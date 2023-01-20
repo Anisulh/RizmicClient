@@ -39,38 +39,52 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+  <body className="bg-gradient-to-r from-lavendarblush to-cambridgeblue ">
+    <div className = "container mx-auto flex items-center justify-center page-height">
+      <div>
+      <h1 className = "font-bold text-5xl pb-3">Login</h1>
       <div>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Username</label>
+            <label className= "text-slategrey">Username</label>
             <input
+              className="rounded w-full py-2 bg-raisinblack text-lavendarblush
+               px-1 outline-none"
               name="email"
               type="email"
               onChange={handleChange}
               placeholder="Email"
             />
           </div>
-
-          <label>Password</label>
-          <input
-            name="password"
-            type={showPassword ? "text" : "password"}
-            onChange={handleChange}
-            placeholder="Password"
-          />
-          <button type="button" onClick={handleClickShowPassword}>
-            {showPassword ? (
-              <EyeSlashIcon className="w-6 h-6 bg-white " />
-            ) : (
-              <EyeIcon className="w-6 h-6 bg-white" />
-            )}
-          </button>
-          <button type="submit">Log In</button>
+            <label className= "text-slategrey">Password</label>
+            <div className="flex items-center pb-3">
+            <input
+              className="rounded w-full py-2 bg-raisinblack text-lavendarblush
+              px-1 outline-none rounded-r-none"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              placeholder="Password"
+            />
+            <button
+              className="bg-raisinblack text-white py-2 rounded-r" 
+              type="button" onClick={handleClickShowPassword}>
+              {showPassword ? (
+                <EyeSlashIcon className="w-6 h-6 bg-raisinblack text-white" />
+              ) : (
+                <EyeIcon className="w-6 h-6 bg-raisinblack text-white" />
+              )}
+            </button>
+            </div>
+          <button
+            className="w-full py-2 bg-cambridgeblue text-lavendarblush
+            px-1 outline-none"
+            type="submit">Log In</button>
         </form>
+        </div>
       </div>
     </div>
+  </body>
   );
 }
 
