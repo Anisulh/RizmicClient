@@ -10,19 +10,6 @@ declare global {
   const google: any;
 }
 
-const loadScript = (src: string) => {
-  return new Promise<void>((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) return resolve();
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => resolve();
-    script.onerror = (err) => reject(err);
-    document.body.appendChild(script);
-  });
-};
-
 function Register() {
   const navigate = useNavigate();
   const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
@@ -47,8 +34,13 @@ function Register() {
   const { password } = registerUserData;
   const googleButton = useRef(null);
   useEffect(() => {
-    loadScript("https://accounts.google.com/gsi/client")
-      .then(() => {
+    const loadScript = (src: string) => {
+      if (document.querySelector(`script[src="${src}"]`)) return;
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
         google.accounts.id.initialize({
           client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
           callback: handleGoogleSignIn,
@@ -57,10 +49,11 @@ function Register() {
           theme: "outline",
           size: "large",
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      };
+      script.onerror = (err) => console.log(err);
+      document.body.appendChild(script);
+    };
+    loadScript("https://accounts.google.com/gsi/client");
   }, []);
 
   useEffect(() => {
@@ -83,7 +76,7 @@ function Register() {
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     console.log(res.credential);
     const response = await fetch("http://localhost:7000/user/register", {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${res.credential}`,
