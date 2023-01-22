@@ -1,10 +1,27 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import Status from "../../components/Status";
 import { registerFormValidation } from "./registrationValidation";
 import { useNavigate } from "react-router-dom";
-import { IRegisterUser, IStatusState } from "./interface";
+import { IGoogleResponse, IRegisterUser, IStatusState } from "./interface";
+
+declare global {
+  const google: any;
+}
+
+const loadScript = (src: string) => {
+  return new Promise<void>((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) return resolve();
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = (err) => reject(err);
+    document.body.appendChild(script);
+  });
+};
 
 function Register() {
   const navigate = useNavigate();
@@ -16,7 +33,7 @@ function Register() {
     confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<
     "weak" | "medium" | "strong"
   >("weak");
@@ -28,7 +45,23 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const { isError, message, showStatus } = status;
   const { password } = registerUserData;
- 
+  const googleButton = useRef(null);
+  useEffect(() => {
+    loadScript("https://accounts.google.com/gsi/client")
+      .then(() => {
+        google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleGoogleSignIn,
+        });
+        google.accounts.id.renderButton(googleButton.current, {
+          theme: "outline",
+          size: "large",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     const mediumPassword = new RegExp(
@@ -47,6 +80,25 @@ function Register() {
     }
   }, [password]);
 
+  const handleGoogleSignIn = async (res: IGoogleResponse) => {
+    console.log(res.credential);
+    const response = await fetch("http://localhost:7000/user/register", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${res.credential}`,
+      },
+    });
+    if (response.ok) {
+      navigate("/");
+    } else {
+      setStatus({
+        isError: true,
+        message: "Something went wrong when registering with google",
+        showStatus: true,
+      });
+    }
+  };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterUserData((prevState) => ({
       ...prevState,
@@ -64,8 +116,12 @@ function Register() {
     );
     if (validated) {
       try {
+        console.log(registerUserData);
         const response = await fetch("http://localhost:7000/user/register", {
-          method: "POST",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(registerUserData),
         });
         if (response.ok) {
@@ -222,6 +278,9 @@ function Register() {
             )}
           </button>
         </form>
+        <div className="flex justify-center">
+          <div ref={googleButton}></div>
+        </div>
       </div>
     </div>
   );
