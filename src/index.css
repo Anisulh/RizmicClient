@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  background-color: #FBFAF5;
+}
 
 .page-height {
   height: calc(100vh - 180px)
