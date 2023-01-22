@@ -49,6 +49,9 @@ function Login() {
     try {
       const response = await fetch("http://localhost:7000/user/login", {
         method: "POST",
+        headers:{
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify(userLoginData),
       });
       if (response.ok) {
