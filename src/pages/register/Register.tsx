@@ -1,10 +1,18 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import Status from "../../components/Status";
 import { registerFormValidation } from "./registrationValidation";
 import { useNavigate } from "react-router-dom";
 import { IGoogleResponse, IRegisterUser, IStatusState } from "./interface";
+import { IUserContext, UserContext } from "../../App";
 
 declare global {
   const google: any;
@@ -12,6 +20,7 @@ declare global {
 
 function Register() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext) as IUserContext;
   const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
     firstName: "",
     lastName: "",
@@ -83,6 +92,9 @@ function Register() {
       },
     });
     if (response.ok) {
+      const user = await response.json();
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("/");
     } else {
       setStatus({
@@ -120,6 +132,9 @@ function Register() {
         if (response.ok) {
           setLoading(false);
           setStatus({ isError: false, message: "", showStatus: false });
+          const user = await response.json();
+          setUser(user);
+          localStorage.setItem("user", JSON.stringify(user));
           navigate("/");
         } else {
           setLoading(false);
