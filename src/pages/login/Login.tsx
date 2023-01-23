@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useEffect,useRef } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import loginImage from "./images/login_page.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { IStatusState } from "../register/interface";
+import { IGoogleResponse } from "../register/interface";
 
 interface IUserLogin {
   email: string;
@@ -31,8 +32,51 @@ function Login() {
     message: "",
     showStatus: false
   })
+  const googleButton = useRef(null);
+  useEffect(() => {
+    const loadScript = (src: string) => {
+      if (document.querySelector(`script[src="${src}"]`)) return;
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleGoogleSignIn,
+        });
+        google.accounts.id.renderButton(googleButton.current, {
+          theme: "outline",
+          size: "large",
+        });
+      };
+      script.onerror = (err) => console.log(err);
+      document.body.appendChild(script);
+    };
+    loadScript("https://accounts.google.com/gsi/client");
+  }, []);
 
   const navigate = useNavigate();
+
+  const handleGoogleSignIn = async (res: IGoogleResponse) => {
+    console.log(res.credential);
+    const response = await fetch("http://localhost:7000/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${res.credential}`,
+      },
+    });
+    if (response.ok) {
+      navigate("/");
+    } else {
+      setStatus({
+        isError: true,
+        message: "Something went wrong when logging in with google",
+        showStatus: true,
+      });
+    }
+  };
 
   const handleSubmit = async(e: FormEvent) => {
     e.preventDefault();
@@ -70,7 +114,7 @@ function Login() {
       setLoading(false);
       setStatus({
         isError: true,
-        message: "Unable to register user",
+        message: "Unable to login user",
         showStatus: true,
       });
     }
@@ -124,7 +168,7 @@ function Login() {
                 </div>
               <button
                 className="w-full py-2 bg-cambridgeblue text-black
-                px-1 outline-none"
+                px-1 outline-none rounded"
                 type="submit"
                 >{loading ? (
                   <span className="flex justify-center items-center">
@@ -153,7 +197,9 @@ function Login() {
                 <Link to = "/register" className="underline" >Register</Link>
                 </div>
                 <p className="text-center horizontalLines" >Or, login with...</p>
-                <button className="flex justify-center">Google</button>
+                <div className=" flex justify-center pt-3">
+                <div ref={googleButton} className="rounded w-fit"></div>
+                </div>
             </form>
             </div>  
         </div>
