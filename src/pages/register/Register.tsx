@@ -12,7 +12,7 @@ import Status from "../../components/Status";
 import { registerFormValidation } from "./registrationValidation";
 import { useNavigate } from "react-router-dom";
 import { IGoogleResponse, IRegisterUser, IStatusState } from "./interface";
-import { IUserContext, UserContext } from "../../App";
+import { IUserContext, UserContext } from "../../UserContext";
 
 declare global {
   const google: any;
@@ -121,7 +121,6 @@ function Register() {
     );
     if (validated) {
       try {
-        console.log(registerUserData);
         const response = await fetch("http://localhost:7000/user/register", {
           method: "post",
           headers: {
