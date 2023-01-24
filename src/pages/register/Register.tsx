@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useContext, useRef, useState } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import Status from "../../components/Status";
@@ -13,7 +6,7 @@ import {
   registerFormValidation,
   usePasswordValidation,
 } from "./registrationValidation";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse, IStatusState } from "./interface";
 import { IUserContext, UserContext } from "../../UserContext";
 
@@ -24,6 +17,7 @@ import {
   IRegisterUser,
 } from "../../interface/userInterface";
 import { loadGoogleScript } from "../../api/googleAPI";
+import registerImage from "./images/registerImage.jpg";
 
 declare global {
   const google: any;
@@ -83,7 +77,7 @@ function Register() {
     }
   };
   loadGoogleScript(handleGoogleSignIn, googleButton);
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterUserData((prevState) => ({
       ...prevState,
@@ -112,130 +106,153 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center page-height">
-      {showStatus && (
-        <Status message={message} isError={isError} setStatus={setStatus} />
-      )}
-      <div>
-        <h1 className="font-bold text-3xl">Register</h1>
-        <form onSubmit={handleSubmit}>
-          <label>First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            onChange={handleChange}
-            className="border rounded block w-full"
-          />
-          <label>Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            onChange={handleChange}
-            className="border rounded block w-full"
-          />
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            onChange={handleChange}
-            className="border rounded block w-full"
-          />
-          <label>Password</label>
-          <div className="flex items-center relative">
+    <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-screen w-1/2 ">
+        {showStatus && (
+          <Status message={message} isError={isError} setStatus={setStatus} />
+        )}
+        <div>
+          <h1 className="font-bold text-4xl">Register</h1>
+          <p className="text-slategrey ">
+            Fill in your details or continue with google with a simple click.
+          </p>
+          <form className="px-14" onSubmit={handleSubmit}>
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
+              type="text"
+              name="firstName"
+              placeholder="First Name"
               onChange={handleChange}
-              className="border rounded block w-full"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
             />
-            <button
-              type="button"
-              className="absolute right-0 text-gray-600"
-              onClick={() => {
-                setShowPassword((prevState) => !prevState);
-              }}
-            >
-              {showPassword ? (
-                <EyeSlashIcon className="h-6 w-6" />
-              ) : (
-                <EyeIcon className="h-6 w-6" />
-              )}
-            </button>
-          </div>
-          {password && (
-            <div>
-              <p>
-                {passwordStrength.charAt(0).toUpperCase() +
-                  passwordStrength.slice(1)}{" "}
-                Password
-              </p>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 ">
-                <div
-                  className=" h-2.5 rounded-full"
-                  style={{
-                    width:
-                      passwordStrength === "weak"
-                        ? "35%"
-                        : passwordStrength === "medium"
-                        ? "70%"
-                        : "100%",
-                    backgroundColor:
-                      passwordStrength === "weak"
-                        ? "red"
-                        : passwordStrength === "medium"
-                        ? "orange"
-                        : "green",
-                  }}
-                ></div>
-              </div>
-            </div>
-          )}
 
-          <label>Confirm Password</label>
-          <div className="flex items-center relative">
             <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
+              type="text"
+              name="lastName"
+              placeholder="lastName"
               onChange={handleChange}
-              className="border rounded block w-full"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
             />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+            />
+
+            <div className="flex items-center relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-1 px-2"
+              />
+              <button
+                type="button"
+                className="absolute right-0 text-gray-600 hover:text-raisinblack px-2"
+                onClick={() => {
+                  setShowPassword((prevState) => !prevState);
+                }}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                ) : (
+                  <EyeIcon className="h-6 w-6 bg-transparent" />
+                )}
+              </button>
+            </div>
+            {password && (
+              <div>
+                <p>
+                  {passwordStrength.charAt(0).toUpperCase() +
+                    passwordStrength.slice(1)}{" "}
+                  Password
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5 ">
+                  <div
+                    className=" h-2.5 rounded-full"
+                    style={{
+                      width:
+                        passwordStrength === "weak"
+                          ? "35%"
+                          : passwordStrength === "medium"
+                          ? "70%"
+                          : "100%",
+                      backgroundColor:
+                        passwordStrength === "weak"
+                          ? "red"
+                          : passwordStrength === "medium"
+                          ? "orange"
+                          : "green",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                onChange={handleChange}
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+              />
+              <button
+                type="button"
+                className="absolute right-0 text-gray-600 hover:text-raisinblack  px-2"
+                onClick={() => {
+                  setShowConfirmPassword((prevState) => !prevState);
+                }}
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                ) : (
+                  <EyeIcon className="h-6 w-6  bg-transparent" />
+                )}
+              </button>
+            </div>
             <button
-              type="button"
-              className="absolute right-0"
-              onClick={() => {
-                setShowConfirmPassword((prevState) => !prevState);
-              }}
+              type="submit"
+              className="mt-2 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
             >
-              {showConfirmPassword ? (
-                <EyeSlashIcon className="h-6 w-6 text-gray-600" />
+              {isLoading ? (
+                <span className="flex justify-center items-center bg-transparent">
+                  <div
+                    className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading</span>
+                  </div>
+                  Processing...
+                </span>
               ) : (
-                <EyeIcon className="h-6 w-6 text-gray-600" />
+                "Submit"
               )}
             </button>
+          </form>
+          <div className="flex items-center justify-center gap-1 py-4">
+            <p>Already have an account?</p>
+            <Link to="/login" className="underline font-medium">
+              Login
+            </Link>
           </div>
-          <button
-            type="submit"
-            className="mt-2 border rounded-md bg-red-900 text-white px-4 py-2 font-medium w-full"
-          >
-            {isLoading ? (
-              <span className="flex justify-center items-center bg-red-900">
-                <div
-                  className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-red-900 text-gray-300"
-                  role="status"
-                >
-                  <span className="sr-only">Loading</span>
-                </div>
-                Processing...
-              </span>
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </form>
-        <div className="flex justify-center">
-          <div ref={googleButton}></div>
+          <p className="text-center horizontalLines my-4">
+            Or, register with...
+          </p>
+          <div className="mt-6 w-fit mx-auto">
+            <div ref={googleButton}></div>
+          </div>
         </div>
       </div>
+
+      <img
+        className="object-cover w-1/2 h-screen "
+        src={registerImage}
+        alt="Register image"
+      />
     </div>
   );
 }
