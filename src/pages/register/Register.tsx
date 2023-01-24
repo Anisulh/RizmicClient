@@ -9,10 +9,21 @@ import {
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import Status from "../../components/Status";
-import { registerFormValidation } from "./registrationValidation";
+import {
+  registerFormValidation,
+  usePasswordValidation,
+} from "./registrationValidation";
 import { useNavigate } from "react-router-dom";
-import { IGoogleResponse, IRegisterUser, IStatusState } from "./interface";
+import { IGoogleResponse, IStatusState } from "./interface";
 import { IUserContext, UserContext } from "../../UserContext";
+
+import { registerAPI } from "../../api/userAPI";
+import { useMutation } from "@tanstack/react-query";
+import {
+  IRegisterAPIParams,
+  IRegisterUser,
+} from "../../interface/userInterface";
+import { loadGoogleScript } from "../../api/googleAPI";
 
 declare global {
   const google: any;
@@ -20,7 +31,7 @@ declare global {
 
 function Register() {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext) as IUserContext;
+  const { setUser } = useContext(UserContext) as IUserContext;
   const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
     firstName: "",
     lastName: "",
@@ -30,73 +41,37 @@ function Register() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState<
-    "weak" | "medium" | "strong"
-  >("weak");
   const [status, setStatus] = useState<IStatusState>({
     isError: false,
     message: "",
     showStatus: false,
   });
-  const [loading, setLoading] = useState(false);
+  const passwordStrength = usePasswordValidation(registerUserData.password);
   const { isError, message, showStatus } = status;
   const { password } = registerUserData;
+
+  const { isLoading, mutate } = useMutation({
+    mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
+      registerAPI({ userData, credential }),
+    onSuccess(data) {
+      if (data.message) {
+        setStatus({
+          isError: true,
+          message: data.message,
+          showStatus: true,
+        });
+      } else {
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/");
+      }
+    },
+  });
   const googleButton = useRef(null);
-  useEffect(() => {
-    const loadScript = (src: string) => {
-      if (document.querySelector(`script[src="${src}"]`)) return;
-      const script = document.createElement("script");
-      script.src = src;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-          callback: handleGoogleSignIn,
-        });
-        google.accounts.id.renderButton(googleButton.current, {
-          theme: "outline",
-          size: "large",
-        });
-      };
-      script.onerror = (err) => console.log(err);
-      document.body.appendChild(script);
-    };
-    loadScript("https://accounts.google.com/gsi/client");
-  }, []);
-
-  useEffect(() => {
-    const mediumPassword = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,}$/
-    );
-    const strongPassword = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
-    );
-
-    if (strongPassword.test(password)) {
-      setPasswordStrength("strong");
-    } else if (mediumPassword.test(password)) {
-      setPasswordStrength("medium");
-    } else {
-      setPasswordStrength("weak");
-    }
-  }, [password]);
-
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
-    console.log(res.credential);
-    const response = await fetch("http://localhost:7000/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${res.credential}`,
-      },
-    });
-    if (response.ok) {
-      const user = await response.json();
-      setUser(user);
-      localStorage.setItem("user", JSON.stringify(user));
-      navigate("/");
-    } else {
+    try {
+      mutate({ credential: res.credential });
+    } catch (error) {
       setStatus({
         isError: true,
         message: "Something went wrong when registering with google",
@@ -104,6 +79,7 @@ function Register() {
       });
     }
   };
+  loadGoogleScript(handleGoogleSignIn, googleButton);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterUserData((prevState) => ({
       ...prevState,
@@ -113,7 +89,6 @@ function Register() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     const validated = registerFormValidation(
       registerUserData,
       setStatus,
@@ -121,38 +96,15 @@ function Register() {
     );
     if (validated) {
       try {
-        const response = await fetch("http://localhost:7000/user/register", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(registerUserData),
-        });
-        if (response.ok) {
-          setLoading(false);
-          setStatus({ isError: false, message: "", showStatus: false });
-          const user = await response.json();
-          setUser(user);
-          localStorage.setItem("user", JSON.stringify(user));
-          navigate("/");
-        } else {
-          setLoading(false);
-          setStatus({
-            isError: true,
-            message: "Unable to register user",
-            showStatus: true,
-          });
-        }
+        mutate({ userData: registerUserData });
       } catch (error) {
-        setLoading(false);
         setStatus({
           isError: true,
-          message: "Unable to register user",
+          message: `Unable to register user ${error}`,
           showStatus: true,
         });
       }
     }
-    setLoading(false);
   };
 
   return (
@@ -261,23 +213,14 @@ function Register() {
             type="submit"
             className="mt-2 border rounded-md bg-red-900 text-white px-4 py-2 font-medium w-full"
           >
-            {loading ? (
-              <span className="flex justify-center items-center">
-                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
+            {isLoading ? (
+              <span className="flex justify-center items-center bg-red-900">
+                <div
+                  className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-red-900 text-gray-300"
+                  role="status"
+                >
+                  <span className="sr-only">Loading</span>
+                </div>
                 Processing...
               </span>
             ) : (

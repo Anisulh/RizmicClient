@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
@@ -9,17 +9,17 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <UserContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <UserContextProvider>
           <Navbar />
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-          </Routes>
-        </Router>
-      </QueryClientProvider>
-    </UserContextProvider>
+          </Routes>{" "}
+        </UserContextProvider>
+      </Router>
+    </QueryClientProvider>
   );
 }
 

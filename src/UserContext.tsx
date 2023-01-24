@@ -1,11 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
+import { IUser } from "./interface/userInterface";
 
-interface IUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  token: string;
-}
 export interface IUserContext {
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;

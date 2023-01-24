@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import { IRegisterUser, IStatusState } from "./interface";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { IRegisterUser } from "../../interface/userInterface";
+import { IStatusState } from "./interface";
 
 export const registerFormValidation = (
   userData: IRegisterUser,
@@ -45,4 +46,28 @@ export const registerFormValidation = (
   }
   setStatus({ isError: false, message: "", showStatus: false });
   return true;
+};
+
+export const usePasswordValidation = (password: string) => {
+  const [passwordStrength, setPasswordStrength] = useState<
+    "weak" | "medium" | "strong"
+  >("weak");
+  useEffect(() => {
+    const mediumPassword = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,}$/
+    );
+    const strongPassword = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
+    );
+
+    if (strongPassword.test(password)) {
+      setPasswordStrength("strong");
+    } else if (mediumPassword.test(password)) {
+      setPasswordStrength("medium");
+    } else {
+      setPasswordStrength("weak");
+    }
+  }, [password]);
+
+  return passwordStrength;
 };
