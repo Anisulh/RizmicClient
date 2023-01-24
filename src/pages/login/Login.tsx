@@ -120,6 +120,10 @@ function Login() {
     return <h1>Loading...</h1>;
   }
 
+  function handleForgotPasswordClick() {
+    navigate("/forgotpassword");
+}
+
   return (
     <div className="flex items-center justify-center">
       <div className="flex items-center justify-center h-screen w-1/2 z-10 rounded-3xl">
@@ -159,6 +163,7 @@ function Login() {
             </div>
             <div className="flex justify-end">
               <button
+                onClick={handleForgotPasswordClick}
                 type="button"
                 className="font-medium text-xs text-ultramarineBlue"
               >
