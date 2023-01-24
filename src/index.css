@@ -2,17 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  background-color: #FBFAF5;
+* {
+  background-color: #fbfaf5;
 }
 
-.page-height {
-  height: calc(100vh - 180px)
-}
+
 .horizontalLines {
-  font-family: sans-serif;
-  margin: auto;
-  color: #1C2331;
+  margin-inline: auto;
+  color: #1c2331;
   text-align: center;
   font-size: 16px;
   max-width: 400px;
@@ -24,7 +21,7 @@
   display: block;
   width: 125px;
   height: 3px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   left: 0;
   top: 50%;
   position: absolute;
@@ -35,7 +32,7 @@
   display: block;
   width: 125px;
   height: 3px;
-  background: #D9D9D9;
+  background: #d9d9d9;
   right: 0;
   top: 50%;
   position: absolute;
