@@ -32,6 +32,7 @@ declare global {
 function Register() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext) as IUserContext;
+
   const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
     firstName: "",
     lastName: "",
@@ -46,9 +47,10 @@ function Register() {
     message: "",
     showStatus: false,
   });
-  const passwordStrength = usePasswordValidation(registerUserData.password);
-  const { isError, message, showStatus } = status;
+
   const { password } = registerUserData;
+  const passwordStrength = usePasswordValidation(password);
+  const { isError, message, showStatus } = status;
 
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
@@ -67,6 +69,7 @@ function Register() {
       }
     },
   });
+
   const googleButton = useRef(null);
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     try {
@@ -80,6 +83,7 @@ function Register() {
     }
   };
   loadGoogleScript(handleGoogleSignIn, googleButton);
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterUserData((prevState) => ({
       ...prevState,
