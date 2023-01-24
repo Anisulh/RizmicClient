@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, useState, useEffect, useRef } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useEffect,
+  useRef,
+  MutableRefObject,
+} from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import loginImage from "./images/login_page.jpg";
@@ -14,6 +21,7 @@ function Login() {
     email: "",
     password: "",
   });
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
 
   const { email } = userLoginData;
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +39,6 @@ function Login() {
     message: "",
     showStatus: false,
   });
-  const googleButton = useRef(null);
 
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     console.log(res.credential);
@@ -52,7 +59,9 @@ function Login() {
       });
     }
   };
+  const googleButton = useRef(null);
   loadGoogleScript(handleGoogleSignIn, googleButton);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -107,9 +116,13 @@ function Login() {
     });
   };
 
+  if (pageLoading) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center justify-center h-screen w-1/2 ">
+      <div className="flex items-center justify-center h-screen w-1/2 z-10 rounded-3xl">
         <div>
           <h1 className="font-bold text-4xl">Welcome back!</h1>
           <p className="text-slategrey ">
@@ -121,7 +134,7 @@ function Login() {
               name="email"
               placeholder="Email"
               onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
             />
 
             <div className="flex items-center relative">
@@ -130,7 +143,7 @@ function Login() {
                 name="password"
                 placeholder="Password"
                 onChange={handleChange}
-                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-1 px-2"
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-2 px-3 placeholder-raisinblack"
               />
               <button
                 type="button"
@@ -142,6 +155,14 @@ function Login() {
                 ) : (
                   <EyeIcon className="h-6 w-6 bg-transparent" />
                 )}
+              </button>
+            </div>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="font-medium text-xs text-ultramarineBlue"
+              >
+                Forgot Password?
               </button>
             </div>
 
@@ -166,7 +187,7 @@ function Login() {
           </form>
           <div className="flex items-center justify-center gap-1 py-4">
             <p>Already have an account?</p>
-            <Link to="/register" className="underline font-medium">
+            <Link to="/register" className="font-medium text-ultramarineBlue">
               Register
             </Link>
           </div>
@@ -178,9 +199,9 @@ function Login() {
           </div>
         </div>
       </div>
-
+      <div className="w-1/2"></div>
       <img
-        className="object-cover w-1/2 h-screen "
+        className="object-cover w-4/6 h-screen absolute right-0"
         src={loginImage}
         alt="Register image"
       />

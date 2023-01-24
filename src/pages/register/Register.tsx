@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, useContext, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import Status from "../../components/Status";
@@ -64,7 +71,6 @@ function Register() {
     },
   });
 
-  const googleButton = useRef(null);
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     try {
       mutate({ credential: res.credential });
@@ -76,6 +82,7 @@ function Register() {
       });
     }
   };
+  const googleButton = useRef(null);
   loadGoogleScript(handleGoogleSignIn, googleButton);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +114,7 @@ function Register() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center justify-center h-screen w-1/2 ">
+      <div className="flex items-center justify-center h-screen w-1/2 z-10 rounded-3xl">
         {showStatus && (
           <Status message={message} isError={isError} setStatus={setStatus} />
         )}
@@ -122,15 +129,15 @@ function Register() {
               name="firstName"
               placeholder="First Name"
               onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack "
             />
 
             <input
               type="text"
               name="lastName"
-              placeholder="lastName"
+              placeholder="Last Name"
               onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
             />
 
             <input
@@ -138,7 +145,7 @@ function Register() {
               name="email"
               placeholder="Email"
               onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
             />
 
             <div className="flex items-center relative">
@@ -147,11 +154,11 @@ function Register() {
                 name="password"
                 placeholder="Password"
                 onChange={handleChange}
-                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-1 px-2"
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-2 px-3 placeholder-raisinblack"
               />
               <button
                 type="button"
-                className="absolute right-0 text-gray-600 hover:text-raisinblack px-2"
+                className="absolute right-0 text-gray-600 hover:text-raisinblac2 px-3"
                 onClick={() => {
                   setShowPassword((prevState) => !prevState);
                 }}
@@ -198,11 +205,11 @@ function Register() {
                 name="confirmPassword"
                 placeholder="Confirm Password"
                 onChange={handleChange}
-                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
               />
               <button
                 type="button"
-                className="absolute right-0 text-gray-600 hover:text-raisinblack  px-2"
+                className="absolute right-0 text-gray-600 hover:text-raisinblack2 px-3"
                 onClick={() => {
                   setShowConfirmPassword((prevState) => !prevState);
                 }}
@@ -235,7 +242,7 @@ function Register() {
           </form>
           <div className="flex items-center justify-center gap-1 py-4">
             <p>Already have an account?</p>
-            <Link to="/login" className="underline font-medium">
+            <Link to="/login" className="text-ultramarineBlue font-medium">
               Login
             </Link>
           </div>
@@ -247,9 +254,9 @@ function Register() {
           </div>
         </div>
       </div>
-
+      <div className="w-1/2"></div>
       <img
-        className="object-cover w-1/2 h-screen "
+        className="object-cover w-4/6 h-screen absolute right-0"
         src={registerImage}
         alt="Register image"
       />
