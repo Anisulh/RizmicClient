@@ -108,95 +108,82 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="max-w-7xl w-full flex">
-        <div className="w-1/2 flex items-center justify-center page-height">
-          <div>
-            <h1 className="font-bold text-5xl pb-2">Welcome Back!</h1>
-            <div>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <input
-                    className="rounded w-full py-2 bg-ourGrey text-raisinblack
-                  px-1 outline-none"
-                    name="email"
-                    type="email"
-                    onChange={handleChange}
-                    placeholder="Email:"
-                  />
-                </div>
-                <div className="flex items-center pb-3">
-                  <input
-                    className="rounded w-full py-2 bg-ourGrey text-raisinblack
-                  px-1 outline-none rounded-r-none"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    onChange={handleChange}
-                    placeholder="Password:"
-                  />
-                  <button
-                    className="bg-ourGrey text-white py-2 rounded-r"
-                    type="button"
-                    onClick={handleClickShowPassword}
-                  >
-                    {showPassword ? (
-                      <EyeSlashIcon className="w-6 h-6 bg-ourGrey text-black" />
-                    ) : (
-                      <EyeIcon className="w-6 h-6 bg-ourGrey text-black" />
-                    )}
-                  </button>
-                </div>
-                <button
-                  className="w-full py-2 bg-cambridgeblue text-black
-                px-1 outline-none rounded"
-                  type="submit"
-                >
-                  {loading ? (
-                    <span className="flex justify-center items-center">
-                      <svg
-                        className="animate-spin h-5 w-5 mr-3"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          stroke-width="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Processing...
-                    </span>
-                  ) : (
-                    "Log In"
-                  )}
-                </button>
-                <div className="flex justify-center gap-1 pb-3 pt-3">
-                  <p className="text-base">Don't have an account?</p>
-                  <Link to="/register" className="underline">
-                    Register
-                  </Link>
-                </div>
-                <p className="text-center horizontalLines">Or, login with...</p>
-                <div className=" flex justify-center pt-3">
-                  <div ref={googleButton} className="rounded w-fit"></div>
-                </div>
-              </form>
+    <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-screen w-1/2 ">
+        <div>
+          <h1 className="font-bold text-4xl">Welcome back!</h1>
+          <p className="text-slategrey ">
+            Login to find a fresh new fit or manage your wardrobe
+          </p>
+          <form className="px-14" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-1 px-2"
+            />
+
+            <div className="flex items-center relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-1 px-2"
+              />
+              <button
+                type="button"
+                className="absolute right-0 text-gray-600 hover:text-raisinblack px-2"
+                onClick={handleClickShowPassword}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                ) : (
+                  <EyeIcon className="h-6 w-6 bg-transparent" />
+                )}
+              </button>
             </div>
+
+            <button
+              type="submit"
+              className="mt-6 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
+            >
+              {loading ? (
+                <span className="flex justify-center items-center bg-transparent">
+                  <div
+                    className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading</span>
+                  </div>
+                  Processing...
+                </span>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </form>
+          <div className="flex items-center justify-center gap-1 py-4">
+            <p>Already have an account?</p>
+            <Link to="/register" className="underline font-medium">
+              Register
+            </Link>
+          </div>
+          <p className="text-center horizontalLines my-4">
+            Or, register with...
+          </p>
+          <div className="mt-6 w-fit mx-auto">
+            <div ref={googleButton}></div>
           </div>
         </div>
-        <img
-          className="w-1/2 page-height rounded"
-          src={loginImage}
-          alt="Login page"
-        ></img>
       </div>
+
+      <img
+        className="object-cover w-1/2 h-screen "
+        src={loginImage}
+        alt="Register image"
+      />
     </div>
   );
 }
