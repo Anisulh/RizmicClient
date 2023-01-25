@@ -1,50 +1,42 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IRegisterUser } from "../../interface/userInterface";
-import { IStatusState } from "./interface";
+import { IErrorNotificationParams } from "../../StatusContext";
 
 export const registerFormValidation = (
   userData: IRegisterUser,
-  setStatus: Dispatch<SetStateAction<IStatusState>>,
-  passwordStrength: "weak" | "medium" | "strong"
+  setError: Dispatch<SetStateAction<IErrorNotificationParams>>,
+  passwordStrength: "weak" | "medium" | "strong",
 ) => {
   const { firstName, lastName, email, password, confirmPassword } = userData;
 
   const emailRegEx = new RegExp(
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   );
   if (!firstName || !lastName || !email || !password || !confirmPassword) {
-    setStatus({
-      isError: true,
+    setError({
       message: "Please fill out all fields",
-      showStatus: true,
     });
     return false;
   }
   if (!emailRegEx.test(email)) {
-    setStatus({
-      isError: true,
+    setError({
       message: "Email entered is not a valid email",
-      showStatus: true,
     });
     return false;
   }
   if (password !== confirmPassword) {
-    setStatus({
-      isError: true,
+    setError({
       message: "Passwords do not match",
-      showStatus: true,
     });
     return false;
   }
   if (passwordStrength === "weak") {
-    setStatus({
-      isError: true,
+    setError({
       message: "Please enter a stronger password",
-      showStatus: true,
     });
     return false;
   }
-  setStatus({ isError: false, message: "", showStatus: false });
+  setError({ message: "" });
   return true;
 };
 
@@ -54,10 +46,10 @@ export const usePasswordValidation = (password: string) => {
   >("weak");
   useEffect(() => {
     const mediumPassword = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,}$/
+      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,}$/,
     );
     const strongPassword = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/,
     );
 
     if (strongPassword.test(password)) {

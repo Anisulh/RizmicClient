@@ -1,4 +1,4 @@
-import {
+import React, {
   ChangeEvent,
   FormEvent,
   useContext,
@@ -8,13 +8,13 @@ import {
 } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
-import Status from "../../components/Status";
+
 import {
   registerFormValidation,
   usePasswordValidation,
 } from "./registrationValidation";
 import { Link, useNavigate } from "react-router-dom";
-import { IGoogleResponse, IStatusState } from "./interface";
+import { IGoogleResponse } from "./interface";
 import { IUserContext, UserContext } from "../../UserContext";
 
 import { registerAPI } from "../../api/userAPI";
@@ -23,17 +23,31 @@ import {
   IRegisterAPIParams,
   IRegisterUser,
 } from "../../interface/userInterface";
-import { loadGoogleScript } from "../../api/googleAPI";
+import { useGoogleScript } from "../../api/googleAPI";
 import registerImage from "./images/registerImage.jpg";
+import {
+  IErrorNotificationParams,
+  IStatusContext,
+  StatusContext,
+} from "../../StatusContext";
 
 declare global {
-  const google: any;
+  const google: {
+    accounts: {
+      id: {
+        initialize: (param: unknown) => void;
+        renderButton: (param: unknown, param1: unknown) => void;
+      };
+    };
+  };
 }
 
 function Register() {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext) as IUserContext;
-
+  const { errorNotification, resetStatus } = useContext(
+    StatusContext,
+  ) as IStatusContext;
   const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
     firstName: "",
     lastName: "",
@@ -43,26 +57,26 @@ function Register() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [status, setStatus] = useState<IStatusState>({
-    isError: false,
-    message: "",
-    showStatus: false,
+  const [error, setError] = useState<IErrorNotificationParams>({
+    message: null,
+    error: null,
   });
-
+  useEffect(() => {
+    errorNotification(error);
+    return () => {
+      resetStatus();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
   const { password } = registerUserData;
   const passwordStrength = usePasswordValidation(password);
-  const { isError, message, showStatus } = status;
 
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
       registerAPI({ userData, credential }),
     onSuccess(data) {
       if (data.message) {
-        setStatus({
-          isError: true,
-          message: data.message,
-          showStatus: true,
-        });
+        setError({ message: data.message });
       } else {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
@@ -75,15 +89,11 @@ function Register() {
     try {
       mutate({ credential: res.credential });
     } catch (error) {
-      setStatus({
-        isError: true,
-        message: "Something went wrong when registering with google",
-        showStatus: true,
-      });
+      setError({ error });
     }
   };
   const googleButton = useRef(null);
-  loadGoogleScript(handleGoogleSignIn, googleButton);
+  useGoogleScript(handleGoogleSignIn, googleButton);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterUserData((prevState) => ({
@@ -96,18 +106,14 @@ function Register() {
     e.preventDefault();
     const validated = registerFormValidation(
       registerUserData,
-      setStatus,
-      passwordStrength
+      setError,
+      passwordStrength,
     );
     if (validated) {
       try {
         mutate({ userData: registerUserData });
       } catch (error) {
-        setStatus({
-          isError: true,
-          message: `Unable to register user ${error}`,
-          showStatus: true,
-        });
+        setError({ error });
       }
     }
   };
@@ -115,9 +121,6 @@ function Register() {
   return (
     <div className="flex items-center justify-center">
       <div className="flex items-center justify-center h-screen w-1/2 z-10 rounded-3xl">
-        {showStatus && (
-          <Status message={message} isError={isError} setStatus={setStatus} />
-        )}
         <div>
           <h1 className="font-bold text-4xl">Register</h1>
           <p className="text-slategrey ">
@@ -258,7 +261,7 @@ function Register() {
       <img
         className="object-cover w-4/6 h-screen absolute right-0"
         src={registerImage}
-        alt="Register image"
+        alt="Clothing on a rack"
       />
     </div>
   );

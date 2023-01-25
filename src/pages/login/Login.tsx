@@ -1,19 +1,12 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useState,
-  useEffect,
-  useRef,
-  MutableRefObject,
-} from "react";
+import React, { ChangeEvent, FormEvent, useState, useRef } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import loginImage from "./images/login_page.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { IStatusState } from "../register/interface";
-import { IGoogleResponse } from "../register/interface";
+import { IGoogleResponse, IStatusState } from "../register/interface";
+
 import { IUserLogin } from "../../interface/userInterface";
-import { loadGoogleScript } from "../../api/googleAPI";
+import { useGoogleScript } from "../../api/googleAPI";
 
 function Login() {
   const navigate = useNavigate();
@@ -60,13 +53,13 @@ function Login() {
     }
   };
   const googleButton = useRef(null);
-  loadGoogleScript(handleGoogleSignIn, googleButton);
+  useGoogleScript(handleGoogleSignIn, googleButton);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     const emailRegex =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
       setLoading(false);
@@ -122,7 +115,7 @@ function Login() {
 
   function handleForgotPasswordClick() {
     navigate("/forgotpassword");
-}
+  }
 
   return (
     <div className="flex items-center justify-center">
@@ -208,7 +201,7 @@ function Login() {
       <img
         className="object-cover w-4/6 h-screen absolute right-0"
         src={loginImage}
-        alt="Register image"
+        alt="Room with clothes near window"
       />
     </div>
   );
