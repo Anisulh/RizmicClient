@@ -1,9 +1,9 @@
 import { MutableRefObject, useEffect } from "react";
 import { IGoogleResponse } from "../pages/register/interface";
 
-export const loadGoogleScript = (
+export const useGoogleScript = (
   handleGoogleSignIn: (res: IGoogleResponse) => void,
-  googleButton: MutableRefObject<null>
+  googleButton: MutableRefObject<null>,
 ) => {
   useEffect(() => {
     google.accounts.id.initialize({
@@ -16,5 +16,6 @@ export const loadGoogleScript = (
       text: "continue_with",
       logo_alignment: "center",
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [googleButton]);
 };
