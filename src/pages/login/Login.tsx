@@ -1,23 +1,67 @@
-import React, { ChangeEvent, FormEvent, useState, useRef } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+} from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import loginImage from "./images/login_page.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse, IStatusState } from "../register/interface";
 
-import { IUserLogin } from "../../interface/userInterface";
+import { ILoginAPIParams, IUserLogin } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
+import {
+  IErrorNotificationParams,
+  IStatusContext,
+  StatusContext,
+} from "../../StatusContext";
+import { IUserContext, UserContext } from "../../UserContext";
+import { loginAPI } from "../../api/userAPI";
+import { useMutation } from "@tanstack/react-query";
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext) as IUserContext;
+  const { errorNotification, resetStatus } = useContext(
+    StatusContext,
+  ) as IStatusContext;
+  const [error, setError] = useState<IErrorNotificationParams>({
+    message: null,
+    error: null,
+  });
+
+  useEffect(() => {
+    errorNotification(error);
+    return () => {
+      resetStatus();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
+
   const [userLoginData, setUserLoginData] = useState<IUserLogin>({
     email: "",
     password: "",
   });
-  const [pageLoading, setPageLoading] = useState<boolean>(false);
-
   const { email } = userLoginData;
   const [showPassword, setShowPassword] = useState(false);
+
+  const { isLoading, mutate } = useMutation({
+    mutationFn: ({ userData, credential }: ILoginAPIParams) =>
+      loginAPI({ userData, credential }),
+    onSuccess(data) {
+      if (data.message) {
+        setError({ message: data.message });
+      } else {
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/");
+      }
+    },
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserLoginData((prevState) => ({
@@ -26,30 +70,11 @@ function Login() {
     }));
   };
 
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<IStatusState>({
-    isError: false,
-    message: "",
-    showStatus: false,
-  });
-
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
-    console.log(res.credential);
-    const response = await fetch("http://localhost:7000/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${res.credential}`,
-      },
-    });
-    if (response.ok) {
-      navigate("/");
-    } else {
-      setStatus({
-        isError: true,
-        message: "Something went wrong when logging in with google",
-        showStatus: true,
-      });
+    try {
+      mutate({ credential: res.credential });
+    } catch (error) {
+      setError({ error });
     }
   };
   const googleButton = useRef(null);
@@ -57,50 +82,18 @@ function Login() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
-      setLoading(false);
-      setStatus({
-        isError: true,
-        message: "Invalid Email, please try again",
-        showStatus: true,
-      });
+      setError({ message: "Email is not valid" });
       return;
     }
-
     try {
-      const response = await fetch("http://localhost:7000/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userLoginData),
-      });
-      if (response.ok) {
-        setLoading(false);
-        setStatus({ isError: false, message: "", showStatus: false });
-        navigate("/");
-      } else {
-        setLoading(false);
-        setStatus({
-          isError: true,
-          message: "Unable to login user",
-          showStatus: true,
-        });
-      }
+      mutate({ userData: userLoginData });
     } catch (error) {
-      setLoading(false);
-      setStatus({
-        isError: true,
-        message: "Unable to login user",
-        showStatus: true,
-      });
+      setError({ error });
     }
-
-    setLoading(false);
   };
 
   const handleClickShowPassword = () => {
@@ -108,10 +101,6 @@ function Login() {
       return !prevState;
     });
   };
-
-  if (pageLoading) {
-    return <h1>Loading...</h1>;
-  }
 
   function handleForgotPasswordClick() {
     navigate("/forgotpassword");
@@ -168,7 +157,7 @@ function Login() {
               type="submit"
               className="mt-6 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
             >
-              {loading ? (
+              {isLoading ? (
                 <span className="flex justify-center items-center bg-transparent">
                   <div
                     className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
