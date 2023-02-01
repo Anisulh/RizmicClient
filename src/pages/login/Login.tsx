@@ -10,7 +10,7 @@ import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import loginImage from "./images/login_page.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { IGoogleResponse, IStatusState } from "../register/interface";
+import { IGoogleResponse } from "../register/interface";
 
 import { ILoginAPIParams, IUserLogin } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
