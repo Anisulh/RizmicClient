@@ -10,6 +10,7 @@ import { StatusContextProvider } from "./StatusContext";
 import Status from "./components/Status";
 import Wardrobe from "./pages/Wardrobe";
 import PrivateRoute from "./components/PrivateRoute";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ function App() {
           </StatusContextProvider>
         </UserContextProvider>
       </Router>
+      <ReactQueryDevtools/>
     </QueryClientProvider>
   );
 }
