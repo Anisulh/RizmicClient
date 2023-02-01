@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+html {
   background-color: #fbfaf5;
 }
 
@@ -36,4 +36,8 @@
   right: 0;
   top: 50%;
   position: absolute;
+}
+
+.clothing-image-position{
+  object-position: 0 90%;
 }
