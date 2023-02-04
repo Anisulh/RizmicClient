@@ -179,7 +179,7 @@ function Login() {
             </Link>
           </div>
           <p className="text-center horizontalLines my-4">
-            Or, register with...
+            Or, login with...
           </p>
           <div className="mt-6 w-fit mx-auto">
             <div ref={googleButton}></div>
