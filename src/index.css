@@ -6,6 +6,27 @@ html {
   background-color: #fbfaf5;
 }
 
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #b3b3b3 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
 
 .horizontalLines {
   margin-inline: auto;
@@ -38,6 +59,6 @@ html {
   position: absolute;
 }
 
-.clothing-image-position{
+.clothing-image-position {
   object-position: 0 90%;
 }
