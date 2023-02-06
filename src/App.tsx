@@ -8,6 +8,7 @@ import { UserContextProvider } from "./UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { StatusContextProvider } from "./StatusContext";
 import Status from "./components/Status";
+import PasswordReset from "./pages/passwordReset/PasswordReset";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/passwordreset" element={<PasswordReset/>} />
             </Routes>
           </StatusContextProvider>
         </UserContextProvider>
