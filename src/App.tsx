@@ -38,7 +38,7 @@ function App() {
           </StatusContextProvider>
         </UserContextProvider>
       </Router>
-      <ReactQueryDevtools/>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
