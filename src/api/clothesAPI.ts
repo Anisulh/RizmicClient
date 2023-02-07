@@ -1,4 +1,3 @@
-import { IClothingData, IUpdateClothingData } from "../components/ClothesModal";
 
 const baseURL = "http://localhost:7000/clothes/";
 
@@ -16,32 +15,31 @@ export const getClothes = async (token: string | undefined) => {
   return response;
 };
 
-export const createClothes = async (
-  clothesData: IClothingData,
-  token: string,
-) => {
+export const createClothes = async (clothesData: FormData, token: string) => {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(clothesData),
+    body: clothesData,
   };
 
   const response = await fetch(baseURL, options);
   return response.json();
 };
 
-export const updateClothes = async (clothesId: string, clothingData:IUpdateClothingData, token: string) => {
+export const updateClothes = async (
+  clothesId: string,
+  clothingData: FormData,
+  token: string,
+) => {
   const url = new URL(clothesId, baseURL);
   const options = {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(clothingData)
+    body: clothingData,
   };
 
   const response = await fetch(url, options);
