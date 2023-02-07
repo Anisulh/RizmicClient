@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import ChevronDownIcon from "@heroicons/react/24/outline/ChevronDownIcon";
 import ChevronLeftIcon from "@heroicons/react/24/outline/ChevronLeftIcon";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
-import ClothingCard from "../components/ClothingCard";
-import ClothesModal, { IClothingData } from "../components/ClothesModal";
+import ClothingCard from "../components/Wardrobe/ClothingCard";
+import ClothesModal from "../components/Wardrobe/ClothesModal";
 import { IUserContext, UserContext } from "../UserContext";
 import {
   IErrorNotificationParams,
@@ -13,6 +13,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
 import Spinner from "../components/Spinner";
+import { IClothingData } from "../components/Wardrobe/interface";
 
 interface IWardrobe {
   tshirt: IClothingData[];
