@@ -9,10 +9,7 @@ export interface IUserContext {
 export const UserContext = createContext<IUserContext | null>(null);
 
 const getUser = () => {
-  if (
-    localStorage.getItem("user") &&
-    JSON.parse(localStorage.getItem("user") as string).hasOwn("token")
-  ) {
+  if (localStorage.getItem("user")) {
     return JSON.parse(localStorage.getItem("user") as string);
   }
   return null;

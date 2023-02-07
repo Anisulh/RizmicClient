@@ -8,6 +8,9 @@ import { UserContextProvider } from "./UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { StatusContextProvider } from "./StatusContext";
 import Status from "./components/Status";
+import Wardrobe from "./pages/Wardrobe";
+import PrivateRoute from "./components/PrivateRoute";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +21,24 @@ function App() {
         <UserContextProvider>
           <StatusContextProvider>
             <Navbar />
-            <Status/>
+            <Status />
             <Routes>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route
+                path="/wardrobe"
+                element={
+                  <PrivateRoute>
+                    <Wardrobe />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </StatusContextProvider>
         </UserContextProvider>
       </Router>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

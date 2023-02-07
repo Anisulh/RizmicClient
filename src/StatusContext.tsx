@@ -26,7 +26,6 @@ export const StatusContextProvider = ({
   });
 
   const errorNotification = ({ message, error }: IErrorNotificationParams) => {
-    console.log("handling");
     if (error) {
       setStatus({
         isError: true,
