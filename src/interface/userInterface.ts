@@ -23,3 +23,8 @@ export interface IUserLogin {
   email: string;
   password: string;
 }
+
+export interface ILoginAPIParams{
+  userData?: IUserLogin;
+  credential?: string;
+}
