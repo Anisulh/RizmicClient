@@ -1,15 +1,16 @@
+import { IPasswordData } from "../pages/passwordReset/PasswordResetFormValidation";
 import {
   ILoginAPIParams,
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
-const baseURL = "http://localhost:7000/user/";
+const baseURL = "http://localhost:7001/user/";
 
 export const registerAPI = async ({
   userData,
   credential,
 }: IRegisterAPIParams) => {
-  const url = new URL(baseURL + "register");
+  const url = baseURL + "register";
   const options: RequestInit = userData
     ? {
         method: "POST",
@@ -31,8 +32,34 @@ export const registerAPI = async ({
   return response.json();
 };
 
+export const forgotPasswordAPI = async (email: string) => {
+  const url = baseURL + "forgotpassword";
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  };
+  const response = await fetch(url, options);
+  return response.json();
+};
+
+export const resetPasswordAPI = async (passwordData: IPasswordData) => {
+  const url = baseURL + "passwordreset";
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(passwordData),
+  };
+  const response = await fetch(url, options);
+  return response.json();
+};
+
 export const loginAPI = async ({ userData, credential }: ILoginAPIParams) => {
-  const url = new URL(baseURL + "login");
+  const url = baseURL + "login";
   const options: RequestInit = userData
     ? {
         method: "POST",
