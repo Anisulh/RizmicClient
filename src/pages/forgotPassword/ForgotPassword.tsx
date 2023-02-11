@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useContext, useEffect } from "react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { forgotPasswordAPI } from "../../api/userAPI";
 import {
   IErrorNotificationParams,
@@ -25,18 +25,20 @@ function ForgotPassword() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
+  const navigate = useNavigate();
   const { isLoading, mutate } = useMutation({
     mutationFn: (email: string) => forgotPasswordAPI(email),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        setError({
+          message: `If your email was registered, you will receive an email to reset password.`,
+        });
+        console.log(data.message);
       } else {
         navigate("/login");
       }
     },
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -47,10 +49,18 @@ function ForgotPassword() {
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValidEmail = emailRegex.test(email);
-    if (!isValidEmail) {
-      return;
+    if (isValidEmail) {
+      try {
+        mutate(email);
+        setError({
+          message: `If your email was registered, you will receive an email to reset password.`,
+        });
+      } catch (error) {
+        setError({ error });
+      }
+    } else {
+      setError({ message: "Enter a valid email" });
     }
-    mutate(email);
   };
 
   return (
