@@ -5,7 +5,7 @@ import React, {
   FormEvent,
   useState,
 } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
@@ -23,7 +23,16 @@ import {
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 
+interface IResetPasswordAPIParams {
+  passwordInfo: IPasswordData;
+  userId: string;
+  resetToken: string;
+}
+
 function PasswordReset() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  let id = searchParams.get("id");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmedPassword, setshowConfirmedPassword] = useState(false);
   const [passwordData, setPasswordData] = useState({
@@ -48,7 +57,12 @@ function PasswordReset() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   const { isLoading, mutate } = useMutation({
-    mutationFn: (passwordInfo: IPasswordData) => resetPasswordAPI(passwordInfo),
+    mutationFn: ({
+      passwordInfo,
+      userId,
+      resetToken,
+    }: IResetPasswordAPIParams) =>
+      resetPasswordAPI(passwordInfo, userId, resetToken),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
@@ -82,8 +96,17 @@ function PasswordReset() {
     );
     if (validated) {
       try {
-        mutate(passwordData);
-        navigate("/");
+        if (id && token) {
+          id = id.substring(0, id.length - 1);
+          mutate({
+            passwordInfo: passwordData,
+            userId: id,
+            resetToken: token,
+          });
+          navigate("/");
+        } else {
+          return;
+        }
       } catch (error) {
         setError({ error });
       }
