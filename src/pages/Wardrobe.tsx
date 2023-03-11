@@ -4,12 +4,12 @@ import ChevronLeftIcon from "@heroicons/react/24/outline/ChevronLeftIcon";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
 import ClothingCard from "../components/Wardrobe/ClothingCard";
 import ClothesModal from "../components/Wardrobe/ClothesModal";
-import { IUserContext, UserContext } from "../UserContext";
+import { IUserContext, UserContext } from "../contexts/UserContext";
 import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../StatusContext";
+} from "../contexts/StatusContext"
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
 import Spinner from "../components/Spinner";

@@ -10,14 +10,14 @@ import React, {
   useState,
 } from "react";
 
-import { IUserContext, UserContext } from "../../UserContext";
+import { IUserContext, UserContext } from "../../contexts/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { createClothes, updateClothes } from "../../api/clothesAPI";
 import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 import ColorPicker from "./ColorPicker";
 import InfoPopover from "./InfoPopover";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";

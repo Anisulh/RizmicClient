@@ -1,10 +1,11 @@
 import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
-import ClothesModal, { IClothingData } from "./ClothesModal";
+import ClothesModal from "./ClothesModal";
 import { Menu, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
 import { deleteClothes } from "../../api/clothesAPI";
-import { IErrorNotificationParams } from "../../StatusContext";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { IClothingData } from "./interface";
 
 export default function ClothingCard({
   item,

@@ -15,7 +15,7 @@ import {
 } from "./registrationValidation";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "./interface";
-import { IUserContext, UserContext } from "../../UserContext";
+import { IUserContext, UserContext } from "../../contexts/UserContext";
 
 import { registerAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -29,7 +29,7 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 
 declare global {
   const google: {
