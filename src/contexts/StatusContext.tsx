@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState } from "react";
-import { IStatusState } from "./pages/register/interface";
+import { IStatusState } from "../pages/register/interface";
 
 export interface IErrorNotificationParams {
   message?: string | null;

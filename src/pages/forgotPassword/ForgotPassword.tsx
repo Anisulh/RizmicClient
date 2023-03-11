@@ -12,7 +12,7 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");

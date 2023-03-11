@@ -19,7 +19,7 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 
