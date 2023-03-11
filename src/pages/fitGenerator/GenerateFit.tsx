@@ -150,16 +150,28 @@ function GenerateFit() {
           <div className="text-lg">
             <h1 className="w-full text-xl">Choose a vibe:</h1>
             <div className="flex justify-center gap-4">
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Neutral
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Monochrome
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Earth-tones
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Complimentary
               </button>
             </div>
@@ -167,19 +179,34 @@ function GenerateFit() {
           <div className="text-lg">
             <h1 className="w-full text-xl">Fit vibes:</h1>
             <div className="flex justify-center gap-4">
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Cozy
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Warm
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Cool
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Professional
               </button>
-              <button type="button" className="border rounded-md bg-ourGrey">
+              <button
+                type="button"
+                className="border rounded-md bg-ourGrey py-2 px-4"
+              >
                 Relaxed
               </button>
             </div>
@@ -187,7 +214,7 @@ function GenerateFit() {
           <div className="flex justify-center items-center py-8">
             <button
               type="button"
-              className="border rounded-md bg-ourGrey h-8 w-24 text-lg"
+              className="flex justify-center items-center border rounded-md bg-ourGrey h-8 w-24 text-lg py-2 px-4"
             >
               Generate
             </button>
@@ -216,14 +243,14 @@ function GenerateFit() {
           </div>
         </div>
       </div>
-      <GenerateFitModal
+      {/* <GenerateFitModal
         open={showModal}
         setOpen={setShowModal}
         data={modalData}
         setError={setError}
         refetch={refetch}
         user={user}
-      />
+      /> */}
     </div>
   );
 }
