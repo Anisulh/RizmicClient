@@ -3,7 +3,7 @@ import { Menu, Popover, Transition } from "@headlessui/react";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link } from "react-router-dom";
-import { IUserContext, UserContext } from "../UserContext";
+import { IUserContext, UserContext } from "../contexts/UserContext";
 import userAvatar from "../assets/userAvatar.png";
 
 function classNames(...classes: string[]) {

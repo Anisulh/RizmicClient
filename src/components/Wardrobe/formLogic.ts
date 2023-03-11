@@ -5,7 +5,7 @@ import {
   SetStateAction,
 } from "react";
 import { IUser } from "../../interface/userInterface";
-import { IErrorNotificationParams } from "../../StatusContext";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import {
   IClothingData,
   ICreateClothingData,
@@ -23,7 +23,6 @@ export const handleChange = (
         [currentTarget.id]: currentTarget.checked,
       }));
     } else if (currentTarget.files) {
-      console.log(currentTarget.files);
       setClothingData((prevState) => ({
         ...prevState,
         [currentTarget.id]: currentTarget.files && currentTarget.files[0],

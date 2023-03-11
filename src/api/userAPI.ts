@@ -1,10 +1,17 @@
 import { IPasswordData } from "../pages/passwordReset/PasswordResetFormValidation";
+import { IChangePasswordData } from "../components/Profile/ChangePassword";
 import {
   ILoginAPIParams,
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
 const baseURL = "http://localhost:7000/user/";
+
+export interface IUpdateProfile {
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+}
 
 export const registerAPI = async ({
   userData,
@@ -83,4 +90,84 @@ export const loginAPI = async ({ userData, credential }: ILoginAPIParams) => {
     : { method: "POST" };
   const response = await fetch(url, options);
   return response.json();
+};
+
+export const updateProfileAPI = async (
+  profileData: IUpdateProfile,
+  token: string,
+) => {
+  try {
+    const url = new URL(baseURL + "updateProfile");
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(profileData),
+    };
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserData = async (token:string) => {
+  try {
+    const url = new URL(baseURL + "getUser");
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await fetch(url, options);
+    return response
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const changePasswordAPI = async (
+  passwordData: IChangePasswordData,
+  token: string,
+) => {
+  try {
+    const url = new URL(baseURL + "changePassword");
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(passwordData),
+    };
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateProfileImageAPI = async (
+  image: FormData,
+  token: string,
+) => {
+  try {
+    const url = new URL(baseURL + "updateProfileImage");
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: image,
+    };
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
 };

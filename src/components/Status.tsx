@@ -2,7 +2,7 @@ import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import React, { useContext, useEffect } from "react";
 import ExclamationCircleIcon from "@heroicons/react/24/outline/ExclamationCircleIcon";
 
-import { IStatusContext, StatusContext } from "../StatusContext";
+import { IStatusContext, StatusContext } from "../contexts/StatusContext";
 
 function Status() {
   const { status, resetStatus } = useContext(StatusContext) as IStatusContext;

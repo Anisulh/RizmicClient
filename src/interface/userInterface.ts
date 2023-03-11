@@ -4,6 +4,7 @@ export interface IUser {
   email: string;
   token: string;
   profilePicture: string;
+  phoneNumber: string
 }
 
 export interface IRegisterUser {

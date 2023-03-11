@@ -4,15 +4,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import { UserContextProvider } from "./UserContext";
+import { UserContextProvider } from "./contexts/UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
-import { StatusContextProvider } from "./StatusContext";
+import { StatusContextProvider } from "./contexts/StatusContext";
 import Status from "./components/Status";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
 import Wardrobe from "./pages/Wardrobe";
 import PrivateRoute from "./components/PrivateRoute";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GenerateFit from "./pages/fitGenerator/GenerateFit";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <GenerateFit />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
                   </PrivateRoute>
                 }
               />

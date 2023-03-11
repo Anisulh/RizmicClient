@@ -18,8 +18,8 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
-import { IUserContext, UserContext } from "../../UserContext";
+} from "../../contexts/StatusContext";
+import { IUserContext, UserContext } from "../../contexts/UserContext";
 import { loginAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 

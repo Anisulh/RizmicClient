@@ -5,12 +5,12 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 import { IClothingData } from "../../components/Wardrobe/interface";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/Spinner";
-import { IUserContext, UserContext } from "../../UserContext";
+import { IUserContext, UserContext } from "../../contexts/UserContext";
 
 export interface IBodyParts {
   head: IClothingData[];
