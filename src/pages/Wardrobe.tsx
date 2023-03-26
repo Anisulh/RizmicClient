@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChevronDownIcon from "@heroicons/react/24/outline/ChevronDownIcon";
 import ChevronLeftIcon from "@heroicons/react/24/outline/ChevronLeftIcon";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
@@ -9,7 +9,7 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../contexts/StatusContext"
+} from "../contexts/StatusContext";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
 import Spinner from "../components/Spinner";
@@ -139,7 +139,7 @@ export default function Wardrobe() {
                   </div>
                 </button>
                 {show[key as keyof IShowCategory] && (
-                  <div className="grid grid-cols-3 gap-4 justify-items-center">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
                     {(wardrobe[key as keyof IWardrobe] as []).map(
                       (item, index) => {
                         return (
@@ -159,13 +159,11 @@ export default function Wardrobe() {
             ) : null;
           })}
         </div>
-
-        <button
-          className=" fixed  bottom-14 right-40"
-          onClick={() => setClothesModalOpen(true)}
-        >
-          <PlusIcon className="h-12 w-12 bg-cambridgeblue rounded-full p-3" />
-        </button>
+        <div className="absolute right-20 xl:right-10 bottom-24">
+          <button className="fixed" onClick={() => setClothesModalOpen(true)}>
+            <PlusIcon className="h-12 w-12 bg-cambridgeblue rounded-full p-3" />
+          </button>
+        </div>
       </div>
       <ClothesModal open={clothesModalOpen} setOpen={setClothesModalOpen} />
     </div>

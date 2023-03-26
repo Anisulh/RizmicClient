@@ -1,18 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import React, {
-  useContext,
-  useEffect,
-  ChangeEvent,
-  FormEvent,
-  useState,
-} from "react";
+import { useContext, useEffect, ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgotPasswordAPI } from "../../api/userAPI";
 import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");

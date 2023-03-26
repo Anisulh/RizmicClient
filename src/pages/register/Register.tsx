@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   FormEvent,
   useContext,
@@ -120,146 +120,147 @@ function Register() {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center justify-center h-screen w-1/2 z-10 rounded-3xl">
-        <div>
-          <h1 className="font-bold text-4xl">Register</h1>
-          <p className="text-slategrey ">
-            Fill in your details or continue with google with a simple click.
-          </p>
-          <form className="px-14" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack "
-            />
-
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
-            />
-
-            <div className="flex items-center relative">
+      <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
+        <div className="flex items-center justify-center lg:h-screen  lg:w-5/12 z-10 rounded-3xl bg-sWhite h-fit py-10 px-8 lg:p-0">
+          <div>
+            <h1 className="font-bold text-4xl">Register</h1>
+            <p className="text-slategrey ">
+              Fill in your details or continue with google with a simple click.
+            </p>
+            <form className="px-14" onSubmit={handleSubmit}>
               <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Password"
+                type="text"
+                name="firstName"
+                placeholder="First Name"
                 onChange={handleChange}
-                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-2 px-3 placeholder-raisinblack"
+                className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack "
               />
-              <button
-                type="button"
-                className="absolute right-0 text-gray-600 hover:text-raisinblac2 px-3"
-                onClick={() => {
-                  setShowPassword((prevState) => !prevState);
-                }}
-              >
-                {showPassword ? (
-                  <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                ) : (
-                  <EyeIcon className="h-6 w-6 bg-transparent" />
-                )}
-              </button>
-            </div>
-            {password && (
-              <div>
-                <p>
-                  {passwordStrength.charAt(0).toUpperCase() +
-                    passwordStrength.slice(1)}{" "}
-                  Password
-                </p>
-                <div className="w-full bg-gray-200 rounded-full h-2.5 ">
-                  <div
-                    className=" h-2.5 rounded-full"
-                    style={{
-                      width:
-                        passwordStrength === "weak"
-                          ? "35%"
-                          : passwordStrength === "medium"
-                          ? "70%"
-                          : "100%",
-                      backgroundColor:
-                        passwordStrength === "weak"
-                          ? "red"
-                          : passwordStrength === "medium"
-                          ? "orange"
-                          : "green",
-                    }}
-                  ></div>
-                </div>
+
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                onChange={handleChange}
+                className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
+              />
+
+              <div className="flex items-center relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  onChange={handleChange}
+                  className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-2 px-3 placeholder-raisinblack"
+                />
+                <button
+                  type="button"
+                  className="absolute right-0 text-gray-600 hover:text-raisinblac2 px-3"
+                  onClick={() => {
+                    setShowPassword((prevState) => !prevState);
+                  }}
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                  ) : (
+                    <EyeIcon className="h-6 w-6 bg-transparent" />
+                  )}
+                </button>
               </div>
-            )}
+              {password && (
+                <div>
+                  <p>
+                    {passwordStrength.charAt(0).toUpperCase() +
+                      passwordStrength.slice(1)}{" "}
+                    Password
+                  </p>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 ">
+                    <div
+                      className=" h-2.5 rounded-full"
+                      style={{
+                        width:
+                          passwordStrength === "weak"
+                            ? "35%"
+                            : passwordStrength === "medium"
+                            ? "70%"
+                            : "100%",
+                        backgroundColor:
+                          passwordStrength === "weak"
+                            ? "red"
+                            : passwordStrength === "medium"
+                            ? "orange"
+                            : "green",
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              )}
 
-            <div className="flex items-center relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-                className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
-              />
+              <div className="flex items-center relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  onChange={handleChange}
+                  className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
+                />
+                <button
+                  type="button"
+                  className="absolute right-0 text-gray-600 hover:text-raisinblack2 px-3"
+                  onClick={() => {
+                    setShowConfirmPassword((prevState) => !prevState);
+                  }}
+                >
+                  {showConfirmPassword ? (
+                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                  ) : (
+                    <EyeIcon className="h-6 w-6  bg-transparent" />
+                  )}
+                </button>
+              </div>
               <button
-                type="button"
-                className="absolute right-0 text-gray-600 hover:text-raisinblack2 px-3"
-                onClick={() => {
-                  setShowConfirmPassword((prevState) => !prevState);
-                }}
+                type="submit"
+                className="mt-2 border border-gray-100 rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
               >
-                {showConfirmPassword ? (
-                  <EyeSlashIcon className="h-6 w-6 bg-transparent" />
+                {isLoading ? (
+                  <span className="flex justify-center items-center bg-transparent">
+                    <div
+                      className="spinner-border border-gray-100 animate-spin inline-block w-5 h-5 border border-gray-100-4 rounded-full bg-transparent text-gray-300"
+                      role="status"
+                    >
+                      <span className="sr-only">Loading</span>
+                    </div>
+                    Processing...
+                  </span>
                 ) : (
-                  <EyeIcon className="h-6 w-6  bg-transparent" />
+                  "Submit"
                 )}
               </button>
+            </form>
+            <div className="flex items-center justify-center gap-1 py-4 text-sm ">
+              <p>Already have an account?</p>
+              <Link to="/login" className="text-ultramarineBlue font-medium">
+                Login
+              </Link>
             </div>
-            <button
-              type="submit"
-              className="mt-2 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
-            >
-              {isLoading ? (
-                <span className="flex justify-center items-center bg-transparent">
-                  <div
-                    className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
-                    role="status"
-                  >
-                    <span className="sr-only">Loading</span>
-                  </div>
-                  Processing...
-                </span>
-              ) : (
-                "Submit"
-              )}
-            </button>
-          </form>
-          <div className="flex items-center justify-center gap-1 py-4">
-            <p>Already have an account?</p>
-            <Link to="/login" className="text-ultramarineBlue font-medium">
-              Login
-            </Link>
-          </div>
-          <p className="text-center horizontalLines my-4">
-            Or, register with...
-          </p>
-          <div className="mt-6 w-fit mx-auto">
-            <div ref={googleButton}></div>
+            <p className="text-center horizontalLines my-4">
+              Or, register with...
+            </p>
+            <div className="mt-6 w-fit mx-auto">
+              <div ref={googleButton}></div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-1/2"></div>
       <img
-        className="object-cover w-4/6 h-screen absolute right-0"
+        className="object-cover w-full lg:w-8/12 h-screen absolute right-0"
         src={registerImage}
         alt="Clothing on a rack"
       />
