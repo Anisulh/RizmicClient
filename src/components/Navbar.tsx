@@ -49,7 +49,7 @@ export default function Navbar() {
                     Wardrobe
                   </Link>
                   <Link
-                    to="/fitgenerator"
+                    to="/generatefit"
                     className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
                   >
                     Fit Generator
@@ -172,7 +172,7 @@ export default function Navbar() {
                       Wardrobe
                     </Link>
                     <Link
-                      to="/fitgenerator"
+                      to="/generatefit"
                       className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
                       Fit Generator

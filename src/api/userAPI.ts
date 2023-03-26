@@ -5,7 +5,7 @@ import {
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
-const baseURL = "http://localhost:7001/user/";
+const baseURL = "http://localhost:7000/user/";
 
 export interface IUpdateProfile {
   firstName?: string;
@@ -52,14 +52,18 @@ export const forgotPasswordAPI = async (email: string) => {
   return response.json();
 };
 
-export const resetPasswordAPI = async (passwordData: IPasswordData) => {
+export const resetPasswordAPI = async (
+  passwordData: IPasswordData,
+  id: string,
+  token: string,
+) => {
   const url = baseURL + "passwordreset";
   const options: RequestInit = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(passwordData),
+    body: JSON.stringify({ userId: id, token: token, password: passwordData }),
   };
   const response = await fetch(url, options);
   return response.json();
