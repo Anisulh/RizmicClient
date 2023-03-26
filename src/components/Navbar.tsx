@@ -1,8 +1,8 @@
-import React, { Fragment, useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IUserContext, UserContext } from "../contexts/UserContext";
 import userAvatar from "../assets/userAvatar.png";
 
@@ -12,10 +12,11 @@ function classNames(...classes: string[]) {
 
 export default function Navbar() {
   const { user } = useContext(UserContext) as IUserContext;
+  const navigate = useNavigate();
   return (
-    <div className="absolute top-0 w-full bg-transparent z-40">
+    <div className="absolute top-0 w-full bg-transparent z-10">
       <Popover className="relative bg-transparent">
-        <div className="mx-auto max-w-7xl md:p-0 p-2 bg-transparent ">
+        <div className="mx-auto max-w-7xl px-6 lg:px-4 bg-transparent ">
           <div className="flex items-center justify-between border-gray-100 my-6 md:justify-start md:space-x-10 bg-transparent">
             <div className="flex justify-start lg:w-0 lg:flex-1 bg-transparent">
               <Link to="/" className="font-semibold text-2xl bg-transparent">
@@ -23,7 +24,7 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden bg-transparent">
-              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-600  hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 bg-transparent">
+              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-600  hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset  bg-transparent">
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon
                   className="h-6 w-6 bg-transparent"
@@ -82,7 +83,7 @@ export default function Navbar() {
                               to="/profile"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700",
+                                "block px-4 py-2 text-sm  text-gray-900 hover:text-gray-700",
                               )}
                             >
                               Your Profile
@@ -91,27 +92,20 @@ export default function Navbar() {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <Link
-                              to="/settings"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700",
-                              )}
-                            >
-                              Settings
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700",
-                              )}
-                            >
-                              Log out
-                            </button>
+                            <div className="w-full flex justify-center py-2">
+                              <button
+                                onClick={() => {
+                                  localStorage.removeItem("user");
+                                  navigate("/");
+                                }}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700",
+                                )}
+                              >
+                                Log out
+                              </button>
+                            </div>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -149,12 +143,12 @@ export default function Navbar() {
         >
           <Popover.Panel
             focus
-            className="absolute top-0 right-0 origin-top-right transform px-2 py-5 transition md:hidden"
+            className="absolute -top-8 right-0 origin-top-right transform px-2 py-5 transition md:hidden"
           >
             <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="px-5 pt-5 pb-6">
+              <div className="px-5  py-2">
                 <div className="absolute right-4">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset ">
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -162,44 +156,66 @@ export default function Navbar() {
                 <div className="mt-6"></div>
               </div>
               <div className="space-y-6 py-6 px-5">
-                <div className="grid grid-cols-1 gap-y-4 gap-x-8 text-left">
-                  <Link
-                    to="/"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    Home
-                  </Link>
-
-                  <Link
-                    to="/wardrobe"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    Wardrobe
-                  </Link>
-                  <Link
-                    to="/fitgenerator"
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                  >
-                    Fit Generator
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to="/register"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                  >
-                    Register
-                  </Link>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500">
-                    Existing user?
+                {user && (
+                  <div className="grid grid-cols-1 gap-y-4 gap-x-8 text-left">
                     <Link
-                      to="/login"
-                      className="pl-1 text-indigo-600 hover:text-indigo-500"
+                      to="/"
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
                     >
-                      Login
+                      Home
                     </Link>
-                  </p>
-                </div>
+
+                    <Link
+                      to="/wardrobe"
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
+                    >
+                      Wardrobe
+                    </Link>
+                    <Link
+                      to="/fitgenerator"
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
+                    >
+                      Fit Generator
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="text-base font-medium text-gray-900 hover:text-gray-700"
+                    >
+                      Profile
+                    </Link>
+                  </div>
+                )}
+                {user ? (
+                  <div>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem("user");
+                        navigate("/");
+                      }}
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <Link
+                      to="/register"
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+                    >
+                      Register
+                    </Link>
+                    <p className="mt-6 text-center text-base font-medium text-gray-500">
+                      Existing user?
+                      <Link
+                        to="/login"
+                        className="pl-1 text-ultramarineBlue hover:text-ultramarineBlue"
+                      >
+                        Login
+                      </Link>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </Popover.Panel>
