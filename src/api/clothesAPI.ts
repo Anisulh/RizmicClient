@@ -1,5 +1,4 @@
-
-const baseURL = "http://localhost:7000/clothes/";
+const baseURL = "http://localhost:7001/clothes/";
 
 export const getClothes = async (token: string | undefined) => {
   if (!token) return;
