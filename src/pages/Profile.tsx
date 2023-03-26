@@ -1,13 +1,7 @@
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { IUpdateProfile, updateProfileAPI } from "../api/userAPI";
 import ChangePassword from "../components/Profile/ChangePassword";
 import ProfileImageModal from "../components/Profile/ProfileImageModal";

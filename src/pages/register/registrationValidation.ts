@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IRegisterUser } from "../../interface/userInterface";
-import { IErrorNotificationParams } from "../../StatusContext";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
 
 export const registerFormValidation = (
   userData: IRegisterUser,

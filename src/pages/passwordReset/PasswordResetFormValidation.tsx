@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IErrorNotificationParams } from "../../StatusContext";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
 export interface IPasswordData {
   password: string;
   confirmPassword: string;

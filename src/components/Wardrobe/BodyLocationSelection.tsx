@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { IBodyLocations, ICreateClothingData } from "./interface";
 
 function classNames(...classes: string[]) {
@@ -58,7 +58,13 @@ export default function BodyLocationOptions() {
   );
 }
 
-export function BodyLocationChips({bodyLocation, setClothingData}: {bodyLocation: string[], setClothingData:Dispatch<SetStateAction<ICreateClothingData>>}) {
+export function BodyLocationChips({
+  bodyLocation,
+  setClothingData,
+}: {
+  bodyLocation: string[];
+  setClothingData: Dispatch<SetStateAction<ICreateClothingData>>;
+}) {
   return (
     <>
       {bodyLocation.map((location, index) => {

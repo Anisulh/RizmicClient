@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import React, {
+import {
   Dispatch,
   FormEvent,
   Fragment,
@@ -19,13 +19,13 @@ export default function ProfileImageModal({
   setOpen,
   setError,
   user,
-  refetchUserData
+  refetchUserData,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   user: IUser | null;
-  refetchUserData: () => void
+  refetchUserData: () => void;
 }) {
   const [image, setImage] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -39,7 +39,6 @@ export default function ProfileImageModal({
     setOpen(false);
   }
 
- 
   const removeImageFromUpload = () => {
     setImage(null);
     if (imageUploadRef.current) {
@@ -53,7 +52,7 @@ export default function ProfileImageModal({
       if (data.message) {
         setError({ message: data.message });
       } else {
-        refetchUserData()
+        refetchUserData();
         setOpen(false);
       }
     },
@@ -62,7 +61,7 @@ export default function ProfileImageModal({
     e.preventDefault();
     if (user && image) {
       const formData = new FormData();
-      formData.append('image', image)
+      formData.append("image", image);
       mutate({ data: formData, token: user.token });
     }
   };
@@ -118,21 +117,20 @@ export default function ProfileImageModal({
                           <p className="mb-2">Image Preview:</p>
                           <div className="flex items-center justify-center">
                             <div className="relative w-32 ">
-                            <img
-                              src={imageUrl}
-                              alt="Chosen clothing"
-                              width="100px"
-                            />{" "}
-                            <button
-                              type="button"
-                              className="absolute -top-3 right-2 text-raisinblack hover:text-red-600"
-                              onClick={removeImageFromUpload}
-                            >
-                              <XMarkIcon className="h-5 w-5 " />
-                            </button>
+                              <img
+                                src={imageUrl}
+                                alt="Chosen clothing"
+                                width="100px"
+                              />{" "}
+                              <button
+                                type="button"
+                                className="absolute -top-3 right-2 text-raisinblack hover:text-red-600"
+                                onClick={removeImageFromUpload}
+                              >
+                                <XMarkIcon className="h-5 w-5 " />
+                              </button>
+                            </div>
                           </div>
-                          </div>
-                          
                         </div>
                       )}
                       <div className="flex items-center justify-center mt-4">

@@ -1,5 +1,5 @@
 import { Dialog, Listbox, Popover, Transition } from "@headlessui/react";
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   Fragment,
@@ -21,10 +21,7 @@ import {
 import ColorPicker from "./ColorPicker";
 import InfoPopover from "./InfoPopover";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
-import {
-  IClothingData,
-  ICreateClothingData,
-} from "./interface";
+import { IClothingData, ICreateClothingData } from "./interface";
 import {
   closeModal,
   handleChange,
@@ -35,7 +32,7 @@ import {
 import BodyLocationOptions, {
   BodyLocationChips,
 } from "./BodyLocationSelection";
-import  ChevronUpDownIcon  from "@heroicons/react/20/solid/ChevronDownIcon";
+import ChevronUpDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
 
 type IColorType = "hex" | "text";
 const categories = [
@@ -49,8 +46,6 @@ const categories = [
   "skirt",
   "shorts",
 ];
-
-
 
 export default function ClothesModal({
   open,

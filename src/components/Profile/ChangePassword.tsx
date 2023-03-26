@@ -3,7 +3,7 @@ import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,

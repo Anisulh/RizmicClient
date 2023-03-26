@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
 import ClothesModal from "./ClothesModal";
 import { Menu, Transition } from "@headlessui/react";

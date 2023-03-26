@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  ChangeEvent,
-  FormEvent,
-  useState,
-} from "react";
+import { useContext, useEffect, ChangeEvent, FormEvent, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
@@ -19,7 +13,7 @@ import {
   IErrorNotificationParams,
   IStatusContext,
   StatusContext,
-} from "../../StatusContext";
+} from "../../contexts/StatusContext";
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 

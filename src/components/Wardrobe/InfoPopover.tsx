@@ -1,6 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
 import QuestionMarkCircleIcon from "@heroicons/react/20/solid/QuestionMarkCircleIcon";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function InfoPopover({
   title,

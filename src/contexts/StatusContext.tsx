@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { IStatusState } from "./pages/register/interface";
 
 export interface IErrorNotificationParams {
