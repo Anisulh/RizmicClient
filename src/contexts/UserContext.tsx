@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { getUserData } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
 
@@ -6,10 +6,10 @@ export interface IUserContext {
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   refetchUserData: () => void;
+  logout: () => void;
 }
 
 export const UserContext = createContext<IUserContext | null>(null);
-
 const getUser = () => {
   const user: string | null | undefined = localStorage.getItem("user");
   if (user && user !== undefined) {
@@ -35,10 +35,16 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   const value = {
     user,
     setUser,
     refetchUserData,
+    logout,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
