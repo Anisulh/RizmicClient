@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import AboutUs from "./pages/aboutUs/aboutUs";
 import { UserContextProvider } from "./contexts/UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { StatusContextProvider } from "./contexts/StatusContext";
@@ -29,6 +30,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/aboutus" element={<AboutUs />} />
               <Route
                 path="/passwordreset:token:id"
                 element={<PasswordReset />}
