@@ -35,12 +35,6 @@ export default function Navbar() {
             {user ? (
               <>
                 <nav className="hidden space-x-10 md:flex bg-transparent">
-                  <Link
-                    to="/"
-                    className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent"
-                  >
-                    Home
-                  </Link>
 
                   <Link
                     to="/wardrobe"
@@ -158,13 +152,6 @@ export default function Navbar() {
               <div className="space-y-6 py-6 px-5">
                 {user && (
                   <div className="grid grid-cols-1 gap-y-4 gap-x-8 text-left">
-                    <Link
-                      to="/"
-                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    >
-                      Home
-                    </Link>
-
                     <Link
                       to="/wardrobe"
                       className="text-base font-medium text-gray-900 hover:text-gray-700"
