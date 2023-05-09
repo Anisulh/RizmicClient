@@ -1,9 +1,12 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/home/home";
 import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import AboutUs from "./pages/aboutUs/aboutUs";
+import ContactUs from "./pages/contactUs";
 import { UserContextProvider } from "./contexts/UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { StatusContextProvider } from "./contexts/StatusContext";
@@ -26,9 +29,12 @@ function App() {
             <Navbar />
             <Status />
             <Routes>
+              <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/contactus" element={<ContactUs />} />
               <Route
                 path="/passwordreset:token:id"
                 element={<PasswordReset />}
