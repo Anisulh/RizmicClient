@@ -1,4 +1,3 @@
-import React from "react";
 import homeImage from "./images/RizmicHome.png";
 import { Link } from "react-router-dom";
 

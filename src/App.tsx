@@ -1,11 +1,11 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/home/home";
+import Home from "./pages/home/Home";
 import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import AboutUs from "./pages/aboutUs/aboutUs";
+import AboutUs from "./pages/aboutUs/AboutUs";
 import ContactUs from "./pages/contactUs";
 import { UserContextProvider } from "./contexts/UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";

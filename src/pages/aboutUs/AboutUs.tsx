@@ -1,4 +1,3 @@
-import React from "react";
 import anisulRizmic from "./images/anisulRizmic.jpg";
 import julfikarRizmic from "./images/julfikarRizmic.jpg";
 
