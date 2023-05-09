@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
 import { IClothingData } from "../../components/Wardrobe/interface";
 import { IUser } from "../../interface/userInterface";
-import { IErrorNotificationParams } from "../../StatusContext";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
 
 export default function GenerateFitModal({
   open,
