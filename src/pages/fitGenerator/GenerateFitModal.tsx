@@ -59,7 +59,7 @@ export default function GenerateFitModal({
                     Add Clothing Item
                   </Dialog.Title>
                   <div className="mt-2">
-                    {data &&
+                    {data?.length && data.length > 0 ?
                       data.map((item: IClothingData, index) => {
                         return (
                           <ClothingCard
@@ -70,7 +70,7 @@ export default function GenerateFitModal({
                             key={index}
                           />
                         );
-                      })}
+                      }) : <p>No clothes to choose from</p>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

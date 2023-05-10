@@ -17,6 +17,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GenerateFit from "./pages/fitGenerator/GenerateFit";
 import Profile from "./pages/Profile";
+import Footer from "./components/Footer/Footer";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ function App() {
                 }
               />
             </Routes>
+            <Footer/>
           </StatusContextProvider>
         </UserContextProvider>
       </Router>

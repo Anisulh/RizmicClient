@@ -14,7 +14,7 @@ export default function Navbar() {
   const { user } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
   return (
-    <div className="absolute top-0 w-full bg-transparent z-10">
+    <div className="absolute top-0 w-full bg-transparent z-20">
       <Popover className="relative bg-transparent">
         <div className="mx-auto max-w-7xl px-6 lg:px-4 bg-transparent ">
           <div className="flex items-center justify-between border-gray-100 my-6 md:justify-start md:space-x-10 bg-transparent">
@@ -35,7 +35,6 @@ export default function Navbar() {
             {user ? (
               <>
                 <nav className="hidden space-x-10 md:flex bg-transparent">
-
                   <Link
                     to="/wardrobe"
                     className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
@@ -108,7 +107,29 @@ export default function Navbar() {
                 </div>
               </>
             ) : (
-              <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 bg-transparent">
+            <>
+             <nav className="hidden space-x-10 md:flex bg-transparent">
+                  <a
+                    href="#features"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="#pricing"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
+                  >
+                    Pricing
+                  </a>
+                  <a
+                    href="#FAQ"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
+                  >
+                    FAQ
+                  </a>
+                  
+                </nav>
+            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 bg-transparent">
                 <Link
                   to="/login"
                   className="whitespace-nowrap text-base font-medium text-raisinblackhover:text-gray-900 bg-transparent mix-blend-difference "
@@ -122,6 +143,8 @@ export default function Navbar() {
                   Register
                 </Link>
               </div>
+            </>
+              
             )}
           </div>
         </div>
@@ -186,6 +209,29 @@ export default function Navbar() {
                   </div>
                 ) : (
                   <div>
+                    <div className="flex flex-col gap-2 mb-4">
+                    <a
+                    href="#features"
+                    className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="#pricing"
+                    className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
+                  >
+                    Pricing
+                  </a>
+                  <a
+                    href="#FAQ"
+                    className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
+                  >
+                    FAQ
+                  </a>
+                    </div>
+                  
+                  
+                
                     <Link
                       to="/register"
                       className="flex w-full items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"

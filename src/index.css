@@ -4,6 +4,7 @@
 
 html {
   background-color: #fbfaf5;
+  scroll-behavior: smooth;
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -58,4 +59,6 @@ html {
   top: 50%;
   position: absolute;
 }
-
+.content-container {
+  min-height: calc(100vh - 34px);
+}

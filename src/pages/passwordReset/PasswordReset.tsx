@@ -118,7 +118,7 @@ function PasswordReset() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex content-container">
       <div className="m-auto justify-center">
         <h1 className="font-bold text-4xl">Password Reset</h1>
         <p className="text-gray-700">

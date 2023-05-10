@@ -4,18 +4,18 @@ import julfikarRizmic from "./images/julfikarRizmic.jpg";
 export default function AboutUs() {
   return (
     <div className="bg-sWhite min-h-screen">
-      <div className="container mx-auto mt-24">
+      <div className="container mx-auto my-40">
         <div>
-          <h1 className="text-3xl font-bold text-slategrey mb-6 text-left">
+          <h1 className="text-4xl font-bold my-16 text-center">
             About Us
           </h1>
-          <div className="mx-auto">
+          <div className="mx-auto flex flex-col gap-10">
             <div className="flex">
               <div className="">
-                <h1 className="text-xl font-bold text-slategrey mb-3">
+                <h1 className="text-3xl font-bold  mb-3">
                   Our Purpose
                 </h1>
-                <p className="text-m text-raisinblack leading-relaxed">
+                <p className="text text-raisinblack leading-relaxed">
                   We believe that style is a form of self-expression, and
                   everyone should have the opportunity to showcase their
                   creativity and authenticity through their wardrobe choices. By
@@ -27,10 +27,10 @@ export default function AboutUs() {
             </div>
             <div className="flex">
               <div>
-                <h1 className="text-xl mt-4 font-bold text-slategrey mb-3">
+                <h1 className="text-3xl mt-4 font-bold  mb-3">
                   How we started
                 </h1>
-                <p className="text-m text-raisinblack leading-relaxed">
+                <p className="text text-raisinblack leading-relaxed">
                   Rizmic was born out of the shared passion of two friends who
                   wanted to revolutionize the way people approach fashion.
                   Recognizing the challenges individuals face when trying to
@@ -42,8 +42,8 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <h1 className="flex text-2xl font-bold text-slategrey py-3 mb-3 justify-center">
+        <div className="flex flex-col mt-10">
+          <h1 className="flex text-3xl font-bold  py-3 mb-3 justify-center">
             The Masterminds:
           </h1>
           <div className="flex justify-center gap-x-8">
@@ -62,7 +62,7 @@ export default function AboutUs() {
               </div>
               <div className="flex gap-2">
                 <a
-                  className="bg-blue-400 rounded-full text-sWhite p-4"
+                  className="bg-blue-400 hover:bg-pink-400 hover:text-white transition-all rounded-full text-sWhite p-4"
                   href="https://instagram.com/uber.goose"
                   target="_blank"
                   rel="noreferrer noopener"
@@ -78,7 +78,7 @@ export default function AboutUs() {
                   </svg>
                 </a>
                 <a
-                  className="bg-cambridgeblue rounded-full text-sWhite p-4"
+                  className="bg-cambridgeblue hover:bg-blue-500 transition-all rounded-full text-sWhite p-4"
                   href="https://linkedin.com/in/anisulh"
                   target="_blank"
                   rel="noreferrer noopener"
@@ -108,7 +108,7 @@ export default function AboutUs() {
               </div>
               <div className="flex gap-2">
                 <a
-                  className="bg-blue-400 rounded-full text-sWhite p-4"
+                  className="bg-blue-400 hover:bg-pink-400 hover:text-white transition-all rounded-full text-sWhite p-4"
                   href="https://instagram.com/julefikar"
                   target="_blank"
                   rel="noreferrer noopener"
@@ -124,7 +124,7 @@ export default function AboutUs() {
                   </svg>
                 </a>
                 <a
-                  className="bg-cambridgeblue rounded-full text-sWhite p-4"
+                  className="bg-cambridgeblue hover:bg-blue-500 transition-all rounded-full text-sWhite p-4"
                   href="https://linkedin.com/in/julfikarc"
                   target="_blank"
                   rel="noreferrer noopener"

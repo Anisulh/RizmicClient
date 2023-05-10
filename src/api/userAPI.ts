@@ -5,7 +5,7 @@ import {
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
-const baseURL = "http://localhost:7000/user/";
+const baseURL = "http://localhost:7001/user/";
 
 export interface IUpdateProfile {
   firstName?: string;

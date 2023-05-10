@@ -112,7 +112,7 @@ export default function Wardrobe() {
   }
 
   return (
-    <div className="flex justify-center h-screen mb-10">
+    <div className="flex justify-center content-container mb-10">
       <div className=" max-w-7xl w-full mt-24 relative">
         <div>
           {Object.keys(wardrobe).map((key) => {

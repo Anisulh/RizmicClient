@@ -80,7 +80,7 @@ function Register() {
       } else {
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
-        navigate("/");
+        navigate("/wardrobe");
       }
     },
   });
@@ -119,7 +119,7 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center content-container">
       <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
         <div className="flex items-center justify-center lg:h-screen  lg:w-5/12 z-10 rounded-3xl bg-sWhite h-fit py-10 px-8 lg:p-0">
           <div>

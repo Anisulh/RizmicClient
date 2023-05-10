@@ -74,7 +74,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="max-w-screen mb-40">
+    <div className="max-w-screen mb-40 content-container">
       <div className=" w-full h-60 bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
 
       <div className="flex flex-col max-w-7xl  mx-auto gap-10">

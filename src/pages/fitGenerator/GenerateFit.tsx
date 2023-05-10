@@ -92,7 +92,7 @@ function GenerateFit() {
   }
 
   return (
-    <div className="flex h-screen justify-center mb-10">
+    <div className="flex content-container justify-center mb-10">
       <div className="flex max-w-7xl mt-24 relative w-full md:mx-auto flex-col md:flex-row px-2">
         <div className="relative bg-sWhite rounded md:w-2/6 ">
           <h1 className=" w-full absolute text-center font-medium text-lg">
