@@ -9,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-
 import { IUserContext, UserContext } from "../../contexts/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { createClothes, updateClothes } from "../../api/clothesAPI";
@@ -33,8 +32,9 @@ import BodyLocationOptions, {
   BodyLocationChips,
 } from "./BodyLocationSelection";
 import ChevronUpDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
+import { colord } from "colord";
 
-type IColorType = "hex" | "text";
+type IColorType = "rgb" | "text";
 const categories = [
   "tshirt",
   "jacket",
@@ -92,13 +92,13 @@ export default function ClothesModal({
     }
   }, [image]);
   const [colorType, setColorType] = useState<IColorType>(
-    existingData && existingData.color.startsWith("#") ? "hex" : "text",
+    existingData && existingData.color.startsWith("rgb") ? "rgb" : "text",
   );
   const [error, setError] = useState<IErrorNotificationParams>({
     message: null,
     error: null,
   });
-
+  const previewRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
     errorNotification(error);
     return () => {
@@ -120,6 +120,22 @@ export default function ClothesModal({
       }
     },
   });
+
+  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  useEffect(() => {
+    if (isSubmiting && color.startsWith("rgb")) {
+      handleSubmit(
+        clothingData,
+        user,
+        setError,
+        setOpen,
+        mutate,
+        refetch,
+        existingData && existingData,
+      );
+      setIsSubmiting(false);
+    }
+  }, [color, isSubmiting]);
 
   return (
     <>
@@ -166,15 +182,16 @@ export default function ClothesModal({
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
-                        handleSubmit(
-                          clothingData,
-                          user,
-                          setError,
-                          setOpen,
-                          mutate,
-                          refetch,
-                          existingData && existingData,
-                        );
+                        setIsSubmiting(true);
+                        if (colorType === "text" && previewRef.current) {
+                          const computedColor = window.getComputedStyle(
+                            previewRef?.current,
+                          ).backgroundColor;
+                          setClothingData((prevState) => ({
+                            ...prevState,
+                            color: computedColor,
+                          }));
+                        }
                       }}
                     >
                       <div className="flex items-center mt-6">
@@ -250,16 +267,12 @@ export default function ClothesModal({
                             value={color}
                             className="shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:outline-none focus:ring-1 focus:ring-ultra  rounded-lg block w-full  text-raisinblack pl-20 pr-4 py-2 text-sm placeholder-gray-600"
                             placeholder={
-                              colorType === "hex"
-                                ? "Please enter hex code"
+                              colorType === "rgb"
+                                ? "Please enter rgb code"
                                 : "Enter color name "
                             }
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                              setColor(
-                                e.target.value,
-                                colorType,
-                                setClothingData,
-                              )
+                              setColor(e.target.value, setClothingData)
                             }
                           />
                           <div className="absolute inset-y-0 left-0 flex items-center">
@@ -272,12 +285,12 @@ export default function ClothesModal({
                               value={colorType}
                               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                                 setColorType(
-                                  e.target.value === "hex" ? "hex" : "text",
+                                  e.target.value === "rgb" ? "rgb" : "text",
                                 )
                               }
                             >
                               <option value="text">Text</option>
-                              <option value="hex">HEX</option>
+                              <option value="rgb">RGB</option>
                             </select>
                           </div>
                         </div>
@@ -286,11 +299,12 @@ export default function ClothesModal({
                           {({ open }) => (
                             <>
                               <Popover.Button
+                                ref={previewRef}
                                 className={`
                 ${open ? "" : "text-opacity-90"}
                    hover:text-opacity-100 focus:outline-none h-9 mt-1 w-9 shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:ring-1 focus:ring-ultra  rounded-md hover:border-ultramarineBlue`}
                                 style={{ backgroundColor: color }}
-                                onClick={() => setColorType("hex")}
+                                onClick={() => setColorType("rgb")}
                               ></Popover.Button>
                               <Transition
                                 as={Fragment}
@@ -305,8 +319,11 @@ export default function ClothesModal({
                                   <div className="bg-sWhite p-5 rounded-md shadow-lg">
                                     <ColorPicker
                                       color={color}
-                                      colorType={colorType}
-                                      onChange={setColor}
+                                      onChange={(data: string): void => {
+                                        const rgbString =
+                                          colord(data).toRgbString();
+                                        setColor(rgbString, setClothingData);
+                                      }}
                                     />
                                   </div>
                                 </Popover.Panel>
