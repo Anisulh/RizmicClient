@@ -1,9 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  RefObject,
-  SetStateAction,
-} from "react";
+import { ChangeEvent, Dispatch, RefObject, SetStateAction } from "react";
 import { IUser } from "../../interface/userInterface";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import {
@@ -56,19 +51,11 @@ export const removeImageFromUpload = (
 
 export const setColor = (
   color: string,
-  colorType: string,
   setClothingData: Dispatch<SetStateAction<ICreateClothingData>>,
 ): void => {
-  let newColor = color;
-  if (colorType === "hex" && !newColor.startsWith("#")) {
-    newColor = `#${color}`;
-  }
-  if (colorType === "text" && newColor.startsWith("#")) {
-    newColor = color.slice(1);
-  }
   setClothingData((prevState) => ({
     ...prevState,
-    color: newColor,
+    color,
   }));
 };
 
@@ -77,6 +64,7 @@ export const handleSubmit = (
   user: IUser | null,
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
+
   mutate: (arg0: { data: FormData; token: string }) => void,
   refetch?: () => void,
   existingData?: IClothingData,
