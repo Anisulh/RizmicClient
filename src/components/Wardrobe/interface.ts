@@ -33,3 +33,27 @@ export interface IBodyLocations {
   upperBody: string;
   lowerBody: string;
 }
+
+export interface IWardrobe {
+  tshirt: IClothingData[];
+  jacket: IClothingData[];
+  sweater: IClothingData[];
+  top: IClothingData[];
+  shirt: IClothingData[];
+  dress: IClothingData[];
+  pants: IClothingData[];
+  skirt: IClothingData[];
+  shorts: IClothingData[];
+}
+
+export interface IShowCategory {
+  tshirt: boolean;
+  jacket: boolean;
+  sweater: boolean;
+  top: boolean;
+  shirt: boolean;
+  dress: boolean;
+  pants: boolean;
+  skirt: boolean;
+  shorts: boolean;
+}
