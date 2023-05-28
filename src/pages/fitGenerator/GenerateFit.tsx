@@ -7,10 +7,12 @@ import {
   StatusContext,
 } from "../../contexts/StatusContext";
 import { IClothingData } from "../../components/Wardrobe/interface";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/Spinner";
 import { IUserContext, UserContext } from "../../contexts/UserContext";
+import { generateBlank } from "../../api/generationAPI";
+import ClothingCard from "../../components/Wardrobe/ClothingCard";
 
 export interface IBodyParts {
   head: IClothingData[];
@@ -21,6 +23,9 @@ export interface IBodyParts {
 
 function GenerateFit() {
   const [showModal, setShowModal] = useState(false);
+  const [style, setStyle] = useState<"monochrome" | "complimentary" | null>(
+    null,
+  );
   const { user } = useContext(UserContext) as IUserContext;
   const { errorNotification, resetStatus } = useContext(
     StatusContext,
@@ -35,6 +40,7 @@ function GenerateFit() {
     bottom: [],
     shoes: [],
   });
+  const [generatedFits, setGeneratedFits] = useState<IClothingData[][]>([]);
   const [modalData, setModalData] = useState<IClothingData[] | null>(null);
   useEffect(() => {
     errorNotification(error);
@@ -45,7 +51,7 @@ function GenerateFit() {
   }, [error]);
 
   const { head, top, bottom, shoes } = wardrobe;
-  const { isLoading, refetch } = useQuery({
+  const { isLoading: queryIsLoading, refetch } = useQuery({
     queryKey: ["wardrobe"],
     queryFn: async () => {
       const response = await getClothes(user?.token);
@@ -53,46 +59,70 @@ function GenerateFit() {
       if (data?.message) {
         setError({ message: data?.message });
       } else {
+        const temp: IBodyParts = {
+          head: [],
+          top: [],
+          bottom: [],
+          shoes: [],
+        };
         data.map((item: IClothingData) => {
           const bodyLocationsArray = item.bodyLocation;
           bodyLocationsArray.map((locations: string) => {
             if (locations === "upperBody") {
-              setWardrobe((prevState) => ({
-                ...prevState,
-                top: [...top, item],
-              }));
+              temp.top.push(item);
             } else if (locations === "lowerBody") {
-              setWardrobe((prevState) => ({
-                ...prevState,
-                bottom: [...bottom, item],
-              }));
+              temp.bottom.push(item);
             } else if (locations === "head") {
-              setWardrobe((prevState) => ({
-                ...prevState,
-                head: [...head, item],
-              }));
+              temp.head.push(item);
             } else if (locations === "feet") {
-              setWardrobe((prevState) => ({
-                ...prevState,
-                shoes: [...shoes, item],
-              }));
+              temp.shoes.push(item);
             } else {
               return;
             }
           });
         });
+        setWardrobe(temp);
         return data;
       }
     },
     refetchOnWindowFocus: false,
   });
+  const { mutate, isLoading: mutationIsLoading } = useMutation({
+    mutationFn: async ({
+      body,
+      token,
+    }: {
+      body: { style: string };
+      token: string;
+    }) => {
+      return await generateBlank(body, token);
+    },
+    onSuccess(data) {
+      data.fits.map((fit: string[]) => {
+        const fits: IClothingData[] = [];
+        fit.map((item) => {
+          const top = wardrobe.top.find((clothes) => {
+            return clothes._id === item;
+          });
+          const bottom = wardrobe.bottom.find((clothes) => {
+            return clothes._id === item;
+          });
+          top && fits.push(top);
+          bottom && fits.push(bottom);
+        });
+        setGeneratedFits((prevState) => {
+          return [...prevState, fits];
+        });
+      });
+    },
+  });
 
-  if (isLoading) {
+  if (queryIsLoading) {
     return <Spinner />;
   }
 
   return (
-    <div className="flex content-container justify-center mb-10">
+    <div className="mb-10">
       <div className="flex max-w-7xl mt-24 relative w-full md:mx-auto flex-col md:flex-row px-2">
         <div className="relative bg-sWhite rounded md:w-2/6 ">
           <h1 className=" w-full absolute text-center font-medium text-lg">
@@ -153,7 +183,10 @@ function GenerateFit() {
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className={`${
+                  style === "monochrome" && "bg-cambridgeblue"
+                }border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4`}
+                onClick={() => setStyle("monochrome")}
               >
                 Monochrome
               </button>
@@ -165,7 +198,10 @@ function GenerateFit() {
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className={`${
+                  style === "complimentary" && "bg-cambridgeblue"
+                }border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4`}
+                onClick={() => setStyle("complimentary")}
               >
                 Complimentary
               </button>
@@ -210,6 +246,11 @@ function GenerateFit() {
             <button
               type="button"
               className="flex justify-center items-center border rounded-md bg-ultramarineBlue transition-all hover:bg-blue-700 text-white py-2 px-4"
+              onClick={() =>
+                style &&
+                user?.token &&
+                mutate({ body: { style }, token: user.token })
+              }
             >
               Generate
             </button>
@@ -243,6 +284,22 @@ function GenerateFit() {
             </div>
           </div>
         </div>
+      </div>{" "}
+      {mutationIsLoading && <Spinner />}
+      <div className="flex gap-10 items-center justify-center mt-10">
+        {generatedFits.map((fit) => {
+          return fit.map((item: IClothingData) => {
+            return (
+              <ClothingCard
+                key={item._id}
+                item={item}
+                token={user?.token}
+                setError={setError}
+                refetch={refetch}
+              />
+            );
+          });
+        })}
       </div>
       <GenerateFitModal
         open={showModal}
