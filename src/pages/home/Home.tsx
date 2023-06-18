@@ -61,6 +61,7 @@ const premiumFeatures = [
   "Unlimited Outfit Generation",
   "Advanced Style Insights",
   "Priority Support",
+  "No Ads",
 ];
 const faq = [
   {
@@ -84,12 +85,6 @@ const faq = [
   {
     show: false,
     question: "Do you offer a free trial for the Premium Plan?",
-    answer:
-      "Our algorithm analyzes your wardrobe, personal style preferences, and the latest fashion trends to create stylish and unique outfit combinations that suit your taste.",
-  },
-  {
-    show: false,
-    question: "How does Rizmic generate outfits",
     answer:
       "Yes, we offer a 3-day free trial for our Premium Plan, allowing you to explore all the advanced features and benefits without any obligation.",
   },
@@ -198,8 +193,8 @@ export default function Home() {
                     </p>
                     <p className="mt-6 text-lg leading-8 text-gray-600">
                       Discover new outfit combinations and save your favorites
-                      with our outfit generator that&apos;s tailored to your unique
-                      style.
+                      with our outfit generator that&apos;s tailored to your
+                      unique style.
                     </p>
                     <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                       {outfitGeneratorFeatures.map((feature) => (
@@ -230,8 +225,8 @@ export default function Home() {
         </section>
 
         <section id="pricing" className="pricing">
-        <h2 className="text-4xl font-bold  mb-8">Pricing</h2>
-          <div className=" py-24 sm:py-32">
+          <h2 className="text-4xl font-bold  mb-8">Pricing</h2>
+          <div className=" py-24 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -293,7 +288,7 @@ export default function Home() {
                     Premium Plan
                   </h3>
                   <p className="mt-6 text-base leading-7 text-gray-600">
-                    Basic plan not enough? Uprade to premium to get unlimited
+                    Basic plan not enough? Upgrade to premium to get unlimited
                     access to all our features and priority support
                   </p>
                   <div className="mt-10 flex items-center gap-x-4">
@@ -322,14 +317,14 @@ export default function Home() {
                       </p>
                       <p className="mt-6 flex items-baseline justify-center gap-x-2">
                         <span className="text-5xl font-bold tracking-tight text-gray-900">
-                          $10
+                          $7.99
                         </span>
                         <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                           USD
                         </span>
                       </p>
                       <a
-                        href="#fsdf"
+                        href="/pricing"
                         className="mt-10 block w-full rounded-md bg-ultramarineBlue px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
                       >
                         Upgrade Now
@@ -357,7 +352,6 @@ export default function Home() {
           ))}
         </section>
       </main>
-     
     </div>
   );
 }
