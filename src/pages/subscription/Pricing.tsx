@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
 
 interface MessageProps {
   message: string;
