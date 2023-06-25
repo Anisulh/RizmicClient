@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
 interface MessageProps {
   message: string;
@@ -64,7 +65,9 @@ const ProductDisplay = () => (
                   type="submit"
                   className="bg-ultramarineBlue hover:bg-blue-600 text-sWhite font-semibold py-2 px-4 rounded"
                 >
-                  Checkout
+                  <a href="https://buy.stripe.com/28oaGsdb3ajHapGdQQ">
+                    Checkout
+                  </a>
                 </button>
               </form>
             </td>
@@ -94,7 +97,9 @@ const ProductDisplay = () => (
                   type="submit"
                   className="bg-ultramarineBlue hover:bg-blue-600 text-sWhite font-semibold py-2 px-4 rounded"
                 >
-                  Checkout
+                  <a href="https://buy.stripe.com/00gg0M2wp77v7duaEF">
+                    Checkout
+                  </a>
                 </button>
               </form>
             </td>
