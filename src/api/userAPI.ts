@@ -5,7 +5,7 @@ import {
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
-const baseURL = "http://localhost:7001/user/";
+const baseURL = "/user/";
 
 export interface IUpdateProfile {
   firstName?: string;
@@ -109,11 +109,11 @@ export const updateProfileAPI = async (
     const response = await fetch(url, options);
     return response.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
-export const getUserData = async (token:string) => {
+export const getUserData = async (token: string) => {
   try {
     const url = new URL(baseURL + "getUser");
     const options: RequestInit = {
@@ -124,12 +124,11 @@ export const getUserData = async (token:string) => {
       },
     };
     const response = await fetch(url, options);
-    return response
+    return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
-
 
 export const changePasswordAPI = async (
   passwordData: IChangePasswordData,
@@ -148,14 +147,11 @@ export const changePasswordAPI = async (
     const response = await fetch(url, options);
     return response.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
-export const updateProfileImageAPI = async (
-  image: FormData,
-  token: string,
-) => {
+export const updateProfileImageAPI = async (image: FormData, token: string) => {
   try {
     const url = new URL(baseURL + "updateProfileImage");
     const options: RequestInit = {
@@ -168,6 +164,6 @@ export const updateProfileImageAPI = async (
     const response = await fetch(url, options);
     return response.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:7001/clothes/";
+const baseURL = "/clothes/";
 
 export const getClothes = async (token: string | undefined) => {
   if (!token) return;
@@ -10,8 +10,12 @@ export const getClothes = async (token: string | undefined) => {
     },
   };
 
-  const response = await fetch(baseURL, options);
-  return response;
+  try {
+    const response = await fetch(baseURL, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const createClothes = async (clothesData: FormData, token: string) => {
@@ -23,8 +27,12 @@ export const createClothes = async (clothesData: FormData, token: string) => {
     body: clothesData,
   };
 
-  const response = await fetch(baseURL, options);
-  return response.json();
+  try {
+    const response = await fetch(baseURL, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const updateClothes = async (

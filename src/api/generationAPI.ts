@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:7001/generation/";
+const baseURL = "/generation/";
 
 export const generateBlank = async (
   body: { style: string },

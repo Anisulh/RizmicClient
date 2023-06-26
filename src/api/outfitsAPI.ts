@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:7001/outfits/";
+const baseURL = "/outfits/";
 
 export const getOutfits = async (token: string | undefined) => {
   const options = {
@@ -8,9 +8,12 @@ export const getOutfits = async (token: string | undefined) => {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await fetch(baseURL, options);
-  return response;
+  try {
+    const response = await fetch(baseURL, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const createOutfits = async (outfitsData: FormData, token: string) => {
@@ -22,9 +25,12 @@ export const createOutfits = async (outfitsData: FormData, token: string) => {
     body: outfitsData,
   };
 
-  const response = await fetch(baseURL, options);
-  console.log('returned')
-  return response.json();
+  try {
+    const response = await fetch(baseURL, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const updateOutfits = async (
@@ -41,8 +47,12 @@ export const updateOutfits = async (
     body: clothingData,
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 export const getFavoriteOutfits = async (token: string) => {
   const url = new URL("favorite/", baseURL);
@@ -54,8 +64,12 @@ export const getFavoriteOutfits = async (token: string) => {
     },
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const favoriteOutfits = async (outfitsId: string, token: string) => {
@@ -68,8 +82,12 @@ export const favoriteOutfits = async (outfitsId: string, token: string) => {
     },
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 export const unfavoriteOutfits = async (outfitsId: string, token: string) => {
   const url = new URL(outfitsId, baseURL + "unfavorite/");
@@ -81,8 +99,12 @@ export const unfavoriteOutfits = async (outfitsId: string, token: string) => {
     },
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
 
 export const deleteOutfits = async (outfitsId: string, token: string) => {
@@ -95,6 +117,10 @@ export const deleteOutfits = async (outfitsId: string, token: string) => {
     },
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    return response.json();
+  } catch (error) {
+    return error;
+  }
 };
