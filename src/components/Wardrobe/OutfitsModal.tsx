@@ -68,9 +68,8 @@ function OutfitsModal({
           favorited: false,
         },
   );
-  const { name, coverImg, clothes, favorited } = outfitData;
+  const { name, coverImg, favorited } = outfitData;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [openClothesModal, setOpenClothesModal] = useState<boolean>(false);
   const imageUploadRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (coverImg && coverImg instanceof Blob) {
