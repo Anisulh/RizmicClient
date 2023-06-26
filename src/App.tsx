@@ -1,11 +1,8 @@
-import React, { useContext, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
-  useNavigate,
 } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Navbar from "./components/Navbar";
@@ -13,7 +10,6 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import AboutUs from "./pages/aboutUs/AboutUs";
 import ContactUs from "./pages/contactUs";
-import { IUserContext, UserContext } from "./contexts/UserContext";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { StatusContextProvider } from "./contexts/StatusContext";
 import Status from "./components/Status";
@@ -29,13 +25,7 @@ import Pricing from "./pages/subscription/Pricing";
 const queryClient = new QueryClient();
 
 function App() {
-  const navigate = useNavigate();
-  const { user } = useContext(UserContext) as IUserContext;
-  useEffect(() => {
-    if (user?.token && location.pathname === "/") {
-      navigate("/wardrobe");
-    }
-  }, [location.pathname, navigate, user?.token]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router>

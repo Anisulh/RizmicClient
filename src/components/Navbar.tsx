@@ -1,6 +1,5 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
-import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IUserContext, UserContext } from "../contexts/UserContext";
@@ -15,6 +14,11 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  useEffect(() => {
+    if (user?.token && isHomePage) {
+      navigate("/wardrobe");
+    }
+  }, [isHomePage, navigate, user?.token]);
 
   return (
     <div className="absolute top-0 w-full bg-transparent z-20">
