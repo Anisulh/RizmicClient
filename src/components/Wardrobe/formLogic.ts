@@ -9,27 +9,27 @@ import {
 
 export const handleChange = (
   { currentTarget }: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  setClothingData: Dispatch<SetStateAction<ICreateClothingData>>,
+  setData: Dispatch<SetStateAction<any>>,
 ): void => {
   if (currentTarget instanceof HTMLInputElement) {
     if (currentTarget.type === "checkbox") {
-      setClothingData((prevState) => ({
+      setData((prevState: any) => ({
         ...prevState,
         [currentTarget.id]: currentTarget.checked,
       }));
     } else if (currentTarget.files) {
-      setClothingData((prevState) => ({
+      setData((prevState: any) => ({
         ...prevState,
         [currentTarget.id]: currentTarget.files && currentTarget.files[0],
       }));
     } else {
-      setClothingData((prevState) => ({
+      setData((prevState: any) => ({
         ...prevState,
         [currentTarget.id]: currentTarget.value,
       }));
     }
   } else if (currentTarget instanceof HTMLSelectElement) {
-    setClothingData((prevState) => ({
+    setData((prevState: any) => ({
       ...prevState,
       [currentTarget.id]: currentTarget.value,
     }));
@@ -37,10 +37,10 @@ export const handleChange = (
 };
 
 export const removeImageFromUpload = (
-  setClothingData: Dispatch<SetStateAction<ICreateClothingData>>,
+  setData: Dispatch<SetStateAction<any>>,
   imageUploadRef: RefObject<HTMLInputElement>,
 ) => {
-  setClothingData((prevState) => ({
+  setData((prevState: any) => ({
     ...prevState,
     image: null,
   }));
