@@ -5,27 +5,26 @@ import {
 } from "@heroicons/react/20/solid";
 import ClothesModal from "./ClothesModal";
 import Spinner from "../Spinner";
-import { useContext, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getClothes } from "../../api/clothesAPI";
 import { IClothingData, IShowCategory, IWardrobe } from "./interface";
 import ClothingCard from "./ClothingCard";
-import { IUserContext, UserContext } from "../../contexts/UserContext";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { IUser } from "../../interface/userInterface";
+import { IErrorNotificationParams } from "../../contexts/StatusContext";
 
-function ClothesSection() {
-  const { user } = useContext(UserContext) as IUserContext;
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
+
+function ClothesSection({
+  clothes,
+  refetch,
+  isLoading,
+  user,
+  setError
+}: {
+  clothes: IClothingData[];
+  refetch: () => void;
+  isLoading: boolean;
+  user: IUser|null;
+  setError: Dispatch<SetStateAction<IErrorNotificationParams>>
+}) {
   const [wardrobe, setWardrobe] = useState<IWardrobe>({
     tshirt: [],
     jacket: [],
@@ -37,14 +36,17 @@ function ClothesSection() {
     skirt: [],
     shorts: [],
   });
-
   useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+    Object.keys(wardrobe).map((wardrobeCategory) => {
+      const clothesMatchingCategory = clothes.filter(
+        (item: IClothingData) => item.category === wardrobeCategory,
+      );
+      setWardrobe((prevState) => ({
+        ...prevState,
+        [wardrobeCategory]: [...clothesMatchingCategory],
+      }));
+    });
+  }, [clothes]);
 
   const [show, setShow] = useState<IShowCategory>({
     tshirt: false,
@@ -56,28 +58,6 @@ function ClothesSection() {
     pants: false,
     skirt: false,
     shorts: false,
-  });
-  const { isLoading, refetch } = useQuery({
-    queryKey: ["wardrobe"],
-    queryFn: async () => {
-      const response = await getClothes(user?.token);
-      const data = await response?.json();
-      if (data?.message) {
-        setError({ message: data?.message });
-      } else {
-        Object.keys(wardrobe).map((wardrobeCategory) => {
-          const clothesMatchingCategory = data.filter(
-            (item: IClothingData) => item.category === wardrobeCategory,
-          );
-          setWardrobe((prevState) => ({
-            ...prevState,
-            [wardrobeCategory]: [...clothesMatchingCategory],
-          }));
-        });
-        return data;
-      }
-    },
-    refetchOnWindowFocus: false,
   });
 
   const [clothesModalOpen, setClothesModalOpen] = useState(false);
@@ -139,7 +119,7 @@ function ClothesSection() {
       </div>
       <div className="absolute right-20 xl:right-10 bottom-24">
         <button className="fixed" onClick={() => setClothesModalOpen(true)}>
-          <PlusIcon className="h-12 w-12 bg-cambridgeblue rounded-full p-3" />
+          <PlusIcon className="h-12 w-12 bg-ultramarineBlue text-white hover:bg-cambridgeblue hover:text-black rounded-full p-3 transition-all" />
         </button>
       </div>
       <ClothesModal open={clothesModalOpen} setOpen={setClothesModalOpen} />
