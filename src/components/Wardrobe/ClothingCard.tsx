@@ -6,6 +6,12 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteClothes } from "../../api/clothesAPI";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { IClothingData } from "./interface";
+import {
+  DeleteActiveIcon,
+  DeleteInactiveIcon,
+  EditActiveIcon,
+  EditInactiveIcon,
+} from "../Icons";
 
 export default function ClothingCard({
   item,
@@ -16,7 +22,7 @@ export default function ClothingCard({
   item: IClothingData;
   token: string | undefined;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
-  refetch: () => void;
+  refetch?: () => void;
 }) {
   const { variant, color, image, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
@@ -31,7 +37,7 @@ export default function ClothingCard({
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
-      } else if (data.id) {
+      } else if (data.id && refetch) {
         refetch();
       }
     },
@@ -150,94 +156,5 @@ export default function ClothingCard({
         refetch={refetch}
       />
     </>
-  );
-}
-function EditInactiveIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>,
-) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#B7D1C1"
-        stroke="#446DF6"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function EditActiveIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>,
-) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function DeleteInactiveIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>,
-) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#B7D1C1"
-        stroke="#446DF6"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#446DF6" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#446DF6" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteActiveIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>,
-) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
-    </svg>
   );
 }
