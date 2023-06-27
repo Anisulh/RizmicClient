@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
-  const { user } = useContext(UserContext) as IUserContext;
+  const { user, logout } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -95,8 +95,8 @@ export default function Navbar() {
                             <div className="w-full flex justify-center py-2">
                               <button
                                 onClick={() => {
-                                  localStorage.removeItem("user");
-                                  navigate("/");
+                                  logout();
+                                  navigate("/login");
                                 }}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -162,8 +162,6 @@ export default function Navbar() {
             )}
           </div>
         </div>
-
-        {/* Rest of the code remains the same */}
       </Popover>
     </div>
   );
