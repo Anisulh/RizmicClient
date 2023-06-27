@@ -1,4 +1,4 @@
-const baseURL = "/generation/";
+const baseURL = `${import.meta.env.VITE_BASE_URL}/generation/`;
 
 export const generateBlank = async (
   body: { style: string },

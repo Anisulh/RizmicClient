@@ -1,4 +1,4 @@
-const baseURL = "/outfits/";
+const baseURL = `${import.meta.env.VITE_BASE_URL}/outfits/`;
 
 export const getOutfits = async (token: string | undefined) => {
   const options = {

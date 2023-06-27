@@ -5,7 +5,7 @@ import {
   IRegisterAPIParams,
 } from "../interface/userInterface";
 
-const baseURL = "/user/";
+const baseURL = `${import.meta.env.VITE_BASE_URL}/user/`;
 
 export interface IUpdateProfile {
   firstName?: string;
