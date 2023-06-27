@@ -44,8 +44,7 @@ function OutiftSection({
   const { isLoading, refetch } = useQuery({
     queryKey: ["outfits"],
     queryFn: async () => {
-      const response = await getOutfits(user?.token);
-      const data = await response?.json();
+      const data = await getOutfits(user?.token);
       if (data?.message) {
         setError({ message: data?.message });
       } else {

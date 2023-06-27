@@ -54,8 +54,7 @@ function GenerateFit() {
   const { isLoading: queryIsLoading, refetch } = useQuery({
     queryKey: ["wardrobe"],
     queryFn: async () => {
-      const response = await getClothes(user?.token);
-      const data = await response?.json();
+      const data = await getClothes(user?.token);
       if (data?.message) {
         setError({ message: data?.message });
       } else {
