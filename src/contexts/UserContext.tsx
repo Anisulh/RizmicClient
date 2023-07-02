@@ -24,7 +24,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const refetchUserData = async () => {
     if (user) {
       const token = user.token;
-      const response = await getUserData(token);
+      const response:any = await getUserData(token);
       if (response?.ok) {
         const data = await response.json();
         setUser({ ...data, token });
