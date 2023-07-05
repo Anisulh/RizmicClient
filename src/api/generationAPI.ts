@@ -1,17 +1,13 @@
 const baseURL = `${import.meta.env.VITE_BASE_URL}/generation/`;
 
-export const generateBlank = async (
-  body: { style: string },
-  token: string | undefined,
-) => {
+export const generateBlank = async (body: { style: string }) => {
   try {
-    if (!token) return;
-    const options = {
+    const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
       body: JSON.stringify(body),
     };
 
