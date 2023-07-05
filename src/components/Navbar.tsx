@@ -10,15 +10,12 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
-  const { user, logout } = useContext(UserContext) as IUserContext;
+  const { user, logout } = useContext(
+    UserContext,
+  ) as IUserContext;
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  useEffect(() => {
-    if (user?.token && isHomePage) {
-      navigate("/wardrobe");
-    }
-  }, [isHomePage, navigate, user?.token]);
 
   return (
     <div className="absolute top-0 w-full bg-transparent z-20">
