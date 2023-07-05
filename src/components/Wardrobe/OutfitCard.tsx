@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { IClothingData } from "./interface";
 import OutfitsModal from "./OutfitsModal";
@@ -17,7 +17,6 @@ import {
   EditInactiveIcon,
 } from "../Icons";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { IUser } from "../../interface/userInterface";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
 export interface IOutfitData {
   _id: string;
@@ -32,30 +31,21 @@ export interface IOutfitData {
 
 function OutfitCard({
   item,
-  token,
   setError,
   refetch,
-  user,
   clothingItems,
 }: {
   item: IOutfitData;
-  token: string | undefined;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch: () => void;
-  user: IUser | null;
   clothingItems: IClothingData[];
 }) {
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
   const { coverImg, clothes, favorited, name, _id } = item;
   const { mutate: deleteMutation } = useMutation({
-    mutationFn: async ({
-      outfitID,
-      userToken,
-    }: {
-      outfitID: string;
-      userToken: string;
-    }) => await deleteOutfits(outfitID, userToken),
+    mutationFn: async ({ outfitID }: { outfitID: string }) =>
+      await deleteOutfits(outfitID),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
@@ -68,17 +58,12 @@ function OutfitCard({
     mutationFn: async ({
       outfitID,
       favorite,
-      userToken,
     }: {
       outfitID: string;
       favorite: boolean;
-      userToken: string;
     }) =>
-      favorite
-        ? await unfavoriteOutfits(outfitID, userToken)
-        : favoriteOutfits(outfitID, userToken),
+      favorite ? await unfavoriteOutfits(outfitID) : favoriteOutfits(outfitID),
     onSuccess(data) {
-      console.log(data);
       if (data.message) {
         setError({ message: data.message });
       } else if (data.outfit) {
@@ -87,14 +72,13 @@ function OutfitCard({
     },
   });
   const handleDelete = () => {
-    if (token && _id) {
-      console.log(_id);
-      deleteMutation({ outfitID: _id, userToken: token });
+    if (_id) {
+      deleteMutation({ outfitID: _id });
     }
   };
   const handleFavoriting = (favorite: boolean) => {
-    if (token && _id) {
-      favoriteMutation({ outfitID: _id, favorite, userToken: token });
+    if (_id) {
+      favoriteMutation({ outfitID: _id, favorite });
     }
   };
   return (
@@ -257,7 +241,6 @@ function OutfitCard({
         name={item.name}
         clothes={item.clothes}
         refetch={refetch}
-        user={user}
       />
       <OutfitsModal
         open={editMenuOpen}
@@ -265,7 +248,6 @@ function OutfitCard({
         setOpen={setEditMenuOpen}
         existingData={item}
         refetch={refetch}
-        user={user}
         clothingItems={clothingItems}
       />
     </>

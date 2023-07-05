@@ -2,21 +2,18 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
 import { IClothingData } from "../../components/Wardrobe/interface";
-import { IUser } from "../../interface/userInterface";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 
 export default function GenerateFitModal({
   open,
   setOpen,
   data,
-  user,
   setError,
   refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   data: IClothingData[] | null;
-  user: IUser | null;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch: () => void;
 }) {
@@ -66,7 +63,6 @@ export default function GenerateFitModal({
                             item={item}
                             refetch={refetch}
                             setError={setError}
-                            token={user?.token}
                             key={index}
                           />
                         );

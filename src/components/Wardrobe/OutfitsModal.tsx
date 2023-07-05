@@ -20,7 +20,6 @@ import {
   ChevronUpDownIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import { IUser } from "../../interface/userInterface";
 import ClothingCard from "./ClothingCard";
 export interface ICreateOutfitData {
   coverImg: Blob | null;
@@ -40,14 +39,12 @@ function OutfitsModal({
   setOpen,
   setError,
   existingData = undefined,
-  user,
   clothingItems = [],
   refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
-  user: IUser | null;
   existingData?: IOutfitData | undefined;
   clothingItems?: IClothingData[];
   refetch: () => void;
@@ -76,18 +73,18 @@ function OutfitsModal({
       setImageUrl(URL.createObjectURL(coverImg));
     }
   }, [coverImg]);
-  const isLoading = true
-  const { mutate,  } = useMutation({
-    mutationFn: async ({ data, token }: { data: FormData; token: string }) =>
+  const isLoading = true;
+  const { mutate } = useMutation({
+    mutationFn: async ({ data }: { data: FormData }) =>
       existingData && existingData._id
-        ? await updateOutfits(existingData._id, data, token)
-        : await createOutfits(data, token),
+        ? await updateOutfits(existingData._id, data)
+        : await createOutfits(data),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
       } else {
         setOpen(false);
-        refetch()
+        refetch();
       }
     },
   });
@@ -95,7 +92,7 @@ function OutfitsModal({
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (existingData && user) {
+    if (existingData) {
       const tempExistingData: IUpdateOutfitData = {
         coverImg: existingData.coverImg || undefined,
         name: existingData.name,
@@ -133,13 +130,13 @@ function OutfitsModal({
               const element = outfitClothes[index];
               formData.append("clothes[]", element._id as string);
             }
-          } else if(changedData[key] !== 'null') {
+          } else if (changedData[key] !== "null") {
             formData.append(String(key), changedData[key] as string | Blob);
           }
         });
-        mutate({ data: formData, token: user.token });
+        mutate({ data: formData });
       }
-    } else if (user) {
+    } else {
       if (!outfitClothes || outfitClothes.length < 1) {
         setError({ error: "Please fill in all fields" });
         return;
@@ -161,7 +158,7 @@ function OutfitsModal({
           );
         }
       });
-      mutate({ data: formData, token: user.token });
+      mutate({ data: formData });
     }
   };
 
@@ -321,9 +318,6 @@ function OutfitsModal({
                                                                 }
                                                                 setError={
                                                                   setError
-                                                                }
-                                                                token={
-                                                                  user?.token
                                                                 }
                                                               />
                                                               {selected ? (

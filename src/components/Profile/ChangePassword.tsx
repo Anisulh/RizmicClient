@@ -12,7 +12,6 @@ import {
 } from "react";
 import { changePasswordAPI } from "../../api/userAPI";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
-import { IUser } from "../../interface/userInterface";
 
 export interface IChangePasswordData {
   currentPassword: string;
@@ -21,21 +20,13 @@ export interface IChangePasswordData {
 }
 
 export default function ChangePassword({
-  user,
   setError,
 }: {
-  user: IUser | null;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
 }) {
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({
-      data,
-      token,
-    }: {
-      data: IChangePasswordData;
-      token: string;
-    }) => {
-      return changePasswordAPI(data, token);
+    mutationFn: ({ data }: { data: IChangePasswordData }) => {
+      return changePasswordAPI(data);
     },
   });
   const [changePassword, setChangePassword] = useState<boolean>(false);
@@ -63,8 +54,8 @@ export default function ChangePassword({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (user && newPassword === confirmPassword) {
-      mutate({ data: changePasswordData, token: user.token });
+    if (newPassword === confirmPassword) {
+      mutate({ data: changePasswordData });
     } else {
       setError({
         message: "Ensure the New Password and Confirm Password are the same",

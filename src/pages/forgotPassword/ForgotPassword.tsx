@@ -32,7 +32,6 @@ function ForgotPassword() {
         setError({
           message: `If your email was registered, you will receive an email to reset password.`,
         });
-        console.log(data.message);
       } else {
         navigate("/login");
       }

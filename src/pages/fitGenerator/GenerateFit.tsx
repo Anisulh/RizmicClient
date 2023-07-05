@@ -10,7 +10,6 @@ import { IClothingData } from "../../components/Wardrobe/interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/Spinner";
-import { IUserContext, UserContext } from "../../contexts/UserContext";
 import { generateBlank } from "../../api/generationAPI";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
 
@@ -26,7 +25,6 @@ function GenerateFit() {
   const [style, setStyle] = useState<"monochrome" | "complimentary" | null>(
     null,
   );
-  const { user } = useContext(UserContext) as IUserContext;
   const { errorNotification, resetStatus } = useContext(
     StatusContext,
   ) as IStatusContext;
@@ -54,7 +52,7 @@ function GenerateFit() {
   const { isLoading: queryIsLoading, refetch } = useQuery({
     queryKey: ["wardrobe"],
     queryFn: async () => {
-      const data = await getClothes(user?.token);
+      const data = await getClothes();
       if (data?.message) {
         setError({ message: data?.message });
       } else {
@@ -87,14 +85,8 @@ function GenerateFit() {
     refetchOnWindowFocus: false,
   });
   const { mutate, isLoading: mutationIsLoading } = useMutation({
-    mutationFn: async ({
-      body,
-      token,
-    }: {
-      body: { style: string };
-      token: string;
-    }) => {
-      return await generateBlank(body, token);
+    mutationFn: async ({ body }: { body: { style: string } }) => {
+      return await generateBlank(body);
     },
     onSuccess(data) {
       data.fits.map((fit: string[]) => {
@@ -245,11 +237,7 @@ function GenerateFit() {
             <button
               type="button"
               className="flex justify-center items-center border rounded-md bg-ultramarineBlue transition-all hover:bg-blue-700 text-white py-2 px-4"
-              onClick={() =>
-                style &&
-                user?.token &&
-                mutate({ body: { style }, token: user.token })
-              }
+              onClick={() => style && mutate({ body: { style } })}
             >
               Generate
             </button>
@@ -292,7 +280,6 @@ function GenerateFit() {
               <ClothingCard
                 key={item._id}
                 item={item}
-                token={user?.token}
                 setError={setError}
                 refetch={refetch}
               />
@@ -306,7 +293,6 @@ function GenerateFit() {
         data={modalData}
         setError={setError}
         refetch={refetch}
-        user={user}
       />
     </div>
   );

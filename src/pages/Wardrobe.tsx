@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import ClothesSection from "../components/Wardrobe/ClothesSection";
 import OutiftSection from "../components/Wardrobe/OutiftSection";
-import { IUserContext, UserContext } from "../contexts/UserContext";
-import { IErrorNotificationParams, IStatusContext, StatusContext } from "../contexts/StatusContext";
+import {
+  IErrorNotificationParams,
+  IStatusContext,
+  StatusContext,
+} from "../contexts/StatusContext";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
 import { IClothingData } from "../components/Wardrobe/interface";
 
 export default function Wardrobe() {
-  const { user } = useContext(UserContext) as IUserContext;
   const { errorNotification, resetStatus } = useContext(
     StatusContext,
   ) as IStatusContext;
@@ -21,12 +23,12 @@ export default function Wardrobe() {
   const { isLoading, refetch } = useQuery({
     queryKey: ["clothes"],
     queryFn: async () => {
-      const data = await getClothes(user?.token);
+      const data = await getClothes();
       if (data?.message) {
         setError({ message: data?.message });
       } else {
-        setClothes(data)
-        return data
+        setClothes(data);
+        return data;
       }
     },
     refetchOnWindowFocus: false,
@@ -76,7 +78,16 @@ export default function Wardrobe() {
             </button>
           </li>
         </ul>
-        {openTab === 1 ? <ClothesSection clothes={clothes} user={user} isLoading = {isLoading} refetch={refetch} setError={setError} /> : <OutiftSection user={user} setError={setError} clothes={clothes} />}
+        {openTab === 1 ? (
+          <ClothesSection
+            clothes={clothes}
+            isLoading={isLoading}
+            refetch={refetch}
+            setError={setError}
+          />
+        ) : (
+          <OutiftSection setError={setError} clothes={clothes} />
+        )}
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/20/solid";
 import OutfitsModal from "./OutfitsModal";
 import OutfitCard, { IOutfitData } from "./OutfitCard";
-import { IUser } from "../../interface/userInterface";
 import { IClothingData } from "./interface";
 
 interface IOutfitsSections {
@@ -23,11 +22,9 @@ interface IOutfitsShow {
 }
 
 function OutiftSection({
-  user,
   setError,
   clothes,
 }: {
-  user: IUser | null;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   clothes: IClothingData[];
 }) {
@@ -44,7 +41,7 @@ function OutiftSection({
   const { isLoading, refetch } = useQuery({
     queryKey: ["outfits"],
     queryFn: async () => {
-      const data = await getOutfits(user?.token);
+      const data = await getOutfits();
       if (data?.message) {
         setError({ message: data?.message });
       } else {
@@ -111,16 +108,14 @@ function OutiftSection({
             {show[key as keyof IOutfitsShow] && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
                 {(outfits[key as keyof IOutfitsSections] as []).map(
-                  (item: IOutfitData, index) => {
+                  (item: IOutfitData) => {
                     return (
                       <OutfitCard
                         clothingItems={clothes}
                         item={item}
                         refetch={refetch}
                         setError={setError}
-                        token={user?.token}
                         key={item._id}
-                        user={user}
                       />
                     );
                   },
@@ -140,7 +135,6 @@ function OutiftSection({
         setError={setError}
         open={clothesModalOpen}
         setOpen={setClothesModalOpen}
-        user={user}
         refetch={refetch}
       />
     </>
