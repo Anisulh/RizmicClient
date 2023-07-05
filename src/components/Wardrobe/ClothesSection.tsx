@@ -8,7 +8,6 @@ import Spinner from "../Spinner";
 import { IClothingData, IShowCategory, IWardrobe } from "./interface";
 import ClothingCard from "./ClothingCard";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IUser } from "../../interface/userInterface";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 
 
@@ -16,13 +15,11 @@ function ClothesSection({
   clothes,
   refetch,
   isLoading,
-  user,
   setError
 }: {
   clothes: IClothingData[];
   refetch: () => void;
   isLoading: boolean;
-  user: IUser|null;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>
 }) {
   const [wardrobe, setWardrobe] = useState<IWardrobe>({
@@ -105,7 +102,6 @@ function ClothesSection({
                           item={item}
                           refetch={refetch}
                           setError={setError}
-                          token={user?.token}
                           key={index}
                         />
                       );

@@ -41,8 +41,7 @@ export default function Profile() {
   }, [error]);
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: ({ data, token }: { data: IUpdateProfile; token: string }) =>
-      updateProfileAPI(data, token),
+    mutationFn: ({ data }: { data: IUpdateProfile }) => updateProfileAPI(data),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
@@ -61,10 +60,7 @@ export default function Profile() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (user?.token) {
-      mutate({ data: profileData, token: user?.token });
-    }
-
+    mutate({ data: profileData });
     setProfileData({
       firstName: user?.firstName,
       lastName: user?.lastName,
@@ -252,7 +248,7 @@ export default function Profile() {
                 )}
               </div>
             </div>
-            <ChangePassword user={user} setError={setError} />
+            <ChangePassword setError={setError} />
           </div>
         </div>
       </div>
@@ -260,7 +256,6 @@ export default function Profile() {
         open={showProfileImageModal}
         setOpen={setShowProfileImageModal}
         setError={setError}
-        user={user}
         refetchUserData={refetchUserData}
       />
     </div>

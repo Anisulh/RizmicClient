@@ -1,12 +1,12 @@
 const baseURL = `${import.meta.env.VITE_BASE_URL}/outfits/`;
 
-export const getOutfits = async (token: string | undefined) => {
-  const options = {
+export const getOutfits = async () => {
+  const options: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
   try {
     const response = await fetch(baseURL, options);
@@ -16,12 +16,11 @@ export const getOutfits = async (token: string | undefined) => {
   }
 };
 
-export const createOutfits = async (outfitsData: FormData, token: string) => {
-  const options = {
+export const createOutfits = async (outfitsData: FormData) => {
+  const options: RequestInit = {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: {},
+    credentials: "include",
     body: outfitsData,
   };
 
@@ -36,14 +35,12 @@ export const createOutfits = async (outfitsData: FormData, token: string) => {
 export const updateOutfits = async (
   outfitsId: string,
   clothingData: FormData,
-  token: string,
 ) => {
   const url = new URL(outfitsId, baseURL);
-  const options = {
+  const options: RequestInit = {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: {},
+    credentials: "include",
     body: clothingData,
   };
 
@@ -54,14 +51,14 @@ export const updateOutfits = async (
     return error;
   }
 };
-export const getFavoriteOutfits = async (token: string) => {
+export const getFavoriteOutfits = async () => {
   const url = new URL("favorite/", baseURL);
-  const options = {
+  const options: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   try {
@@ -72,14 +69,14 @@ export const getFavoriteOutfits = async (token: string) => {
   }
 };
 
-export const favoriteOutfits = async (outfitsId: string, token: string) => {
+export const favoriteOutfits = async (outfitsId: string) => {
   const url = new URL(outfitsId, baseURL + "favorite/");
-  const options = {
+  const options: RequestInit = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   try {
@@ -89,14 +86,14 @@ export const favoriteOutfits = async (outfitsId: string, token: string) => {
     return error;
   }
 };
-export const unfavoriteOutfits = async (outfitsId: string, token: string) => {
+export const unfavoriteOutfits = async (outfitsId: string) => {
   const url = new URL(outfitsId, baseURL + "unfavorite/");
-  const options = {
+  const options: RequestInit = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   try {
@@ -107,14 +104,14 @@ export const unfavoriteOutfits = async (outfitsId: string, token: string) => {
   }
 };
 
-export const deleteOutfits = async (outfitsId: string, token: string) => {
+export const deleteOutfits = async (outfitsId: string) => {
   const url = new URL(outfitsId, baseURL);
-  const options = {
+  const options: RequestInit = {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   try {

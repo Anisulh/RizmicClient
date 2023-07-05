@@ -24,6 +24,7 @@ export const registerAPI = async ({
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(userData),
       }
     : credential
@@ -33,8 +34,9 @@ export const registerAPI = async ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${credential}`,
         },
+        credentials: "include",
       }
-    : { method: "POST" };
+    : { method: "POST", credentials: "include" };
   const response = await fetch(url, options);
   return response.json();
 };
@@ -46,6 +48,7 @@ export const forgotPasswordAPI = async (email: string) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ email }),
   };
   const response = await fetch(url, options);
@@ -63,6 +66,7 @@ export const resetPasswordAPI = async (
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ userId: id, token: token, password: passwordData }),
   };
   const response = await fetch(url, options);
@@ -77,6 +81,7 @@ export const loginAPI = async ({ userData, credential }: ILoginAPIParams) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(userData),
       }
     : credential
@@ -86,24 +91,22 @@ export const loginAPI = async ({ userData, credential }: ILoginAPIParams) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${credential}`,
         },
+        credentials: "include",
       }
-    : { method: "POST" };
+    : { method: "POST", credentials: "include" };
   const response = await fetch(url, options);
   return response.json();
 };
 
-export const updateProfileAPI = async (
-  profileData: IUpdateProfile,
-  token: string,
-) => {
+export const updateProfileAPI = async (profileData: IUpdateProfile) => {
   try {
     const url = new URL(baseURL + "updateProfile");
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
       body: JSON.stringify(profileData),
     };
     const response = await fetch(url, options);
@@ -113,35 +116,32 @@ export const updateProfileAPI = async (
   }
 };
 
-export const getUserData = async (token: string) => {
+export const getUserData = async () => {
   try {
     const url = new URL(baseURL + "getUser");
     const options: RequestInit = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
     };
     const response = await fetch(url, options);
-    return response;
+    return response.json();
   } catch (error) {
     return error;
   }
 };
 
-export const changePasswordAPI = async (
-  passwordData: IChangePasswordData,
-  token: string,
-) => {
+export const changePasswordAPI = async (passwordData: IChangePasswordData) => {
   try {
     const url = new URL(baseURL + "changePassword");
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
+      credentials: "include",
       body: JSON.stringify(passwordData),
     };
     const response = await fetch(url, options);
@@ -151,14 +151,12 @@ export const changePasswordAPI = async (
   }
 };
 
-export const updateProfileImageAPI = async (image: FormData, token: string) => {
+export const updateProfileImageAPI = async (image: FormData) => {
   try {
     const url = new URL(baseURL + "updateProfileImage");
     const options: RequestInit = {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      credentials: "include",
       body: image,
     };
     const response = await fetch(url, options);

@@ -7,6 +7,7 @@ export interface IUserContext {
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   refetchUserData: () => void;
   logout: () => void;
+  validateToken: () => Promise<boolean>;
 }
 
 export const UserContext = createContext<IUserContext | null>(null);
@@ -23,18 +24,31 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
   const refetchUserData = async () => {
     if (user) {
-      const token = user.token;
-      const response:any = await getUserData(token);
-      if (response?.ok) {
+      const response = await getUserData();
+      if (response.status === 200) {
         const data = await response.json();
-        setUser({ ...data, token });
+        setUser(data);
         localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify({ ...data, token }));
+        localStorage.setItem("user", JSON.stringify(data));
         return;
       }
     }
   };
-
+  const validateToken = async (): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/user/validate`,
+        { credentials: "include" },
+      );
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  };
   const logout = () => {
     localStorage.removeItem("user");
     setUser(null);
@@ -45,6 +59,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     setUser,
     refetchUserData,
     logout,
+    validateToken,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

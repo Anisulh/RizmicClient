@@ -1,8 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "./ClothingCard";
 import { IClothingData } from "./interface";
-import { IUser } from "../../interface/userInterface";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
@@ -11,7 +10,6 @@ export default function ExpandOutfitsModal({
   setOpen,
   name = "Outfit",
   clothes = [],
-  user,
   setError,
   refetch,
 }: {
@@ -19,7 +17,6 @@ export default function ExpandOutfitsModal({
   setOpen: Dispatch<SetStateAction<boolean>>;
   name: string | undefined;
   clothes: IClothingData[];
-  user: IUser | null;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch?: () => void;
 }) {
@@ -78,7 +75,6 @@ export default function ExpandOutfitsModal({
                             item={item}
                             refetch={refetch}
                             setError={setError}
-                            token={user?.token}
                           />
                         );
                       })

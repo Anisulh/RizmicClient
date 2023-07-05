@@ -12,19 +12,16 @@ import {
 } from "react";
 import { updateProfileImageAPI } from "../../api/userAPI";
 import { IErrorNotificationParams } from "../../contexts/StatusContext";
-import { IUser } from "../../interface/userInterface";
 
 export default function ProfileImageModal({
   open,
   setOpen,
   setError,
-  user,
   refetchUserData,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
-  user: IUser | null;
   refetchUserData: () => void;
 }) {
   const [image, setImage] = useState<Blob | null>(null);
@@ -46,8 +43,8 @@ export default function ProfileImageModal({
     }
   };
   const { mutate, isLoading } = useMutation({
-    mutationFn: async ({ data, token }: { data: FormData; token: string }) =>
-      updateProfileImageAPI(data, token),
+    mutationFn: async ({ data }: { data: FormData }) =>
+      updateProfileImageAPI(data),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
@@ -59,10 +56,10 @@ export default function ProfileImageModal({
   });
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (user && image) {
+    if (image) {
       const formData = new FormData();
       formData.append("image", image);
-      mutate({ data: formData, token: user.token });
+      mutate({ data: formData });
     }
   };
 

@@ -1,13 +1,12 @@
 const baseURL = `${import.meta.env.VITE_BASE_URL}/clothes/`;
 
-export const getClothes = async (token: string | undefined) => {
-  if (!token) return;
-  const options = {
+export const getClothes = async () => {
+  const options: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   try {
@@ -18,12 +17,11 @@ export const getClothes = async (token: string | undefined) => {
   }
 };
 
-export const createClothes = async (clothesData: FormData, token: string) => {
-  const options = {
+export const createClothes = async (clothesData: FormData) => {
+  const options: RequestInit = {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: {},
+    credentials: "include",
     body: clothesData,
   };
 
@@ -38,14 +36,12 @@ export const createClothes = async (clothesData: FormData, token: string) => {
 export const updateClothes = async (
   clothesId: string,
   clothingData: FormData,
-  token: string,
 ) => {
   const url = new URL(clothesId, baseURL);
-  const options = {
+  const options: RequestInit = {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: {},
+    credentials: "include",
     body: clothingData,
   };
 
@@ -53,14 +49,14 @@ export const updateClothes = async (
   return response.json();
 };
 
-export const deleteClothes = async (clothesId: string, token: string) => {
+export const deleteClothes = async (clothesId: string) => {
   const url = new URL(clothesId, baseURL);
-  const options = {
+  const options: RequestInit = {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
+    credentials: "include",
   };
 
   const response = await fetch(url, options);

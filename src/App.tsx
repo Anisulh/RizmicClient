@@ -69,7 +69,7 @@ function App() {
           <Footer />
         </StatusContextProvider>
       </Router>
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

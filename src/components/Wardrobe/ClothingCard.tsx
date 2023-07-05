@@ -15,12 +15,10 @@ import {
 
 export default function ClothingCard({
   item,
-  token,
   setError,
   refetch,
 }: {
   item: IClothingData;
-  token: string | undefined;
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch?: () => void;
 }) {
@@ -28,12 +26,10 @@ export default function ClothingCard({
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
     mutationFn: async ({
-      clothingID,
-      userToken,
+      clothingID
     }: {
       clothingID: string;
-      userToken: string;
-    }) => await deleteClothes(clothingID, userToken),
+    }) => await deleteClothes(clothingID),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
@@ -43,8 +39,8 @@ export default function ClothingCard({
     },
   });
   const handleDelete = () => {
-    if (token && _id) {
-      mutate({ clothingID: _id, userToken: token });
+    if ( _id) {
+      mutate({ clothingID: _id });
     }
   };
 
