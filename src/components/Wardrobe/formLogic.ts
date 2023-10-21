@@ -65,7 +65,7 @@ export const handleSubmit = (
   setError: Dispatch<SetStateAction<IErrorNotificationParams>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
 
-  mutate: (arg0: { data: FormData; token: string }) => void,
+  mutate: (data: FormData) => void,
   refetch?: () => void,
   existingData?: IClothingData,
 ): void => {
@@ -118,7 +118,7 @@ export const handleSubmit = (
           formData.append(String(key), changedData[key] as string | Blob);
         }
       });
-      mutate({ data: formData, token: user.token });
+      mutate(formData);
       refetch && refetch();
     }
   } else if (user) {
@@ -140,7 +140,7 @@ export const handleSubmit = (
       }
     });
 
-    mutate({ data: formData, token: user.token });
+    mutate(formData);
   }
 };
 

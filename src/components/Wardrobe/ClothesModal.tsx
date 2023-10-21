@@ -108,10 +108,10 @@ export default function ClothesModal({
   }, [error]);
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: async ({ data, token }: { data: FormData; token: string }) =>
+    mutationFn: async (data: FormData) =>
       existingData && existingData._id
-        ? await updateClothes(existingData._id, data, token)
-        : await createClothes(data, token),
+        ? await updateClothes(existingData._id, data)
+        : await createClothes(data),
     onSuccess(data) {
       if (data.message) {
         setError({ message: data.message });
