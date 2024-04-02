@@ -38,7 +38,7 @@ export default function InfoPopover({
             show={isShowing}
           >
             <Popover.Panel className="absolute left-full  z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-              <div className="overflow-hidden bg-sWhite rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="p-4">
                   <div className=" px-2 py-2 ">
                     <h6 className="text-sm font-medium text-gray-900">

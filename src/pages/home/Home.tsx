@@ -92,53 +92,36 @@ const faq = [
 export default function Home() {
   const navigate = useNavigate();
   return (
-    <div className="content-container bg-sWhite">
-      <main className="container mx-auto px-4">
-        <section className="text-center mt-24 flex justify-center items-center py-20">
-          <div className="hero-text py-20 flex flex-col items-center justify-center ">
-            <h1 className="text-4xl font-bold  mb-2">
-              Your Personal Wardrobe Manager & Outfit Generator
+    <div className="content-container max-w-7xl mx-auto bg-white">
+      <main className="container mx-auto px-4 ">
+        <section className="text-center mt-24 flex justify-center items-center py-28">
+          <div className="hero-text py-20 flex flex-col items-center justify-center gap-10">
+            <div>
+              <h1 className="text-5xl font-bold  mb-4">
+              Your Personal Wardrobe Manager
             </h1>
-            <p className="text-lg text-slategrey max-w-3xl">
+            <p className="text-xl text-slategrey max-w-4xl">
               Revolutionize the way you dress with our intuitive app that keeps
               your wardrobe organized and generates stylish outfits tailored to
               your taste.
             </p>
+            </div>
+            
             <button
-              className="border px-4 py-2 rounded-lg bg-ultramarineBlue text-white text-lg mt-10 shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
+              className="border px-6 py-3 font-bold rounded-xl bg-ultramarineBlue text-white text-xl mt-10 shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
               onClick={() => navigate("/register")}
             >
               Get Started
             </button>
           </div>
-          {/* <img src={homeImage} alt="Rizmic App on Phone" className="w-screen "/> */}
+         
         </section>
 
         <section id="features" className="py-24">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Features
           </h2>
-          {/* <div className="feature">
-            <h3>Wardrobe Manager</h3>
-            <p>
-              Easily catalog your wardrobe, track your most-worn items, and stay
-              organized with our intuitive wardrobe manager.
-            </p>
-          </div>
-          <div className="feature">
-            <h3>Outfit Generator</h3>
-            <p>
-              Discover new outfit combinations and save your favorites with our
-              AI-powered outfit generator that's tailored to your unique style.
-            </p>
-          </div>
-          <div className="feature">
-            <h3>Style Insights</h3>
-            <p>
-              Get personalized style insights and recommendations based on your
-              wardrobe and fashion preferences.
-            </p>
-          </div> */}
+          
           <div className="overflow-hidden py-20">
             <div className=" px-6 lg:px-8">
               <div className="flex items-center justify-center ">
@@ -147,10 +130,10 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Shop more, think less
                     </h2>
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                       Virtual Wardrobe
                     </p>
-                    <p className="mt-6 text-lg leading-8 text-gray-600">
+                    <p className="mt-6 text-xl leading-8 text-gray-600">
                       Easily catalog your wardrobe, track your most-worn items,
                       and stay organized with our intuitive wardrobe manager.
                     </p>
@@ -170,13 +153,7 @@ export default function Home() {
                     </dl>
                   </div>
                 </div>
-                {/* <img
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
-            alt="Product screenshot"
-            className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          /> */}
+              
               </div>
             </div>
           </div>
@@ -188,10 +165,10 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Style more, think less
                     </h2>
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                       Outfit Generator
                     </p>
-                    <p className="mt-6 text-lg leading-8 text-gray-600">
+                    <p className="mt-6 text-xl leading-8 text-gray-600">
                       Discover new outfit combinations and save your favorites
                       with our outfit generator that&apos;s tailored to your
                       unique style.
@@ -212,32 +189,26 @@ export default function Home() {
                     </dl>
                   </div>
                 </div>
-                {/* <img
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
-            alt="Product screenshot"
-            className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          /> */}
+           
               </div>
             </div>
           </div>
         </section>
 
-        <section id="pricing" className="pricing">
+        <section id="pricing" className="py-24">
           <h2 className="text-4xl font-bold  mb-8">Pricing</h2>
           <div className=" py-24 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                   Simple no-tricks pricing
                 </h2>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
+                <p className="mt-6 text-xl leading-8 text-gray-600">
                   We believe in being completely transparent with our users so
                   we provided straight forward pricing plan with no hidden fees.
                 </p>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="mx-auto mt-16 max-w-2xl rounded-4xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
                   <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                     Basic Plan
@@ -282,7 +253,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="mx-auto mt-16 max-w-2xl rounded-4xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
                   <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                     Premium Plan
@@ -341,10 +312,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="FAQ" className="faq mb-24">
+        <section id="FAQ" className=" mb-48">
           <h2 className="text-4xl font-bold  mb-8">FAQ</h2>
           {faq.map((section, i) => (
-            <div key={i} className="mb-4 pl-10">
+            <div key={i} className="mb-4 pl-10 max-w-5xl mx-auto">
               <h3 className="text-xl font-bold mb-2">{section.question}</h3>
 
               <p className="text-slategrey ">{section.answer}</p>
