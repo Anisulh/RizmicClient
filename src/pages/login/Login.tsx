@@ -8,7 +8,7 @@ import {
 } from "react";
 import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
-import loginImage from "./images/login_page.jpg";
+import loginImage from "../../assets/login_page.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "../register/interface";
 
@@ -103,25 +103,27 @@ function Login() {
   };
 
   function handleForgotPasswordClick() {
-    navigate("/forgotpassword");
+    navigate("/forgot-password");
   }
 
   return (
-    <div className="flex items-center content-container">
-      <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
-        <div className="flex items-center justify-center lg:h-screen  lg:w-5/12 z-10 rounded-3xl bg-sWhite h-fit py-10 px-8 lg:p-0 ">
+    <div className="flex items-center content-container min-h-screen overflow-auto">
+      <div className="z-10 flex items-center justify-center min-h-screen h-max w-full lg:block">
+        <div className="flex items-center justify-center h-screen md:h-fit lg:min-h-screen lg:h-max lg:w-5/12 z-10 md:rounded-3xl bg-white py-10 px-8 lg:p-0 ">
           <div>
-            <h1 className="font-bold text-4xl">Welcome back!</h1>
-            <p className="text-slategrey ">
+            <h1 className="font-bold text-3xl lg:text-5xl tracking-wide">
+              Welcome back!
+            </h1>
+            <p className="text-slategrey lg:text-lg">
               Login to find a fresh new fit or manage your wardrobe
             </p>
-            <form className="px-14" onSubmit={handleSubmit}>
+            <form className="lg:px-10 py-2 lg:py-5" onSubmit={handleSubmit}>
               <input
                 type="email"
                 name="email"
                 placeholder="Email"
                 onChange={handleChange}
-                className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-6 py-2 px-3 placeholder-raisinblack"
+                className="border-2 border-gray-200 rounded-lg block w-full  text-raisinblack my-2 lg:my-6  py-2 px-4 placeholder-raisinblack"
               />
 
               <div className="flex items-center relative">
@@ -130,7 +132,7 @@ function Login() {
                   name="password"
                   placeholder="Password"
                   onChange={handleChange}
-                  className="border border-gray-100 rounded-lg block w-full bg-ourGrey text-raisinblack my-1 py-2 px-3 placeholder-raisinblack"
+                  className="border-2 border-gray-200 rounded-lg block w-full  text-raisinblack my-1 py-2 px-4 placeholder-raisinblack"
                 />
                 <button
                   type="button"
@@ -148,7 +150,7 @@ function Login() {
                 <button
                   onClick={handleForgotPasswordClick}
                   type="button"
-                  className="font-medium text-xs text-ultramarineBlue"
+                  className="font-medium text-sm lg:text-base text-ultramarineBlue"
                 >
                   Forgot Password?
                 </button>
@@ -156,7 +158,7 @@ function Login() {
 
               <button
                 type="submit"
-                className="mt-6 border border-gray-100 rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
+                className="mt-6 border border-gray-100 rounded-md text-raisinblack px-4 py-2 font-medium w-full lg:text-lg bg-cambridgeblue"
               >
                 {isLoading ? (
                   <span className="flex justify-center items-center bg-transparent">
@@ -173,23 +175,21 @@ function Login() {
                 )}
               </button>
             </form>
-            <div className="flex items-center justify-center gap-1 py-4 text-sm">
+            <div className="flex items-center text-base justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
               <Link to="/register" className="font-medium text-ultramarineBlue">
                 Register
               </Link>
             </div>
-            <p className="text-center horizontalLines my-4">
-              Or, login with...
-            </p>
+            <p className="text-center text-base my-4">Or, login with...</p>
             <div className="mt-6 w-fit mx-auto">
               <div ref={googleButton}></div>
             </div>
           </div>
-        </div>{" "}
+        </div>
       </div>
       <img
-        className="object-cover w-full lg:w-8/12 h-screen absolute right-0"
+        className="hidden md:block object-cover w-full lg:w-8/12 h-screen absolute right-0"
         src={loginImage}
         alt="Room with clothes near window"
       />

@@ -22,7 +22,7 @@ export default function ContactUs() {
           import.meta.env.VITE_SERVICE_ID,
           import.meta.env.VITE_TEMPLATE_ID,
           form.current,
-          import.meta.env.VITE_PUBLIC_KEY
+          import.meta.env.VITE_PUBLIC_KEY,
         );
         alert("Success! I will be in contact with you soon.");
         console.log(result);
@@ -30,12 +30,12 @@ export default function ContactUs() {
         alert("Oh no, something went wrong!");
         console.log(error);
       }
-    }else {
-      console.log('invalid email')
+    } else {
+      console.log("invalid email");
     }
   };
   return (
-    <section className="bg-sWhite mt-24 content-container">
+    <section className="bg-white mt-24 content-container">
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center ">
           Contact Us
@@ -45,10 +45,7 @@ export default function ContactUs() {
         </p>
         <form ref={form} onSubmit={onFormSubmit} className="space-y-8">
           <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium"
-            >
+            <label htmlFor="email" className="block mb-2 text-sm font-medium">
               Your email
             </label>
             <input
@@ -56,7 +53,7 @@ export default function ContactUs() {
               id="email"
               name="user_email"
               value={email}
-              onChange={(e)=> setEmail(e.target.value) }
+              onChange={(e) => setEmail(e.target.value)}
               className="shadow-sm bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-ultrabg-ultramarineBlue focus:border-ultrabg-ultramarineBlue block w-full p-2.5 "
               required
             />
@@ -76,10 +73,7 @@ export default function ContactUs() {
             />
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block mb-2 text-sm font-medium"
-            >
+            <label htmlFor="message" className="block mb-2 text-sm font-medium">
               Your message
             </label>
             <textarea

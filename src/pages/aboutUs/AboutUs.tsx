@@ -1,20 +1,16 @@
-import anisulRizmic from "./images/anisulRizmic.jpg";
-import julfikarRizmic from "./images/julfikarRizmic.jpg";
+import anisulRizmic from "../../assets/anisulRizmic.webp";
+import julfikarRizmic from "../../assets/julfikarRizmic.webp";
 
 export default function AboutUs() {
   return (
-    <div className="bg-sWhite min-h-screen">
+    <div className="bg-white min-h-screen">
       <div className="container mx-auto my-40">
         <div>
-          <h1 className="text-4xl font-bold my-16 text-center">
-            About Us
-          </h1>
+          <h1 className="text-4xl font-bold my-16 text-center">About Us</h1>
           <div className="mx-auto flex flex-col gap-10">
             <div className="flex">
               <div className="">
-                <h1 className="text-3xl font-bold  mb-3">
-                  Our Purpose
-                </h1>
+                <h1 className="text-3xl font-bold  mb-3">Our Purpose</h1>
                 <p className="text text-raisinblack leading-relaxed">
                   We believe that style is a form of self-expression, and
                   everyone should have the opportunity to showcase their

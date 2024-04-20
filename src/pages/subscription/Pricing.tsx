@@ -5,7 +5,7 @@ interface MessageProps {
 }
 
 const ProductDisplay = () => (
-  <section className="flex justify-center items-center min-h-screen bg-sWhite">
+  <section className="flex justify-center items-center min-h-screen bg-white">
     <div className="container mx-auto">
       <div className="mx-auto">
         <h2 className="text-xl sm:text-center font-bold tracking-tight text-raisinblack sm:text-2xl">
