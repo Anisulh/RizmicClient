@@ -4,19 +4,13 @@ import {
   Dispatch,
   Fragment,
   SetStateAction,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { IUserContext, UserContext } from "../../contexts/UserContext";
+import { useAuth } from "../../contexts/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { createClothes, updateClothes } from "../../api/clothesAPI";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
 import ColorPicker from "./ColorPicker";
 import InfoPopover from "./InfoPopover";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
@@ -33,6 +27,7 @@ import BodyLocationOptions, {
 } from "./BodyLocationSelection";
 import ChevronUpDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
 import { colord } from "colord";
+import { useToast } from "../../contexts/ToastContext";
 
 type IColorType = "rgb" | "text";
 const categories = [
@@ -58,11 +53,8 @@ export default function ClothesModal({
   existingData?: IClothingData | undefined;
   refetch?: () => void;
 }) {
-  const { user } = useContext(UserContext) as IUserContext;
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-
+  const { addToast } = useToast();
+  const { user } = useAuth();
   const [clothingData, setClothingData] = useState<ICreateClothingData>(
     existingData
       ? {
@@ -86,6 +78,8 @@ export default function ClothesModal({
     clothingData;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const imageUploadRef = useRef<HTMLInputElement>(null);
+  const previewRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     if (image && image instanceof Blob) {
       setImageUrl(URL.createObjectURL(image));
@@ -94,18 +88,6 @@ export default function ClothesModal({
   const [colorType, setColorType] = useState<IColorType>(
     existingData && existingData.color.startsWith("rgb") ? "rgb" : "text",
   );
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
-  const previewRef = useRef<HTMLButtonElement | null>(null);
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: FormData) =>
@@ -114,7 +96,11 @@ export default function ClothesModal({
         : await createClothes(data),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         setOpen(false);
       }
@@ -127,7 +113,6 @@ export default function ClothesModal({
       handleSubmit(
         clothingData,
         user,
-        setError,
         setOpen,
         mutate,
         refetch,

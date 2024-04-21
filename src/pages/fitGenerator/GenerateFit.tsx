@@ -1,17 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import GenerateFitModal from "./GenerateFitModal";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
 import { IClothingData } from "../../components/Wardrobe/interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/Spinner";
 import { generateBlank } from "../../api/generationAPI";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
+import { useToast } from "../../contexts/ToastContext";
 
 export interface IBodyParts {
   head: IClothingData[];
@@ -21,17 +17,11 @@ export interface IBodyParts {
 }
 
 function GenerateFit() {
+  const { addToast } = useToast();
   const [showModal, setShowModal] = useState(false);
   const [style, setStyle] = useState<"monochrome" | "complimentary" | null>(
     null,
   );
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
   const [wardrobe, setWardrobe] = useState<IBodyParts>({
     head: [],
     top: [],
@@ -40,13 +30,6 @@ function GenerateFit() {
   });
   const [generatedFits, setGeneratedFits] = useState<IClothingData[][]>([]);
   const [modalData, setModalData] = useState<IClothingData[] | null>(null);
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   const { head, top, bottom, shoes } = wardrobe;
   const { isLoading: queryIsLoading, refetch } = useQuery({
@@ -54,7 +37,11 @@ function GenerateFit() {
     queryFn: async () => {
       const data = await getClothes();
       if (data?.message) {
-        setError({ message: data?.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data?.message,
+          type: "error",
+        });
       } else {
         const temp: IBodyParts = {
           head: [],
@@ -126,7 +113,7 @@ function GenerateFit() {
                 setModalData(head);
               }}
               type="button"
-              className="flex border border-gray-300 bg-ourGrey transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
+              className="flex border-gray-300 border-2 transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
             >
               <PlusIcon className="h-12 w-12 rounded-full p-3" />
             </button>
@@ -136,7 +123,7 @@ function GenerateFit() {
                 setModalData(top);
               }}
               type="button"
-              className="flex border border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56 rounded-xl"
+              className="flex border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56 rounded-xl"
             >
               <PlusIcon className="h-12 w-12 rounded-full p-3" />
             </button>
@@ -146,7 +133,7 @@ function GenerateFit() {
                 setModalData(bottom);
               }}
               type="button"
-              className="flex border border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56  rounded-xl"
+              className="flex border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56  rounded-xl"
             >
               <PlusIcon className="h-12 w-12 rounded-full p-3" />
             </button>
@@ -156,7 +143,7 @@ function GenerateFit() {
                 setModalData(shoes);
               }}
               type="button"
-              className="flex border border-gray-300 bg-ourGrey transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
+              className="flex border-gray-300 border-2 transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
             >
               <PlusIcon className="h-12 w-12 rounded-full p-3" />
             </button>
@@ -168,7 +155,7 @@ function GenerateFit() {
             <div className="flex justify-center gap-2  md:gap-4 mt-8">
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Neutral
               </button>
@@ -176,14 +163,14 @@ function GenerateFit() {
                 type="button"
                 className={`${
                   style === "monochrome" && "bg-cambridgeblue"
-                }border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4`}
+                }rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4`}
                 onClick={() => setStyle("monochrome")}
               >
                 Monochrome
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Earth-tones
               </button>
@@ -191,7 +178,7 @@ function GenerateFit() {
                 type="button"
                 className={`${
                   style === "complimentary" && "bg-cambridgeblue"
-                }border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4`}
+                }rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4`}
                 onClick={() => setStyle("complimentary")}
               >
                 Complimentary
@@ -203,31 +190,31 @@ function GenerateFit() {
             <div className="flex justify-center gap-4  md:gap-4 mt-8">
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue  py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue  py-2 px-4"
               >
                 Cozy
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Warm
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Cool
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Professional
               </button>
               <button
                 type="button"
-                className="border rounded-md bg-ourGrey transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
               >
                 Relaxed
               </button>
@@ -236,14 +223,14 @@ function GenerateFit() {
           <div className="flex justify-center items-center py-8">
             <button
               type="button"
-              className="flex justify-center items-center border rounded-md bg-ultramarineBlue transition-all hover:bg-blue-700 text-white py-2 px-4"
+              className="flex justify-center items-center rounded-md bg-ultramarineBlue transition-all hover:bg-blue-700 text-white py-2 px-4"
               onClick={() => style && mutate({ body: { style } })}
             >
               Generate
             </button>
           </div>
           <div className="flex items-center justify-center mb-20 md:mb-0 p-4">
-            <div className="flex flex-col justify-center border bg-ourGrey border-gray-700 p-4 rounded-lg">
+            <div className="flex flex-col justify-center border-2 p-4 rounded-lg">
               <h1 className="text-lg font-medium ">How does it work?</h1>
 
               <ol className="mt-4 flex flex-col gap-2 px-10 list-decimal">
@@ -277,12 +264,7 @@ function GenerateFit() {
         {generatedFits.map((fit) => {
           return fit.map((item: IClothingData) => {
             return (
-              <ClothingCard
-                key={item._id}
-                item={item}
-                setError={setError}
-                refetch={refetch}
-              />
+              <ClothingCard key={item._id} item={item} refetch={refetch} />
             );
           });
         })}
@@ -291,7 +273,6 @@ function GenerateFit() {
         open={showModal}
         setOpen={setShowModal}
         data={modalData}
-        setError={setError}
         refetch={refetch}
       />
     </div>

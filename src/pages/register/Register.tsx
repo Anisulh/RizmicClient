@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "./interface";
 import { useAuth } from "../../contexts/UserContext";
@@ -7,11 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { IRegisterAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
 import registerImage from "../../assets/registerImage.webp";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
+import { useToast } from "../../contexts/ToastContext";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
@@ -32,13 +28,7 @@ declare global {
 function Register() {
   const navigate = useNavigate();
   const { setUser, isAuthenticated } = useAuth();
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
+  const { addToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -55,20 +45,16 @@ function Register() {
     }
   });
 
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
-
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
       registerAPI({ userData, credential }),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         reset();
         setUser(data);
@@ -82,18 +68,27 @@ function Register() {
     try {
       mutate({ credential: res.credential });
     } catch (error) {
-      setError({ error });
+      console.log(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "An error occurred.",
+        type: "error",
+      });
     }
   };
   const googleButton = useRef(null);
   useGoogleScript(handleGoogleSignIn, googleButton);
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
-    console.log(data);
     try {
       mutate({ userData: data });
     } catch (error) {
       console.log(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "An error occurred.",
+        type: "error",
+      });
     }
   };
 

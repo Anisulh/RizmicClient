@@ -1,5 +1,4 @@
-import { Dispatch, Fragment, SetStateAction, useState } from "react";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { Fragment, useState } from "react";
 import { IClothingData } from "./interface";
 import OutfitsModal from "./OutfitsModal";
 import { Menu, Transition } from "@headlessui/react";
@@ -18,6 +17,7 @@ import {
 } from "../Icons";
 import { StarIcon } from "@heroicons/react/20/solid";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
+import { useToast } from "../../contexts/ToastContext";
 export interface IOutfitData {
   _id: string;
   coverImg?: string;
@@ -31,15 +31,14 @@ export interface IOutfitData {
 
 function OutfitCard({
   item,
-  setError,
   refetch,
   clothingItems,
 }: {
   item: IOutfitData;
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch: () => void;
   clothingItems: IClothingData[];
 }) {
+  const { addToast } = useToast();
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
   const { coverImg, clothes, favorited, name, _id } = item;
@@ -48,7 +47,11 @@ function OutfitCard({
       await deleteOutfits(outfitID),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else if (data.id) {
         refetch();
       }
@@ -65,7 +68,11 @@ function OutfitCard({
       favorite ? await unfavoriteOutfits(outfitID) : favoriteOutfits(outfitID),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else if (data.outfit) {
         refetch();
       }
@@ -236,7 +243,6 @@ function OutfitCard({
       </div>
       <ExpandOutfitsModal
         open={expandModal}
-        setError={setError}
         setOpen={setExpandModal}
         name={item.name}
         clothes={item.clothes}
@@ -244,7 +250,6 @@ function OutfitCard({
       />
       <OutfitsModal
         open={editMenuOpen}
-        setError={setError}
         setOpen={setEditMenuOpen}
         existingData={item}
         refetch={refetch}

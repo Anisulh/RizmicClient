@@ -1,31 +1,25 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import ClothesSection from "../components/Wardrobe/ClothesSection";
 import OutiftSection from "../components/Wardrobe/OutiftSection";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../contexts/StatusContext";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
 import { IClothingData } from "../components/Wardrobe/interface";
+import { useToast } from "../contexts/ToastContext";
 
 export default function Wardrobe() {
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
   const [openTab, setOpenTab] = useState(1);
   const [clothes, setClothes] = useState<IClothingData[]>([]);
+  const { addToast } = useToast();
   const { isLoading, refetch } = useQuery({
     queryKey: ["clothes"],
     queryFn: async () => {
       const data = await getClothes();
       if (data?.message) {
-        setError({ message: data?.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data?.message,
+          type: "error",
+        });
       } else {
         setClothes(data);
         return data;
@@ -33,15 +27,9 @@ export default function Wardrobe() {
     },
     refetchOnWindowFocus: false,
   });
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+
   return (
-    <div className="content-container max-w-7xl w-full mb-10 relative">
+    <div className="content-container max-w-7xl w-full mb-10 relative mx-auto">
       <ul className="flex items-center pt-3 pb-4" role="tablist">
         <li className=" mr-2 text-center">
           <button
@@ -82,10 +70,9 @@ export default function Wardrobe() {
           clothes={clothes}
           isLoading={isLoading}
           refetch={refetch}
-          setError={setError}
         />
       ) : (
-        <OutiftSection setError={setError} clothes={clothes} />
+        <OutiftSection clothes={clothes} />
       )}
     </div>
   );

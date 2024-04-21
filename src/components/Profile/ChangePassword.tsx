@@ -5,13 +5,11 @@ import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
 import {
   ChangeEvent,
-  Dispatch,
   FormEvent,
-  SetStateAction,
   useState,
 } from "react";
 import { changePasswordAPI } from "../../api/userAPI";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { useToast } from "../../contexts/ToastContext";
 
 export interface IChangePasswordData {
   currentPassword: string;
@@ -19,11 +17,8 @@ export interface IChangePasswordData {
   confirmPassword: string;
 }
 
-export default function ChangePassword({
-  setError,
-}: {
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
-}) {
+export default function ChangePassword() {
+  const {addToast} = useToast();
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ data }: { data: IChangePasswordData }) => {
       return changePasswordAPI(data);
@@ -57,8 +52,10 @@ export default function ChangePassword({
     if (newPassword === confirmPassword) {
       mutate({ data: changePasswordData });
     } else {
-      setError({
-        message: "Ensure the New Password and Confirm Password are the same",
+      addToast({
+        title: "Error",
+        description: "Ensure the New Password and Confirm Password are the same",
+        type: "error",
       });
     }
     setChangePasswordData({

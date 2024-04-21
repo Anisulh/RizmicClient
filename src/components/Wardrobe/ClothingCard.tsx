@@ -1,10 +1,9 @@
-import { Dispatch, Fragment, SetStateAction, useState } from "react";
+import { Fragment, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
 import ClothesModal from "./ClothesModal";
 import { Menu, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
 import { deleteClothes } from "../../api/clothesAPI";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { IClothingData } from "./interface";
 import {
   DeleteActiveIcon,
@@ -12,34 +11,35 @@ import {
   EditActiveIcon,
   EditInactiveIcon,
 } from "../Icons";
+import { useToast } from "../../contexts/ToastContext";
 
 export default function ClothingCard({
   item,
-  setError,
   refetch,
 }: {
   item: IClothingData;
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch?: () => void;
 }) {
+  const { addToast } = useToast();
   const { variant, color, image, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
-    mutationFn: async ({
-      clothingID
-    }: {
-      clothingID: string;
-    }) => await deleteClothes(clothingID),
+    mutationFn: async ({ clothingID }: { clothingID: string }) =>
+      await deleteClothes(clothingID),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else if (data.id && refetch) {
         refetch();
       }
     },
   });
   const handleDelete = () => {
-    if ( _id) {
+    if (_id) {
       mutate({ clothingID: _id });
     }
   };

@@ -1,36 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
-import { useContext, useEffect, ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgotPasswordAPI } from "../../api/userAPI";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
+import { useToast } from "../../contexts/ToastContext";
 
 function ForgotPassword() {
+  const { addToast } = useToast();
   const [email, setEmail] = useState("");
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
   const navigate = useNavigate();
   const { isLoading, mutate } = useMutation({
     mutationFn: (email: string) => forgotPasswordAPI(email),
     onSuccess(data) {
       if (data.message) {
-        setError({
-          message: `If your email was registered, you will receive an email to reset password.`,
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
         });
       } else {
         navigate("/login");
@@ -50,14 +35,25 @@ function ForgotPassword() {
     if (isValidEmail) {
       try {
         mutate(email);
-        setError({
-          message: `If your email was registered, you will receive an email to reset password.`,
+        addToast({
+          title: "Email sent.",
+          description: `If your email was registered, you will receive an email to reset password.`,
+          type: "success",
         });
       } catch (error) {
-        setError({ error });
+        console.error(error);
+        addToast({
+          title: "Something went wrong.",
+          description: "Please try again.",
+          type: "error",
+        });
       }
     } else {
-      setError({ message: "Enter a valid email" });
+      addToast({
+        title: "Invalid email.",
+        description: "Enter a valid email.",
+        type: "error",
+      });
     }
   };
 

@@ -74,7 +74,7 @@ export default function Navbar() {
                         Wardrobe
                       </Link>
                       <Link
-                        to="/generatefit"
+                        to="/generate-fit"
                         className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 mix-blend-difference"
                       >
                         Fit Generator

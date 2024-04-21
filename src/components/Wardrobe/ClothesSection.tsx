@@ -7,20 +7,16 @@ import ClothesModal from "./ClothesModal";
 import Spinner from "../Spinner";
 import { IClothingData, IShowCategory, IWardrobe } from "./interface";
 import ClothingCard from "./ClothingCard";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
-
+import { useEffect, useState } from "react";
 
 function ClothesSection({
   clothes,
   refetch,
   isLoading,
-  setError
 }: {
   clothes: IClothingData[];
   refetch: () => void;
   isLoading: boolean;
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>
 }) {
   const [wardrobe, setWardrobe] = useState<IWardrobe>({
     tshirt: [],
@@ -101,7 +97,6 @@ function ClothesSection({
                         <ClothingCard
                           item={item}
                           refetch={refetch}
-                          setError={setError}
                           key={index}
                         />
                       );

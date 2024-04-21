@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, RefObject, SetStateAction } from "react";
 import { IUser } from "../../interface/userInterface";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import {
   IClothingData,
   ICreateClothingData,
@@ -62,7 +61,6 @@ export const setColor = (
 export const handleSubmit = (
   clothingData: ICreateClothingData,
   user: IUser | null,
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
 
   mutate: (data: FormData) => void,
@@ -71,7 +69,7 @@ export const handleSubmit = (
 ): void => {
   const { category, variant, color, bodyLocation, image } = clothingData;
   if (!category || !variant || !color || !bodyLocation) {
-    setError({ error: "Please fill in all fields" });
+    console.log({ error: "Please fill in all fields" });
     return;
   }
   if (existingData && user) {

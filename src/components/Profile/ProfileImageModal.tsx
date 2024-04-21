@@ -11,19 +11,18 @@ import {
   useState,
 } from "react";
 import { updateProfileImageAPI } from "../../api/userAPI";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { useToast } from "../../contexts/ToastContext";
 
 export default function ProfileImageModal({
   open,
   setOpen,
-  setError,
   refetchUserData,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetchUserData: () => void;
 }) {
+  const { addToast } = useToast();
   const [image, setImage] = useState<Blob | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const imageUploadRef = useRef<HTMLInputElement>(null);
@@ -47,7 +46,11 @@ export default function ProfileImageModal({
       updateProfileImageAPI(data),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         refetchUserData();
         setOpen(false);
