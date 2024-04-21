@@ -92,21 +92,21 @@ const faq = [
 export default function Home() {
   const navigate = useNavigate();
   return (
-    <div className="content-container max-w-7xl mx-auto bg-white">
-      <main className="container mx-auto px-4 ">
+    <div className="content-container max-w-7xl mx-auto">
+      <main className="w-full mx-auto px-4 ">
         <section className="text-center mt-24 flex justify-center items-center py-28">
           <div className="hero-text py-20 flex flex-col items-center justify-center gap-10">
             <div>
               <h1 className="text-5xl font-bold  mb-4">
-              Your Personal Wardrobe Manager
-            </h1>
-            <p className="text-xl text-slategrey max-w-4xl">
-              Revolutionize the way you dress with our intuitive app that keeps
-              your wardrobe organized and generates stylish outfits tailored to
-              your taste.
-            </p>
+                Your Personal Wardrobe Manager
+              </h1>
+              <p className="text-xl text-slategrey max-w-4xl">
+                Revolutionize the way you dress with our intuitive app that
+                keeps your wardrobe organized and generates stylish outfits
+                tailored to your taste.
+              </p>
             </div>
-            
+
             <button
               className="border px-6 py-3 font-bold rounded-xl bg-ultramarineBlue text-white text-xl mt-10 shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
               onClick={() => navigate("/register")}
@@ -114,14 +114,13 @@ export default function Home() {
               Get Started
             </button>
           </div>
-         
         </section>
 
         <section id="features" className="py-24">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-4xl">
             Features
           </h2>
-          
+
           <div className="overflow-hidden py-20">
             <div className=" px-6 lg:px-8">
               <div className="flex items-center justify-center ">
@@ -130,17 +129,17 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Shop more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
                       Virtual Wardrobe
                     </p>
-                    <p className="mt-6 text-xl leading-8 text-gray-600">
+                    <p className="mt-6">
                       Easily catalog your wardrobe, track your most-worn items,
                       and stay organized with our intuitive wardrobe manager.
                     </p>
-                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
+                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-200 lg:max-w-none">
                       {virtualWardrobeFeatures.map((feature) => (
                         <div key={feature.name} className="relative pl-9">
-                          <dt className="inline font-semibold text-gray-900">
+                          <dt className="inline font-semibold text-gray-800 dark:text-gray-100">
                             <feature.icon
                               className="absolute left-1 top-1 h-5 w-5 text-ultramarineBlue"
                               aria-hidden="true"
@@ -153,7 +152,6 @@ export default function Home() {
                     </dl>
                   </div>
                 </div>
-              
               </div>
             </div>
           </div>
@@ -165,18 +163,18 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Style more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl">
                       Outfit Generator
                     </p>
-                    <p className="mt-6 text-xl leading-8 text-gray-600">
+                    <p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-200">
                       Discover new outfit combinations and save your favorites
                       with our outfit generator that&apos;s tailored to your
                       unique style.
                     </p>
-                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
+                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-200 lg:max-w-none">
                       {outfitGeneratorFeatures.map((feature) => (
                         <div key={feature.name} className="relative pl-9">
-                          <dt className="inline font-semibold text-gray-900">
+                          <dt className="inline font-semibold text-gray-800 dark:text-gray-100">
                             <feature.icon
                               className="absolute left-1 top-1 h-5 w-5 text-ultramarineBlue"
                               aria-hidden="true"
@@ -189,7 +187,6 @@ export default function Home() {
                     </dl>
                   </div>
                 </div>
-           
               </div>
             </div>
           </div>
@@ -200,20 +197,20 @@ export default function Home() {
           <div className=" py-24 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h2 className="text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl">
                   Simple no-tricks pricing
                 </h2>
-                <p className="mt-6 text-xl leading-8 text-gray-600">
+                <p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-200">
                   We believe in being completely transparent with our users so
                   we provided straight forward pricing plan with no hidden fees.
                 </p>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-4xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="mx-auto mt-16 max-w-2xl rounded-4xl border-2 rounded-xl sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
-                  <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+                  <h3 className="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                     Basic Plan
                   </h3>
-                  <p className="mt-6 text-base leading-7 text-gray-600">
+                  <p className="mt-6 text-base leading-7 text-gray-600 dark:text-gray-200">
                     A simple plan to get you to be able express yourself sooner
                     rather than later
                   </p>
@@ -223,7 +220,7 @@ export default function Home() {
                     </h4>
                     <div className="h-px flex-auto bg-gray-100" />
                   </div>
-                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 dark:text-gray-200 sm:grid-cols-2 sm:gap-6">
                     {includedFeatures.map((feature) => (
                       <li key={feature} className="flex gap-x-3">
                         <CheckIcon
@@ -236,10 +233,10 @@ export default function Home() {
                   </ul>
                 </div>
                 <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-                  <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+                  <div className="rounded-2xl py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                     <div className="mx-auto max-w-xs px-8">
                       <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                        <span className="text-5xl font-bold tracking-tight text-gray-900">
+                        <span className="text-5xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                           FREE
                         </span>
                       </p>
@@ -253,12 +250,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-4xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="mx-auto mt-16 max-w-2xl rounded-4xl border-2 rounded-xl sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
-                  <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+                  <h3 className="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                     Premium Plan
                   </h3>
-                  <p className="mt-6 text-base leading-7 text-gray-600">
+                  <p className="mt-6 text-base leading-7 text-gray-600 dark:text-gray-200">
                     Basic plan not enough? Upgrade to premium to get unlimited
                     access to all our features and priority support
                   </p>
@@ -268,7 +265,7 @@ export default function Home() {
                     </h4>
                     <div className="h-px flex-auto bg-gray-100" />
                   </div>
-                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 dark:text-gray-200 sm:grid-cols-2 sm:gap-6">
                     {premiumFeatures.map((feature) => (
                       <li key={feature} className="flex gap-x-3">
                         <CheckIcon
@@ -281,16 +278,16 @@ export default function Home() {
                   </ul>
                 </div>
                 <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-                  <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+                  <div className="rounded-2xl py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                     <div className="mx-auto max-w-xs px-8">
-                      <p className="text-base font-semibold text-gray-600">
+                      <p className="text-base font-semibold text-gray-600 dark:text-gray-200">
                         Per Month
                       </p>
                       <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                        <span className="text-5xl font-bold tracking-tight text-gray-900">
+                        <span className="text-5xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                           $7.99
                         </span>
-                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
+                        <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600 dark:text-gray-200">
                           USD
                         </span>
                       </p>
@@ -300,7 +297,7 @@ export default function Home() {
                       >
                         Upgrade Now
                       </a>
-                      <p className="mt-6 text-xs leading-5 text-gray-600">
+                      <p className="mt-6 text-xs leading-5 text-gray-600 dark:text-gray-200">
                         Invoices and receipts available for easy company
                         reimbursement
                       </p>

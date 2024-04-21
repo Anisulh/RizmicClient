@@ -119,9 +119,9 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center content-container overflow-auto min-h-screen">
+    <div className="flex items-center justify-center overflow-auto min-h-screen">
       <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
-        <div className="flex items-center justify-center h-screen md:h-fit lg:min-h-screen lg:h-max lg:w-5/12 z-10 md:rounded-3xl bg-white  py-10 px-8 lg:p-0">
+        <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
           <div>
             <h1 className="font-bold text-3xl lg:text-5xl tracking-wide">
               Register
@@ -252,9 +252,7 @@ function Register() {
                 Login
               </Link>
             </div>
-            <p className="text-center text-base my-4">
-              Or, register with...
-            </p>
+            <p className="text-center text-base my-4">Or, register with...</p>
             <div className="mt-6 w-fit mx-auto">
               <div ref={googleButton}></div>
             </div>
@@ -262,7 +260,7 @@ function Register() {
         </div>
       </div>
       <img
-        className="hidden md:block object-cover w-full lg:w-8/12 h-screen absolute right-0"
+        className="hidden md:block object-cover w-full lg:w-[60%] h-screen absolute right-0 rounded-2xl"
         src={registerImage}
         alt="Clothing on a rack"
       />

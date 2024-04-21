@@ -35,12 +35,12 @@ export default function ContactUs() {
     }
   };
   return (
-    <section className="bg-white mt-24 content-container">
+    <section className="content-container">
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center ">
           Contact Us
         </h2>
-        <p className="mb-8 lg:mb-16 font-light text-center text-gray-500  sm:text-xl">
+        <p className="mb-8 lg:mb-16 font-light text-center sm:text-xl">
           Got a technical issue? Want to send feedback about a feature?
         </p>
         <form ref={form} onSubmit={onFormSubmit} className="space-y-8">

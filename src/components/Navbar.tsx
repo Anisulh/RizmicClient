@@ -25,26 +25,25 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+  const isRegisterPage = location.pathname === "/register";
+  const isLoginPage = location.pathname === "/login";
 
   return (
     <Disclosure
       as="nav"
-      className={` top-0 w-full ${
-        location.pathname === "/login" || location.pathname === "/register"
-          ? "lg:bg-transparent bg-white absolute"
-          : "bg-white fixed"
-      } z-20`}
+      className={`top-0 w-full bg-white dark:bg-gray-800 ${
+        isLoginPage || isRegisterPage
+          ? "fixed bg-transparent dark:bg-transparent"
+          : "fixed"
+      } z-20 `}
     >
       {({ open }) => (
         <>
-          <div className="relative bg-transparent">
-            <div className="mx-auto max-w-7xl px-6 lg:px-4 bg-transparent">
-              <div className="flex items-center justify-between border-gray-100 my-4 lg:my-6 md:justify-start md:space-x-10 bg-transparent">
-                <div className="flex justify-start lg:w-0 lg:flex-1 bg-transparent">
-                  <Link
-                    to="/"
-                    className="font-semibold text-2xl bg-transparent"
-                  >
+          <div className="relative">
+            <div className="mx-auto max-w-7xl px-6 lg:px-4">
+              <div className="flex items-center justify-between border-gray-100 my-4 lg:my-6 md:justify-start md:space-x-10">
+                <div className="flex justify-start lg:w-0 lg:flex-1">
+                  <Link to="/" className="font-semibold text-2xl hover:bg-transparent">
                     RizmicFits
                   </Link>
                 </div>
@@ -60,21 +59,21 @@ export default function Navbar() {
 
                 {user ? (
                   <>
-                    <div className="hidden space-x-10 md:flex bg-transparent">
+                    <div className="hidden space-x-10 md:flex">
                       <Link
                         to="/wardrobe"
-                        className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
+                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900  mix-blend-difference"
                       >
                         Wardrobe
                       </Link>
                       <Link
                         to="/generatefit"
-                        className="text-base font-medium text-gray-500 hover:text-gray-900 bg-transparent mix-blend-difference"
+                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 mix-blend-difference"
                       >
                         Fit Generator
                       </Link>
                     </div>
-                    <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 bg-transparent">
+                    <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
                       <Menu as="div" className="relative ml-3">
                         <div>
                           <Menu.Button className="flex rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 border">
@@ -134,33 +133,13 @@ export default function Navbar() {
                   </>
                 ) : isHomePage ? (
                   <>
-                    <div className="hidden space-x-10 md:flex bg-transparent">
-                      <a
-                        href="#features"
-                        className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
-                      >
-                        Features
-                      </a>
-                      <a
-                        href="#pricing"
-                        className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
-                      >
-                        Pricing
-                      </a>
-                      <a
-                        href="#FAQ"
-                        className="text-base font-medium text-raisinblack hover:text-gray-700 hover:bg-gray-50"
-                      >
-                        FAQ
-                      </a>
+                    <div className="hidden space-x-10 md:flex">
+                      <a href="#features">Features</a>
+                      <a href="#pricing">Pricing</a>
+                      <a href="#FAQ">FAQ</a>
                     </div>
-                    <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 bg-transparent">
-                      <Link
-                        to="/login"
-                        className="whitespace-nowrap text-base font-medium text-raisinblack hover:text-gray-900 bg-transparent "
-                      >
-                        Login
-                      </Link>
+                    <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+                      <Link to="/login">Login</Link>
                       <Link
                         to="/register"
                         className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
@@ -170,10 +149,10 @@ export default function Navbar() {
                     </div>
                   </>
                 ) : (
-                  <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 bg-transparent">
+                  <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
                     <Link
                       to="/login"
-                      className="whitespace-nowrap text-base font-medium text-raisinblack hover:text-gray-900 bg-transparent "
+                      className="text-gray-800 dark:text-gray-800 hover:text-gray-900 dark:hover:text-gray-900 mix-blend-difference"
                     >
                       Login
                     </Link>
