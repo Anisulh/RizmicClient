@@ -1,28 +1,10 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
-import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
-
-import {
-  registerFormValidation,
-  usePasswordValidation,
-} from "./registrationValidation";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "./interface";
-import { IUserContext, UserContext } from "../../contexts/UserContext";
-
+import { useAuth } from "../../contexts/UserContext";
 import { registerAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
-import {
-  IRegisterAPIParams,
-  IRegisterUser,
-} from "../../interface/userInterface";
+import { IRegisterAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
 import registerImage from "../../assets/registerImage.webp";
 import {
@@ -30,6 +12,11 @@ import {
   IStatusContext,
   StatusContext,
 } from "../../contexts/StatusContext";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
+import Input from "../../components/ui/Input";
+import PasswordStrengthCheck from "./PasswordStrengthCheck";
 
 declare global {
   const google: {
@@ -44,23 +31,30 @@ declare global {
 
 function Register() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext) as IUserContext;
+  const { setUser, isAuthenticated } = useAuth();
   const { errorNotification, resetStatus } = useContext(
     StatusContext,
   ) as IStatusContext;
-  const [registerUserData, setRegisterUserData] = useState<IRegisterUser>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState<IErrorNotificationParams>({
     message: null,
     error: null,
   });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterSchemaType>({ resolver: zodResolver(RegisterSchema) });
+
+  const password = watch("password");
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/wardrobe");
+    }
+  });
+
   useEffect(() => {
     errorNotification(error);
     return () => {
@@ -68,8 +62,6 @@ function Register() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
-  const { password } = registerUserData;
-  const passwordStrength = usePasswordValidation(password);
 
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
@@ -78,6 +70,7 @@ function Register() {
       if (data.message) {
         setError({ message: data.message });
       } else {
+        reset();
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/wardrobe");
@@ -95,26 +88,12 @@ function Register() {
   const googleButton = useRef(null);
   useGoogleScript(handleGoogleSignIn, googleButton);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setRegisterUserData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const validated = registerFormValidation(
-      registerUserData,
-      setError,
-      passwordStrength,
-    );
-    if (validated) {
-      try {
-        mutate({ userData: registerUserData });
-      } catch (error) {
-        setError({ error });
-      }
+  const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
+    console.log(data);
+    try {
+      mutate({ userData: data });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -129,104 +108,55 @@ function Register() {
             <p className="text-slategrey lg:text-lg">
               Fill in your details or continue with google with a simple click.
             </p>
-            <form className="lg:px-10 py-2 lg:py-5" onSubmit={handleSubmit}>
-              <input
+            <form
+              className="lg:px-10 py-2 lg:py-5 max-w-lg"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input<RegisterSchemaType>
                 type="text"
                 name="firstName"
                 placeholder="First Name"
-                onChange={handleChange}
-                className="border-2 border-gray-200 rounded-lg block w-full text-raisinblack my-2 lg:my-6 py-2 px-4 placeholder-raisinblack "
+                register={register}
+                error={errors.firstName}
+                errorText={errors.firstName?.message}
               />
-
-              <input
+              <Input<RegisterSchemaType>
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
-                onChange={handleChange}
-                className="border-2 border-gray-200 rounded-lg block w-full text-raisinblack my-2 lg:my-6 py-2 px-4 placeholder-raisinblack"
+                register={register}
+                error={errors.lastName}
+                errorText={errors.lastName?.message}
               />
-
-              <input
+              <Input<RegisterSchemaType>
                 type="email"
                 name="email"
                 placeholder="Email"
-                onChange={handleChange}
-                className="border-2 border-gray-200 rounded-lg block w-full text-raisinblack my-2 lg:my-6 py-2 px-4 placeholder-raisinblack"
+                register={register}
+                error={errors.email}
+                errorText={errors.email?.message}
               />
 
-              <div className="flex items-center relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                  className="border-2 border-gray-200 rounded-lg block w-full text-raisinblack my-1 py-2 px-4 placeholder-raisinblack"
-                />
-                <button
-                  type="button"
-                  className="absolute right-0 text-gray-600 hover:text-raisinblack px-3"
-                  onClick={() => {
-                    setShowPassword((prevState) => !prevState);
-                  }}
-                >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                  ) : (
-                    <EyeIcon className="h-6 w-6 bg-transparent" />
-                  )}
-                </button>
-              </div>
-              {password && (
-                <div className="px-2 mt-2">
-                  <p className="text-sm">
-                    {passwordStrength.charAt(0).toUpperCase() +
-                      passwordStrength.slice(1)}{" "}
-                    Password
-                  </p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 ">
-                    <div
-                      className=" h-2.5 rounded-full"
-                      style={{
-                        width:
-                          passwordStrength === "weak"
-                            ? "35%"
-                            : passwordStrength === "medium"
-                            ? "70%"
-                            : "100%",
-                        backgroundColor:
-                          passwordStrength === "weak"
-                            ? "red"
-                            : passwordStrength === "medium"
-                            ? "orange"
-                            : "green",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              )}
+              <Input<RegisterSchemaType>
+                type="password"
+                name="password"
+                placeholder="Password"
+                register={register}
+                error={errors.password}
+                errorText={errors.password?.message}
+              />
 
-              <div className="flex items-center relative">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  onChange={handleChange}
-                  className="border-2 border-gray-200 rounded-lg block w-full text-raisinblack my-2 lg:my-6 py-2 px-4 placeholder-raisinblack"
-                />
-                <button
-                  type="button"
-                  className="absolute right-0 text-gray-600 hover:text-raisinblack px-3"
-                  onClick={() => {
-                    setShowConfirmPassword((prevState) => !prevState);
-                  }}
-                >
-                  {showConfirmPassword ? (
-                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                  ) : (
-                    <EyeIcon className="h-6 w-6  bg-transparent" />
-                  )}
-                </button>
-              </div>
+              {password && <PasswordStrengthCheck password={password} />}
+
+              <Input<RegisterSchemaType>
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                register={register}
+                error={errors.confirmPassword}
+                errorText={errors.confirmPassword?.message}
+              />
+
               <button
                 type="submit"
                 className="mt-4 border-2 border-gray-200 rounded-md text-raisinblack px-4 py-2 font-medium w-full lg:text-lg bg-cambridgeblue"

@@ -19,19 +19,25 @@ import {
   IStatusContext,
   StatusContext,
 } from "../../contexts/StatusContext";
-import { IUserContext, UserContext } from "../../contexts/UserContext";
+import { useAuth } from "../../contexts/UserContext";
 import { loginAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 
 function Login() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext) as IUserContext;
+  const { setUser, isAuthenticated } = useAuth();
   const { errorNotification, resetStatus } = useContext(
     StatusContext,
   ) as IStatusContext;
   const [error, setError] = useState<IErrorNotificationParams>({
     message: null,
     error: null,
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/wardrobe");
+    }
   });
 
   useEffect(() => {
@@ -56,6 +62,10 @@ function Login() {
       if (data.message) {
         setError({ message: data.message });
       } else {
+        setUserLoginData({
+          email: "",
+          password: "",
+        });
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/wardrobe");
