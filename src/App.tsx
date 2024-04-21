@@ -7,7 +7,7 @@ import Register from "./pages/register/Register";
 import AboutUs from "./pages/aboutUs/AboutUs";
 import ContactUs from "./pages/contactUs";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
-import { StatusContextProvider } from "./contexts/StatusContext";
+import { ToastProvider } from "./contexts/ToastContext";
 import Status from "./components/Status";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
 import Wardrobe from "./pages/Wardrobe";
@@ -17,14 +17,15 @@ import GenerateFit from "./pages/fitGenerator/GenerateFit";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer/Footer";
 import Pricing from "./pages/subscription/Pricing";
+import ToastContainer from "./components/ui/toast/ToastContainer";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <StatusContextProvider>
+      <ToastProvider>
+        <Router>
           <Navbar />
           <Status />
           <Routes>
@@ -62,8 +63,9 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
           </Routes>
           <Footer />
-        </StatusContextProvider>
-      </Router>
+        </Router>
+        <ToastContainer />
+      </ToastProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
