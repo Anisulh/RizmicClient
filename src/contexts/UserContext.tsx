@@ -1,65 +1,68 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { getUserData } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
 
 export interface IUserContext {
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
-  refetchUserData: () => void;
+  isAuthenticated: boolean;
+  refetchUserData: () => Promise<void>;
   logout: () => void;
-  validateToken: () => Promise<boolean>;
+  validateToken: () => Promise<void>;
 }
 
 export const UserContext = createContext<IUserContext | null>(null);
-const getUser = () => {
-  const user: string | null | undefined = localStorage.getItem("user");
-  if (user && user !== undefined) {
-    return JSON.parse(user);
-  }
-  return null;
+
+export const useAuth = (): IUserContext => {
+  const context = useContext(UserContext);
+  if (!context) throw new Error('useAuth must be used within a UserContextProvider');
+  return context;
+};
+
+const getUser = (): IUser | null => {
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user) : null;
 };
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(getUser());
+  const [user, setUser] = useState<IUser | null>(getUser());
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!user);
 
-  const refetchUserData = async () => {
-    if (user) {
+  useEffect(() => {
+    validateToken();
+  }, []);
+
+  const refetchUserData = async (): Promise<void> => {
+    if (!user) return;
+    try {
       const response = await getUserData();
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json();
         setUser(data);
-        localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify(data));
-        return;
-      }
-    }
-  };
-  const validateToken = async (): Promise<boolean> => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/user/validate`,
-        { credentials: "include" },
-      );
-      if (response.status === 200) {
-        return true;
-      } else {
-        return false;
+        localStorage.setItem('user', JSON.stringify(data));
       }
     } catch (error) {
-      return false;
+      console.error('Failed to fetch user data:', error);
     }
   };
-  const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+
+  const validateToken = async (): Promise<void> => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/validate`, { credentials: 'include' });
+      setIsAuthenticated(response.ok);
+    } catch (error) {
+      setIsAuthenticated(false);
+      console.error('Error validating token:', error);
+    }
   };
 
-  const value = {
-    user,
-    setUser,
-    refetchUserData,
-    logout,
-    validateToken,
+  const logout = (): void => {
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsAuthenticated(false);
   };
+
+  const value = { user, setUser, isAuthenticated, refetchUserData, logout, validateToken };
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
