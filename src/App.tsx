@@ -8,7 +8,6 @@ import AboutUs from "./pages/aboutUs/AboutUs";
 import ContactUs from "./pages/contactUs";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { ToastProvider } from "./contexts/ToastContext";
-import Status from "./components/Status";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
 import Wardrobe from "./pages/Wardrobe";
 import PrivateRoute from "./components/PrivateRoute";
@@ -27,15 +26,14 @@ function App() {
       <ToastProvider>
         <Router>
           <Navbar />
-          <Status />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/passwordreset:token:id" element={<PasswordReset />} />
+            <Route path="/password-reset:token:id" element={<PasswordReset />} />
             <Route
               path="/wardrobe"
               element={
@@ -45,7 +43,7 @@ function App() {
               }
             />
             <Route
-              path="/generatefit"
+              path="/generate-fit"
               element={
                 <PrivateRoute>
                   <GenerateFit />
