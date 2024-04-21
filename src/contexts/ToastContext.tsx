@@ -1,39 +1,37 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 export interface IToast {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   type: "success" | "error" | "info";
   duration?: number;
-  removeToast: (id:number) => void;
 }
 
-export interface IToastContext {
-  addToast: (toast: IToast) => void;
+interface IToastContext {
+  addToast: (toast: Omit<IToast, 'id'>) => void;
   removeToast: (id: number) => void;
   toasts: IToast[];
 }
 
 const ToastContext = createContext<IToastContext | null>(null);
 
-export const useToast = () => useContext(ToastContext) as IToastContext;
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  if (!context) throw new Error('useToast must be used within a ToastProvider');
+  return context;
+};
 
-export const ToastProvider = ({ children }: { children: ReactNode }) => {
+export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
-  function addToast(toast: IToast) {
-    setToasts((currentToasts) => [
-      ...currentToasts,
-      { ...toast, id: Date.now() },
-    ]);
-  }
+  const addToast = useCallback((toast: Omit<IToast, 'id'>) => {
+    setToasts((currentToasts) => [...currentToasts, { ...toast, id: Date.now() }]);
+  }, []);
 
-  const removeToast = (id: number) => {
-    setToasts((currentToasts) =>
-      currentToasts.filter((toast) => toast.id !== id),
-    );
-  };
+  const removeToast = useCallback((id: number) => {
+    setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== id));
+  }, []);
 
   return (
     <ToastContext.Provider value={{ addToast, removeToast, toasts }}>
