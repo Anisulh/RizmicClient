@@ -8,6 +8,8 @@ import {
   ViewfinderCircleIcon,
 } from "@heroicons/react/20/solid";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/UserContext";
+import { useEffect } from "react";
 
 const virtualWardrobeFeatures = [
   {
@@ -89,8 +91,15 @@ const faq = [
       "Yes, we offer a 3-day free trial for our Premium Plan, allowing you to explore all the advanced features and benefits without any obligation.",
   },
 ];
+
 export default function Home() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/wardrobe");
+    }
+  });
   return (
     <div className="content-container max-w-7xl mx-auto">
       <main className="w-full mx-auto px-4 ">
