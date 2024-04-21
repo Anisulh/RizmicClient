@@ -4,6 +4,7 @@ import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IUserContext, UserContext } from "../contexts/UserContext";
 import userAvatar from "../assets/userAvatar.webp";
+import RizmicIcon from "../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 
 function classNames(...classes: string[]) {
@@ -42,11 +43,17 @@ export default function Navbar() {
           <div className="relative">
             <div className="mx-auto max-w-7xl px-6 lg:px-4">
               <div className="flex items-center justify-between border-gray-100 my-4 lg:my-6 md:justify-start md:space-x-10">
-                <div className="flex justify-start lg:w-0 lg:flex-1">
-                  <Link to="/" className="font-semibold text-2xl hover:bg-transparent">
+                  <Link
+                    to="/"
+                    className="font-semibold text-2xl hover:bg-transparent flex gap-1 lg:flex-1"
+                  >
+                    <img
+                      src={RizmicIcon}
+                      alt="RizmicFits"
+                      className="w-8 h-8 rounded-full"
+                    />
                     RizmicFits
                   </Link>
-                </div>
                 <Disclosure.Button className=" md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
