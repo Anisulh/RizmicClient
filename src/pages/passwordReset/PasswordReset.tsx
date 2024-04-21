@@ -1,4 +1,4 @@
-import { useContext, useEffect, ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
@@ -9,13 +9,9 @@ import {
   passwordResetFormValidation,
   usePasswordValidation,
 } from "./PasswordResetFormValidation";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
+import { useToast } from "../../contexts/ToastContext";
 
 interface IResetPasswordAPIParams {
   passwordInfo: IPasswordData;
@@ -24,6 +20,7 @@ interface IResetPasswordAPIParams {
 }
 
 function PasswordReset() {
+  const {addToast} = useToast();  
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get("token");
   let id = searchParams.get("id");
@@ -36,20 +33,6 @@ function PasswordReset() {
   const [isShowing, setIsShowing] = useState(false);
   const { password } = passwordData;
   const passwordStrength = usePasswordValidation(password);
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
   const { isLoading, mutate } = useMutation({
     mutationFn: ({
       passwordInfo,
@@ -59,7 +42,11 @@ function PasswordReset() {
       resetPasswordAPI(passwordInfo, userId, resetToken),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         navigate("/login");
       }
@@ -85,7 +72,6 @@ function PasswordReset() {
     e.preventDefault();
     const validated = passwordResetFormValidation(
       passwordData,
-      setError,
       passwordStrength,
     );
     if (validated) {
@@ -102,7 +88,12 @@ function PasswordReset() {
           return;
         }
       } catch (error) {
-        setError({ error });
+        console.error(error);
+        addToast({
+          title: "Something went wrong.",
+          description: "Please try again.",
+          type: "error",
+        });
       }
     }
   };

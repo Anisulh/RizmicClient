@@ -1,17 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import GenerateFitModal from "./GenerateFitModal";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
 import { IClothingData } from "../../components/Wardrobe/interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/Spinner";
 import { generateBlank } from "../../api/generationAPI";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
+import { useToast } from "../../contexts/ToastContext";
 
 export interface IBodyParts {
   head: IClothingData[];
@@ -21,17 +17,11 @@ export interface IBodyParts {
 }
 
 function GenerateFit() {
+  const {addToast} = useToast();
   const [showModal, setShowModal] = useState(false);
   const [style, setStyle] = useState<"monochrome" | "complimentary" | null>(
     null,
   );
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
   const [wardrobe, setWardrobe] = useState<IBodyParts>({
     head: [],
     top: [],
@@ -40,13 +30,6 @@ function GenerateFit() {
   });
   const [generatedFits, setGeneratedFits] = useState<IClothingData[][]>([]);
   const [modalData, setModalData] = useState<IClothingData[] | null>(null);
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   const { head, top, bottom, shoes } = wardrobe;
   const { isLoading: queryIsLoading, refetch } = useQuery({
@@ -54,7 +37,11 @@ function GenerateFit() {
     queryFn: async () => {
       const data = await getClothes();
       if (data?.message) {
-        setError({ message: data?.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data?.message,
+          type: "error",
+        });
       } else {
         const temp: IBodyParts = {
           head: [],
@@ -280,7 +267,6 @@ function GenerateFit() {
               <ClothingCard
                 key={item._id}
                 item={item}
-                setError={setError}
                 refetch={refetch}
               />
             );
@@ -291,7 +277,6 @@ function GenerateFit() {
         open={showModal}
         setOpen={setShowModal}
         data={modalData}
-        setError={setError}
         refetch={refetch}
       />
     </div>

@@ -2,7 +2,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "./ClothingCard";
 import { IClothingData } from "./interface";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 export default function ExpandOutfitsModal({
@@ -10,14 +9,12 @@ export default function ExpandOutfitsModal({
   setOpen,
   name = "Outfit",
   clothes = [],
-  setError,
   refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   name: string | undefined;
   clothes: IClothingData[];
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   refetch?: () => void;
 }) {
   function closeModal() {
@@ -74,7 +71,6 @@ export default function ExpandOutfitsModal({
                             key={index}
                             item={item}
                             refetch={refetch}
-                            setError={setError}
                           />
                         );
                       })

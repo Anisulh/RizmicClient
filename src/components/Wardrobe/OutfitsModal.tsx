@@ -12,7 +12,6 @@ import { IOutfitData } from "./OutfitCard";
 import { IClothingData } from "./interface";
 import { useMutation } from "@tanstack/react-query";
 import { createOutfits, updateOutfits } from "../../api/outfitsAPI";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
 import { closeModal, handleChange, removeImageFromUpload } from "./formLogic";
 import InfoPopover from "./InfoPopover";
 import {
@@ -21,6 +20,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import ClothingCard from "./ClothingCard";
+import { useToast } from "../../contexts/ToastContext";
 export interface ICreateOutfitData {
   coverImg: Blob | null;
   name: string | undefined;
@@ -37,18 +37,17 @@ export interface IUpdateOutfitData {
 function OutfitsModal({
   open,
   setOpen,
-  setError,
   existingData = undefined,
   clothingItems = [],
   refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   existingData?: IOutfitData | undefined;
   clothingItems?: IClothingData[];
   refetch: () => void;
 }) {
+  const { addToast } = useToast();
   const [outfitClothes, setOutfitClothes] = useState<IClothingData[]>([]);
   const [outfitData, setOutfitData] = useState<ICreateOutfitData>(
     existingData
@@ -81,7 +80,11 @@ function OutfitsModal({
         : await createOutfits(data),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         setOpen(false);
         refetch();
@@ -138,7 +141,11 @@ function OutfitsModal({
       }
     } else {
       if (!outfitClothes || outfitClothes.length < 1) {
-        setError({ error: "Please fill in all fields" });
+        addToast({
+          title: "Something went wrong.",
+          description: "Please add at least one piece of clothing",
+          type: "error",
+        });
         return;
       }
       const formData = new FormData();
@@ -315,9 +322,6 @@ function OutfitsModal({
                                                                 item={item}
                                                                 refetch={
                                                                   refetch
-                                                                }
-                                                                setError={
-                                                                  setError
                                                                 }
                                                               />
                                                               {selected ? (

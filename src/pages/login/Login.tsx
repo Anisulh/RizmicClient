@@ -1,14 +1,9 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import loginImage from "../../assets/login_page.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "../register/interface";
 import { ILoginAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../../contexts/StatusContext";
 import { useAuth } from "../../contexts/UserContext";
 import { loginAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -16,31 +11,18 @@ import { LoginSchema, LoginSchemaType } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/ui/Input";
+import { useToast } from "../../contexts/ToastContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const { setUser, isAuthenticated } = useAuth();
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/wardrobe");
     }
   });
-
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   const {
     register,
@@ -54,7 +36,11 @@ function Login() {
       loginAPI({ userData, credential }),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         reset();
         setUser(data);
@@ -68,18 +54,27 @@ function Login() {
     try {
       mutate({ credential: res.credential });
     } catch (error) {
-      setError({ error });
+      console.error(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "Please try again.",
+        type: "error",
+      });
     }
   };
   const googleButton = useRef(null);
   useGoogleScript(handleGoogleSignIn, googleButton);
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
-    console.log(data);
     try {
       mutate({ userData: data });
     } catch (error) {
       console.log(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "Please try again.",
+        type: "error",
+      });
     }
   };
 

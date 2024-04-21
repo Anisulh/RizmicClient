@@ -1,26 +1,16 @@
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { IUpdateProfile, updateProfileAPI } from "../api/userAPI";
 import ChangePassword from "../components/Profile/ChangePassword";
 import ProfileImageModal from "../components/Profile/ProfileImageModal";
-import {
-  IErrorNotificationParams,
-  IStatusContext,
-  StatusContext,
-} from "../contexts/StatusContext";
-import { IUserContext, UserContext } from "../contexts/UserContext";
+import { useAuth } from "../contexts/UserContext";
+import { useToast } from "../contexts/ToastContext";
 
 export default function Profile() {
-  const { user, refetchUserData } = useContext(UserContext) as IUserContext;
-  const { errorNotification, resetStatus } = useContext(
-    StatusContext,
-  ) as IStatusContext;
-  const [error, setError] = useState<IErrorNotificationParams>({
-    message: null,
-    error: null,
-  });
+  const { addToast } = useToast();
+  const { user, refetchUserData } = useAuth();
   const [editingProfile, setEditingProfile] = useState(false);
   const [profileData, setProfileData] = useState({
     firstName: user?.firstName,
@@ -32,19 +22,16 @@ export default function Profile() {
 
   const [showProfileImageEdit, setShowProfileImageEdit] = useState(false);
   const [showProfileImageModal, setShowProfileImageModal] = useState(false);
-  useEffect(() => {
-    errorNotification(error);
-    return () => {
-      resetStatus();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ data }: { data: IUpdateProfile }) => updateProfileAPI(data),
     onSuccess(data) {
       if (data.message) {
-        setError({ message: data.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
       } else {
         refetchUserData();
       }
@@ -248,14 +235,13 @@ export default function Profile() {
                 )}
               </div>
             </div>
-            <ChangePassword setError={setError} />
+            <ChangePassword />
           </div>
         </div>
       </div>
       <ProfileImageModal
         open={showProfileImageModal}
         setOpen={setShowProfileImageModal}
-        setError={setError}
         refetchUserData={refetchUserData}
       />
     </div>

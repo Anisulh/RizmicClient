@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { useEffect, useState } from "react";
 export interface IPasswordData {
   password: string;
   confirmPassword: string;
@@ -7,31 +6,30 @@ export interface IPasswordData {
 
 export const passwordResetFormValidation = (
   passwordData: IPasswordData,
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>,
   passwordStrength: "weak" | "medium" | "strong",
 ) => {
   const { password, confirmPassword } = passwordData;
 
   if (!password || !confirmPassword) {
-    setError({
+    console.log({
       message: "Please fill out all fields",
     });
     return false;
   }
 
   if (password !== confirmPassword) {
-    setError({
+    console.log({
       message: "Passwords do not match",
     });
     return false;
   }
   if (passwordStrength === "weak") {
-    setError({
+    console.log({
       message: "Please enter a stronger password",
     });
     return false;
   }
-  setError({ message: "" });
+  console.log({ message: "" });
   return true;
 };
 

@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IErrorNotificationParams } from "../../contexts/StatusContext";
+import { useEffect, useState } from "react";
+import { useToast } from "../../contexts/ToastContext";
 import { useQuery } from "@tanstack/react-query";
 import { getOutfits } from "../../api/outfitsAPI";
 import Spinner from "../Spinner";
@@ -22,12 +22,11 @@ interface IOutfitsShow {
 }
 
 function OutiftSection({
-  setError,
   clothes,
 }: {
-  setError: Dispatch<SetStateAction<IErrorNotificationParams>>;
   clothes: IClothingData[];
 }) {
+  const {addToast} = useToast();
   const [outfits, setOutfits] = useState<IOutfitsSections>({
     favoriteOutfits: [],
     allOutfits: [],
@@ -43,7 +42,11 @@ function OutiftSection({
     queryFn: async () => {
       const data = await getOutfits();
       if (data?.message) {
-        setError({ message: data?.message });
+        addToast({
+          title: "Something went wrong.",
+          description: data?.message,
+          type: "error",
+        });
       } else {
         const tempFav: IOutfitData[] = [];
         data.outfits.map((item: IOutfitData) => {
@@ -114,7 +117,6 @@ function OutiftSection({
                         clothingItems={clothes}
                         item={item}
                         refetch={refetch}
-                        setError={setError}
                         key={item._id}
                       />
                     );
@@ -132,7 +134,6 @@ function OutiftSection({
       </div>
       <OutfitsModal
         clothingItems={clothes}
-        setError={setError}
         open={clothesModalOpen}
         setOpen={setClothesModalOpen}
         refetch={refetch}
