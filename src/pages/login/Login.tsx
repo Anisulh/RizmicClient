@@ -1,18 +1,8 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useState,
-  useRef,
-  useContext,
-  useEffect,
-} from "react";
-import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
-import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
+import { useState, useRef, useContext, useEffect } from "react";
 import loginImage from "../../assets/login_page.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "../register/interface";
-
-import { ILoginAPIParams, IUserLogin } from "../../interface/userInterface";
+import { ILoginAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
 import {
   IErrorNotificationParams,
@@ -22,6 +12,10 @@ import {
 import { useAuth } from "../../contexts/UserContext";
 import { loginAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
+import { LoginSchema, LoginSchemaType } from "./loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Input from "../../components/ui/Input";
 
 function Login() {
   const navigate = useNavigate();
@@ -48,12 +42,12 @@ function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
-  const [userLoginData, setUserLoginData] = useState<IUserLogin>({
-    email: "",
-    password: "",
-  });
-  const { email } = userLoginData;
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
 
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ userData, credential }: ILoginAPIParams) =>
@@ -62,23 +56,13 @@ function Login() {
       if (data.message) {
         setError({ message: data.message });
       } else {
-        setUserLoginData({
-          email: "",
-          password: "",
-        });
+        reset();
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/wardrobe");
       }
     },
   });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserLoginData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     try {
@@ -90,26 +74,13 @@ function Login() {
   const googleButton = useRef(null);
   useGoogleScript(handleGoogleSignIn, googleButton);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const isValidEmail = emailRegex.test(email);
-    if (!isValidEmail) {
-      setError({ message: "Email is not valid" });
-      return;
-    }
+  const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
+    console.log(data);
     try {
-      mutate({ userData: userLoginData });
+      mutate({ userData: data });
     } catch (error) {
-      setError({ error });
+      console.log(error);
     }
-  };
-
-  const handleClickShowPassword = () => {
-    setShowPassword((prevState) => {
-      return !prevState;
-    });
   };
 
   function handleForgotPasswordClick() {
@@ -127,35 +98,28 @@ function Login() {
             <p className="text-slategrey lg:text-lg">
               Login to find a fresh new fit or manage your wardrobe
             </p>
-            <form className="lg:px-10 py-2 lg:py-5" onSubmit={handleSubmit}>
-              <input
+            <form
+              className="lg:px-10 py-2 lg:py-5"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input<LoginSchemaType>
                 type="email"
                 name="email"
                 placeholder="Email"
-                onChange={handleChange}
-                className="border-2 border-gray-200 rounded-lg block w-full  text-raisinblack my-2 lg:my-6  py-2 px-4 placeholder-raisinblack"
+                register={register}
+                error={errors.email}
+                errorText={errors.email?.message}
               />
 
-              <div className="flex items-center relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  onChange={handleChange}
-                  className="border-2 border-gray-200 rounded-lg block w-full  text-raisinblack my-1 py-2 px-4 placeholder-raisinblack"
-                />
-                <button
-                  type="button"
-                  className="absolute right-0 text-gray-600 hover:text-raisinblack px-2"
-                  onClick={handleClickShowPassword}
-                >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                  ) : (
-                    <EyeIcon className="h-6 w-6 bg-transparent" />
-                  )}
-                </button>
-              </div>
+              <Input<LoginSchemaType>
+                type="password"
+                name="password"
+                placeholder="Password"
+                register={register}
+                error={errors.password}
+                errorText={errors.password?.message}
+              />
+
               <div className="flex justify-end">
                 <button
                   onClick={handleForgotPasswordClick}

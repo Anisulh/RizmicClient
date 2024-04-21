@@ -115,7 +115,7 @@ function GenerateFit() {
   return (
     <div className="mb-10">
       <div className="flex max-w-7xl mt-24 relative w-full md:mx-auto flex-col md:flex-row px-2">
-        <div className="relative bg-white rounded md:w-2/6 ">
+        <div className="relative rounded md:w-2/6 ">
           <h1 className=" w-full absolute text-center font-medium text-lg">
             Our Recommended Generation
           </h1>
@@ -162,7 +162,7 @@ function GenerateFit() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col bg-white grow rounded">
+        <div className="flex flex-col grow rounded">
           <div className="text-sm">
             <h1 className="w-full text-lg font-medium">Choose a vibe:</h1>
             <div className="flex justify-center gap-2  md:gap-4 mt-8">
