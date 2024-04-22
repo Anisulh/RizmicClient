@@ -41,7 +41,7 @@ export default function Navbar() {
       {({ open }) => (
         <>
           <div className="relative">
-            <div className="mx-auto max-w-7xl px-6 lg:px-4">
+            <div className="mx-auto max-w-7xl px-2 lg:px-4">
               <div className="flex items-center justify-between border-gray-100 my-4 lg:my-6 md:justify-start md:space-x-10">
                   <Link
                     to="/"
@@ -52,7 +52,7 @@ export default function Navbar() {
                       alt="RizmicFits"
                       className="w-8 h-8 rounded-full"
                     />
-                    RizmicFits
+                   <span className="hidden md:block">RizmicFits</span> 
                   </Link>
                 <Disclosure.Button className=" md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
