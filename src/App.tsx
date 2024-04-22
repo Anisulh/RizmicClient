@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import AboutUs from "./pages/aboutUs/AboutUs";
-import ContactUs from "./pages/contactUs";
+import ContactUs from "./pages/contactUs/ContactUs";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { ToastProvider } from "./contexts/ToastContext";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
@@ -33,7 +33,10 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/password-reset:token:id" element={<PasswordReset />} />
+            <Route
+              path="/password-reset:token:id"
+              element={<PasswordReset />}
+            />
             <Route
               path="/wardrobe"
               element={
