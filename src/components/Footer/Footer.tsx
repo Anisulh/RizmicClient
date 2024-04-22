@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./footer.css";
 
 function Footer() {
   return (
@@ -9,7 +8,7 @@ function Footer() {
         <Link to="/about-us">About Us</Link>
         <Link to="/contact-us">Contact Us</Link>
       </div>
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto px-4 text-center my-4">
         &copy; {new Date().getFullYear()} RizmicFits. All rights reserved.
       </div>
     </footer>
