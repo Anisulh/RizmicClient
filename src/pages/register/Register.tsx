@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
 import Input from "../../components/ui/Input";
-import PasswordStrengthCheck from "./PasswordStrengthCheck";
+import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 
 declare global {
   const google: {
@@ -108,6 +108,7 @@ function Register() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<RegisterSchemaType>
+                label="First Name"
                 type="text"
                 name="firstName"
                 placeholder="First Name"
@@ -116,6 +117,7 @@ function Register() {
                 errorText={errors.firstName?.message}
               />
               <Input<RegisterSchemaType>
+                label="Last Name"
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
@@ -124,6 +126,7 @@ function Register() {
                 errorText={errors.lastName?.message}
               />
               <Input<RegisterSchemaType>
+                label="Email"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -133,6 +136,7 @@ function Register() {
               />
 
               <Input<RegisterSchemaType>
+                label="Password"
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -144,6 +148,7 @@ function Register() {
               {password && <PasswordStrengthCheck password={password} />}
 
               <Input<RegisterSchemaType>
+                label="Confirm Password"
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
