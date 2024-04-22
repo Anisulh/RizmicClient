@@ -3,7 +3,7 @@ import julfikarRizmic from "../../assets/julfikarRizmic.webp";
 
 export default function AboutUs() {
   return (
-    <div className="content-container max-w-7xl w-full mx-auto">
+    <div className="content-container max-w-7xl w-full mx-auto px-2 lg:px-4">
       <div>
         <h1 className="text-4xl font-bold mt-36 mb-16 text-center">About Us</h1>
         <div className="mx-auto flex flex-col gap-10">
@@ -39,7 +39,7 @@ export default function AboutUs() {
         <h1 className="flex text-3xl font-bold  py-3 mb-3 justify-center">
           The Masterminds:
         </h1>
-        <div className="flex justify-center gap-x-8">
+        <div className="flex flex-col md:flex-row justify-center gap-8 ">
           <div className="flex flex-col items-center">
             <div className="relative rounded-lg h-96 w-80 overflow-hidden">
               <img src={anisulRizmic} alt="Anisul" />
