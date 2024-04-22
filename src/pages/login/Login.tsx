@@ -78,9 +78,6 @@ function Login() {
     }
   };
 
-  function handleForgotPasswordClick() {
-    navigate("/forgot-password");
-  }
 
   return (
     <div className="flex items-center min-h-screen overflow-auto">
@@ -98,6 +95,7 @@ function Login() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<LoginSchemaType>
+                label="Email"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -107,6 +105,7 @@ function Login() {
               />
 
               <Input<LoginSchemaType>
+                label="Password"
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -115,14 +114,13 @@ function Login() {
                 errorText={errors.password?.message}
               />
 
-              <div className="flex justify-end">
-                <button
-                  onClick={handleForgotPasswordClick}
-                  type="button"
-                  className="font-medium text-sm lg:text-base text-ultramarineBlue"
+              <div className="flex justify-end -mt-2">
+                <Link
+                  to={"/forgot-password"}
+                  className="text-sm text-ultramarineBlue hover:bg-inherit p-0"
                 >
                   Forgot Password?
-                </button>
+                </Link>
               </div>
 
               <button
@@ -144,13 +142,13 @@ function Login() {
                 )}
               </button>
             </form>
-            <div className="flex items-center text-base justify-center gap-1 py-4 ">
+            <div className="flex items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
-              <Link to="/register" className="font-medium text-ultramarineBlue">
+              <Link to="/register" className="font-medium text-ultramarineBlue p-1">
                 Register
               </Link>
             </div>
-            <p className="text-center text-base my-4">Or, login with...</p>
+            <p className="text-center  my-4">Or, login with...</p>
             <div className="mt-6 w-fit mx-auto">
               <div ref={googleButton}></div>
             </div>
