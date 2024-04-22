@@ -1,38 +1,42 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
-import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
-import EyeIcon from "@heroicons/react/24/outline/EyeIcon";
 import QuestionMarkCircleIcon from "@heroicons/react/20/solid/QuestionMarkCircleIcon";
-import {
-  IPasswordData,
-  passwordResetFormValidation,
-  usePasswordValidation,
-} from "./PasswordResetFormValidation";
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "../../contexts/ToastContext";
+import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  PasswordResetSchema,
+  PasswordResetSchemaType,
+} from "./passwordResetSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Input from "../../components/ui/Input";
 
 interface IResetPasswordAPIParams {
-  passwordInfo: IPasswordData;
+  passwordInfo: PasswordResetSchemaType;
   userId: string;
   resetToken: string;
 }
 
 function PasswordReset() {
-  const {addToast} = useToast();  
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { addToast } = useToast();
+  const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   let id = searchParams.get("id");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmedPassword, setshowConfirmedPassword] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    password: "",
-    confirmPassword: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<PasswordResetSchemaType>({
+    resolver: zodResolver(PasswordResetSchema),
   });
+
   const [isShowing, setIsShowing] = useState(false);
-  const { password } = passwordData;
-  const passwordStrength = usePasswordValidation(password);
+  const password = watch("password");
   const { isLoading, mutate } = useMutation({
     mutationFn: ({
       passwordInfo,
@@ -52,60 +56,34 @@ function PasswordReset() {
       }
     },
   });
-
-  //   const passwordRequirements = [
-  //     "Minimum of 6 characters",
-  //     "Contains one lowercase and one uppercase",
-  //     "A symbol",
-  //   ];
-
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const validated = passwordResetFormValidation(
-      passwordData,
-      passwordStrength,
-    );
-    if (validated) {
-      try {
-        if (id && token) {
-          id = id.substring(0, id.length - 1);
-          mutate({
-            passwordInfo: passwordData,
-            userId: id,
-            resetToken: token,
-          });
-          navigate("/");
-        } else {
-          return;
-        }
-      } catch (error) {
-        console.error(error);
+  const onSubmit: SubmitHandler<PasswordResetSchemaType> = async (data) => {
+    try {
+      if (id && token) {
+        id = id.substring(0, id.length - 1);
+        mutate({
+          passwordInfo: data,
+          userId: id,
+          resetToken: token,
+        });
+        reset();
+        navigate("/");
+      } else {
         addToast({
           title: "Something went wrong.",
           description: "Please try again.",
           type: "error",
         });
       }
+    } catch (error) {
+      console.error(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "Please try again.",
+        type: "error",
+      });
     }
-  };
-  const handleClickShowPassword = () => {
-    setShowPassword((prevState) => {
-      return !prevState;
-    });
-  };
-  const handleClickShowConfirmedPassword = () => {
-    setshowConfirmedPassword((prevState) => {
-      return !prevState;
-    });
   };
 
   return (
@@ -115,66 +93,21 @@ function PasswordReset() {
         <p className="text-gray-700">
           Enter the fields below to reset your password.
         </p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center mt-6 relative">
             <div className="w-full">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Password:
-              </label>
-              <div className="relative">
-                <input
-                  className="shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:outline-none focus:ring-1 focus:ring-ultra  rounded-lg text-sm block w-full  text-raisinblack py-2 px-3 placeholder-gray-600"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Enter new password"
-                  required
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  className="absolute top-2.5 right-0 text-gray-600 hover:text-raisinblack px-2"
-                  onClick={handleClickShowPassword}
-                >
-                  {showPassword ? (
-                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                  ) : (
-                    <EyeIcon className="h-6 w-6 bg-transparent" />
-                  )}
-                </button>
-              </div>
-              {password && (
-                <div>
-                  <p>
-                    {passwordStrength.charAt(0).toUpperCase() +
-                      passwordStrength.slice(1)}{" "}
-                    Password
-                  </p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 ">
-                    <div
-                      className=" h-2.5 rounded-full"
-                      style={{
-                        width:
-                          passwordStrength === "weak"
-                            ? "35%"
-                            : passwordStrength === "medium"
-                            ? "70%"
-                            : "100%",
-                        backgroundColor:
-                          passwordStrength === "weak"
-                            ? "#8b0000"
-                            : passwordStrength === "medium"
-                            ? "orange"
-                            : "green",
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              )}
-            </div>
+              <Input<PasswordResetSchemaType>
+                label="Password"
+                type="password"
+                name="password"
+                placeholder="Password"
+                register={register}
+                error={errors.password}
+                errorText={errors.password?.message}
+              />
 
+              <PasswordStrengthCheck password={password} />
+            </div>
             <div className="absolute -top-1 -right-6 z-20">
               <Popover className="relative">
                 <Popover.Button className="text-opacity-90 hover:text-opacity-100 focus:outline-none rounded-full p-0 bg-transpare">
@@ -218,34 +151,15 @@ function PasswordReset() {
           </div>
           <div className="flex items-center mt-6">
             <div className="w-full">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Confirm Password:
-              </label>
-              <div className="relative">
-                <input
-                  className="shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:outline-none focus:ring-1 focus:ring-ultra  rounded-lg text-sm block w-full  text-raisinblack py-2 px-3 placeholder-gray-600"
-                  type={showConfirmedPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm the new password"
-                  required
-                  onChange={handleChange}
-                />
-
-                <button
-                  type="button"
-                  className="absolute top-2.5 right-0 text-gray-600 hover:text-raisinblack px-2"
-                  onClick={handleClickShowConfirmedPassword}
-                >
-                  {showConfirmedPassword ? (
-                    <EyeSlashIcon className="h-6 w-6 bg-transparent" />
-                  ) : (
-                    <EyeIcon className="h-6 w-6 bg-transparent" />
-                  )}
-                </button>
-              </div>
+              <Input<PasswordResetSchemaType>
+                label="Confirm Password"
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                register={register}
+                error={errors.confirmPassword}
+                errorText={errors.confirmPassword?.message}
+              />
             </div>
           </div>
           <button
