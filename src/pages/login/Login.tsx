@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/ui/Input";
 import { useToast } from "../../contexts/ToastContext";
+import Button from "../../components/ui/Button";
 
 function Login() {
   const navigate = useNavigate();
@@ -78,7 +79,6 @@ function Login() {
     }
   };
 
-
   return (
     <div className="flex items-center min-h-screen overflow-auto">
       <div className="z-10 flex items-center justify-center min-h-screen h-max w-full lg:block">
@@ -122,29 +122,21 @@ function Login() {
                   Forgot Password?
                 </Link>
               </div>
-
-              <button
+              <Button
                 type="submit"
-                className="mt-6 border border-gray-100 rounded-md text-raisinblack px-4 py-2 font-medium w-full lg:text-lg bg-cambridgeblue"
+                variant="secondary"
+                className="mt-6 w-full"
+                isLoading={isLoading}
               >
-                {isLoading ? (
-                  <span className="flex justify-center items-center bg-transparent">
-                    <div
-                      className="spinner-border border-gray-100 animate-spin inline-block w-5 h-5 border border-gray-100-4 rounded-full bg-transparent text-gray-300"
-                      role="status"
-                    >
-                      <span className="sr-only">Loading</span>
-                    </div>
-                    Processing...
-                  </span>
-                ) : (
-                  "Submit"
-                )}
-              </button>
+                Submit
+              </Button>
             </form>
             <div className="flex items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
-              <Link to="/register" className="font-medium text-ultramarineBlue p-1">
+              <Link
+                to="/register"
+                className="font-medium text-ultramarineBlue p-1"
+              >
                 Register
               </Link>
             </div>

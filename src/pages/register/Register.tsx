@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
 import Input from "../../components/ui/Input";
 import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
+import Button from "../../components/ui/Button";
 
 declare global {
   const google: {
@@ -157,24 +158,14 @@ function Register() {
                 errorText={errors.confirmPassword?.message}
               />
 
-              <button
+              <Button
+                variant="secondary"
                 type="submit"
-                className="mt-4 border-2 border-gray-200 rounded-md text-raisinblack px-4 py-2 font-medium w-full lg:text-lg bg-cambridgeblue"
+                className="mt-6 w-full"
+                isLoading={isLoading}
               >
-                {isLoading ? (
-                  <span className="flex justify-center items-center bg-transparent">
-                    <div
-                      className="spinner-border-2 border-gray-200 animate-spin inline-block w-5 h-5 border-2 border-gray-200-4 rounded-full bg-transparent text-gray-300"
-                      role="status"
-                    >
-                      <span className="sr-only">Loading</span>
-                    </div>
-                    Processing...
-                  </span>
-                ) : (
-                  "Submit"
-                )}
-              </button>
+                Submit
+              </Button>
             </form>
             <div className="flex text-base items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>

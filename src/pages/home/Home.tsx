@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/UserContext";
 import { useEffect } from "react";
+import Button from "../../components/ui/Button";
 
 const virtualWardrobeFeatures = [
   {
@@ -115,13 +116,12 @@ export default function Home() {
                 tailored to your taste.
               </p>
             </div>
-
-            <button
-              className="border px-6 py-3 font-bold rounded-xl bg-ultramarineBlue text-white text-xl mt-10 shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
+            <Button
               onClick={() => navigate("/register")}
+              className="text-xl px-6 py-3 font-bold"
             >
               Get Started
-            </button>
+            </Button>
           </div>
         </section>
 
@@ -251,7 +251,7 @@ export default function Home() {
                       </p>
                       <Link
                         to="/register"
-                        className="mt-10 block w-full rounded-md bg-ultramarineBlue px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultrabg-ultramarineBlue"
+                        className="mt-10 block w-full rounded-md bg-ultramarineBlue px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue"
                       >
                         Get Started
                       </Link>
