@@ -1,9 +1,9 @@
-import { IPasswordData } from "../pages/passwordReset/PasswordResetFormValidation";
 import { IChangePasswordData } from "../components/Profile/ChangePassword";
 import {
   ILoginAPIParams,
   IRegisterAPIParams,
 } from "../interface/userInterface";
+import { PasswordResetSchemaType } from "../pages/passwordReset/passwordResetSchema";
 
 const baseURL = `${import.meta.env.VITE_BASE_URL}/user/`;
 
@@ -56,7 +56,7 @@ export const forgotPasswordAPI = async (email: string) => {
 };
 
 export const resetPasswordAPI = async (
-  passwordData: IPasswordData,
+  passwordData: PasswordResetSchemaType,
   id: string,
   token: string,
 ) => {
@@ -95,6 +95,9 @@ export const loginAPI = async ({ userData, credential }: ILoginAPIParams) => {
       }
     : { method: "POST", credentials: "include" };
   const response = await fetch(url, options);
+  if(!response.ok){
+    throw new Error(response.statusText);
+  }
   return response.json();
 };
 
