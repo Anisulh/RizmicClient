@@ -3,11 +3,7 @@ import EyeSlashIcon from "@heroicons/react/24/outline/EyeSlashIcon";
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import {
-  ChangeEvent,
-  FormEvent,
-  useState,
-} from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { changePasswordAPI } from "../../api/userAPI";
 import { useToast } from "../../contexts/ToastContext";
 
@@ -18,7 +14,7 @@ export interface IChangePasswordData {
 }
 
 export default function ChangePassword() {
-  const {addToast} = useToast();
+  const { addToast } = useToast();
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ data }: { data: IChangePasswordData }) => {
       return changePasswordAPI(data);
@@ -54,7 +50,8 @@ export default function ChangePassword() {
     } else {
       addToast({
         title: "Error",
-        description: "Ensure the New Password and Confirm Password are the same",
+        description:
+          "Ensure the New Password and Confirm Password are the same",
         type: "error",
       });
     }
@@ -69,10 +66,8 @@ export default function ChangePassword() {
     <div className="overflow-hidden ">
       <div className="flex justify-between items-center">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg font-medium leading-6 text-gray-900">
-            Settings
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <h3 className="text-lg font-medium leading-6">Settings</h3>
+          <p className="mt-1 max-w-2xl text-sm">
             Change credentials
           </p>
         </div>
@@ -94,7 +89,7 @@ export default function ChangePassword() {
       <div className="border-t border-gray-200 ">
         <form onSubmit={handleSubmit} className="">
           <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <p className="text-sm font-medium text-gray-500">Change Password</p>
+            <p className="text-sm font-medium">Change Password</p>
             <div className="flex flex-col w-full sm:col-span-2 mt-1 sm:mt-0 ">
               <label
                 htmlFor="currentPassword"
@@ -105,7 +100,7 @@ export default function ChangePassword() {
               <div className="flex flex-col w-full sm:col-span-2 relative">
                 <input
                   type={showCurrentPassword ? "text" : "password"}
-                  className={`text-sm text-gray-900 border-gray-300 rounded-md py-1 px-2 ${
+                  className={`text-sm border-gray-300 rounded-md py-1 px-2 ${
                     changePassword ? "bg-white" : "bg-gray-100"
                   }`}
                   id="currentPassword"
@@ -140,7 +135,7 @@ export default function ChangePassword() {
               <div className="flex flex-col w-full sm:col-span-2 relative">
                 <input
                   type={showNewPassword ? "text" : "password"}
-                  className={`text-sm text-gray-900 border-gray-300 rounded-md py-1 px-2 ${
+                  className={`text-sm border-gray-300 rounded-md py-1 px-2 ${
                     changePassword ? "bg-white" : "bg-gray-100"
                   }`}
                   id="newPassword"
@@ -175,7 +170,7 @@ export default function ChangePassword() {
               <div className="flex flex-col w-full sm:col-span-2 relative">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  className={`text-sm text-gray-900 border-gray-300 rounded-md py-1 px-2 ${
+                  className={`text-sm border-gray-300 rounded-md py-1 px-2 ${
                     changePassword ? "bg-white" : "bg-gray-100"
                   }`}
                   id="confirmPassword"
