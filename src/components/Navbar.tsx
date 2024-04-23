@@ -2,7 +2,7 @@ import { Fragment, useContext } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IUserContext, UserContext } from "../contexts/UserContext";
+import { IUserContext, UserContext, useAuth } from "../contexts/UserContext";
 import userAvatar from "../assets/userAvatar.webp";
 import RizmicIcon from "../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
@@ -22,7 +22,7 @@ const loginRegisterNav = [
 ];
 
 export default function Navbar() {
-  const { user, logout } = useContext(UserContext) as IUserContext;
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -64,7 +64,7 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
 
-                {user ? (
+                {isAuthenticated ? (
                   <>
                     <div className="hidden space-x-10 md:flex">
                       <Link
@@ -87,7 +87,7 @@ export default function Navbar() {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full "
-                              src={user.profilePicture ?? userAvatar}
+                              src={user?.profilePicture ?? userAvatar}
                               alt=""
                             />
                           </Menu.Button>
