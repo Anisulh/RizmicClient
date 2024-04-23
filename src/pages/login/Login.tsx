@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/ui/Input";
 import { useToast } from "../../contexts/ToastContext";
+import Button from "../../components/ui/Button";
 
 function Login() {
   const navigate = useNavigate();
@@ -78,10 +79,6 @@ function Login() {
     }
   };
 
-  function handleForgotPasswordClick() {
-    navigate("/forgot-password");
-  }
-
   return (
     <div className="flex items-center min-h-screen overflow-auto">
       <div className="z-10 flex items-center justify-center min-h-screen h-max w-full lg:block">
@@ -98,6 +95,7 @@ function Login() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<LoginSchemaType>
+                label="Email"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -107,6 +105,7 @@ function Login() {
               />
 
               <Input<LoginSchemaType>
+                label="Password"
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -115,42 +114,33 @@ function Login() {
                 errorText={errors.password?.message}
               />
 
-              <div className="flex justify-end">
-                <button
-                  onClick={handleForgotPasswordClick}
-                  type="button"
-                  className="font-medium text-sm lg:text-base text-ultramarineBlue"
+              <div className="flex justify-end -mt-2">
+                <Link
+                  to={"/forgot-password"}
+                  className="text-sm text-ultramarineBlue hover:bg-inherit p-0"
                 >
                   Forgot Password?
-                </button>
+                </Link>
               </div>
-
-              <button
+              <Button
                 type="submit"
-                className="mt-6 border border-gray-100 rounded-md text-raisinblack px-4 py-2 font-medium w-full lg:text-lg bg-cambridgeblue"
+                variant="secondary"
+                className="mt-6 w-full"
+                isLoading={isLoading}
               >
-                {isLoading ? (
-                  <span className="flex justify-center items-center bg-transparent">
-                    <div
-                      className="spinner-border border-gray-100 animate-spin inline-block w-5 h-5 border border-gray-100-4 rounded-full bg-transparent text-gray-300"
-                      role="status"
-                    >
-                      <span className="sr-only">Loading</span>
-                    </div>
-                    Processing...
-                  </span>
-                ) : (
-                  "Submit"
-                )}
-              </button>
+                Submit
+              </Button>
             </form>
-            <div className="flex items-center text-base justify-center gap-1 py-4 ">
+            <div className="flex items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
-              <Link to="/register" className="font-medium text-ultramarineBlue">
+              <Link
+                to="/register"
+                className="font-medium text-ultramarineBlue p-1"
+              >
                 Register
               </Link>
             </div>
-            <p className="text-center text-base my-4">Or, login with...</p>
+            <p className="text-center  my-4">Or, login with...</p>
             <div className="mt-6 w-fit mx-auto">
               <div ref={googleButton}></div>
             </div>

@@ -8,6 +8,7 @@ import cn from "./cn";
 
 interface InputProps<T extends FieldValues> {
   type: string;
+  label: string;
   name: Path<T>;
   placeholder: string;
   register: UseFormRegister<T>;
@@ -18,6 +19,7 @@ interface InputProps<T extends FieldValues> {
 
 function Input<T extends FieldValues>({
   type,
+  label,
   name,
   placeholder,
   register,
@@ -27,6 +29,12 @@ function Input<T extends FieldValues>({
 }: InputProps<T>) {
   return (
     <div className="my-2 lg:my-4 w-full">
+      <label
+        htmlFor={name}
+        className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+      >
+        {label}
+      </label>
       <input
         type={type}
         placeholder={placeholder}
@@ -37,7 +45,7 @@ function Input<T extends FieldValues>({
           },
         })}
         className={cn(
-          "border-2 border-gray-200 rounded-lg block w-full text-raisinblack py-2 px-4 placeholder-raisinblack",
+          "rounded-lg block w-full text-raisinblack placeholder-gray-400",
           className,
         )}
       />

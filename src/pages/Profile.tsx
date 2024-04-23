@@ -60,7 +60,7 @@ export default function Profile() {
     <div className="max-w-screen mb-40 content-container">
       <div className=" w-full h-60 bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
 
-      <div className="flex flex-col max-w-7xl  mx-auto gap-10">
+      <div className="flex flex-col max-w-7xl mx-auto gap-10">
         <div className="flex gap-2">
           <div className="relative flex items-center justify-center h-full">
             <img
@@ -86,20 +86,20 @@ export default function Profile() {
           </div>
 
           <div>
-            <h1 className="font-medium text-2xl">{`${user?.firstName} ${user?.lastName} `}</h1>
-            <p className="text-gray-600">{user?.email}</p>
+            <h1 className="font-medium text-2xl">{`${user?.firstName} ${user?.lastName}`}</h1>
+            <p>{user?.email}</p>
           </div>
-        </div>{" "}
+        </div>
         <div className="flex justify-center ">
           <div className="max-w-5xl w-full ">
             <div className="overflow-hidden ">
               <div className="flex justify-between items-center">
                 <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
                   <div>
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    <h3 className="text-lg font-medium leading-6">
                       Profile Information
                     </h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                    <p className="text-sm">
                       User details listed below
                     </p>
                   </div>

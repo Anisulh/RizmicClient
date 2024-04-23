@@ -1,22 +1,22 @@
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  PlusIcon,
-} from "@heroicons/react/20/solid";
-import ClothesModal from "./ClothesModal";
-import Spinner from "../Spinner";
+import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
+import Spinner from "../ui/spinner/Spinner";
 import { IClothingData, IShowCategory, IWardrobe } from "./interface";
 import ClothingCard from "./ClothingCard";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import ClothesModal from "./ClothesModal";
 
 function ClothesSection({
   clothes,
   refetch,
   isLoading,
+  modalOpen,
+  setModalOpen,
 }: {
   clothes: IClothingData[];
   refetch: () => void;
   isLoading: boolean;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const [wardrobe, setWardrobe] = useState<IWardrobe>({
     tshirt: [],
@@ -31,12 +31,12 @@ function ClothesSection({
   });
   useEffect(() => {
     Object.keys(wardrobe).map((wardrobeCategory) => {
-      const clothesMatchingCategory = clothes.filter(
+      const matchingCategory = clothes.filter(
         (item: IClothingData) => item.category === wardrobeCategory,
       );
       setWardrobe((prevState) => ({
         ...prevState,
-        [wardrobeCategory]: [...clothesMatchingCategory],
+        [wardrobeCategory]: [...matchingCategory],
       }));
     });
   }, [clothes]);
@@ -53,12 +53,11 @@ function ClothesSection({
     shorts: false,
   });
 
-  const [clothesModalOpen, setClothesModalOpen] = useState(false);
   useEffect(() => {
-    if (!clothesModalOpen) {
+    if (!modalOpen) {
       refetch();
     }
-  }, [clothesModalOpen, refetch]);
+  }, [modalOpen, refetch]);
 
   if (isLoading) {
     return <Spinner />;
@@ -108,12 +107,7 @@ function ClothesSection({
           ) : null;
         })}
       </div>
-      <div className="absolute right-20 xl:right-10 bottom-24">
-        <button className="fixed" onClick={() => setClothesModalOpen(true)}>
-          <PlusIcon className="h-12 w-12 bg-ultramarineBlue text-white hover:bg-cambridgeblue hover:text-black rounded-full p-3 transition-all" />
-        </button>
-      </div>
-      <ClothesModal open={clothesModalOpen} setOpen={setClothesModalOpen} />
+      <ClothesModal open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 }
