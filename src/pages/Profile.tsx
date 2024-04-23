@@ -99,9 +99,7 @@ export default function Profile() {
                     <h3 className="text-lg font-medium leading-6">
                       Profile Information
                     </h3>
-                    <p className="text-sm">
-                      User details listed below
-                    </p>
+                    <p className="text-sm">User details listed below</p>
                   </div>
                 </div>
                 <button
@@ -124,35 +122,27 @@ export default function Profile() {
                 {!editingProfile ? (
                   <dl>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        First name
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <dt className="text-sm font-medium">First name</dt>
+                      <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.firstName}
                       </dd>
                     </div>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Last name
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <dt className="text-sm font-medium">Last name</dt>
+                      <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.lastName}
                       </dd>
                     </div>
 
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Email address
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <dt className="text-sm font-medium">Email address</dt>
+                      <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.email}
                       </dd>
                     </div>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Phone Number
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <dt className="text-sm font-medium">Phone Number</dt>
+                      <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.phoneNumber || "N/A"}
                       </dd>
                     </div>
@@ -162,48 +152,43 @@ export default function Profile() {
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <label
                         htmlFor="firstName"
-                        className="text-sm font-medium text-gray-500"
+                        className="text-sm font-medium"
                       >
                         First name
                       </label>
                       <input
-                        className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
+                        className="mt-1 text-sm sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
                         id="firstName"
                         onChange={handleChange}
                         value={firstName}
                       />
                     </div>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <label
-                        htmlFor="lastName"
-                        className="text-sm font-medium text-gray-500"
-                      >
+                      <label htmlFor="lastName" className="text-sm font-medium">
                         Last name
                       </label>
                       <input
-                        className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
+                        className="mt-1 text-sm sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
                         id="lastName"
                         onChange={handleChange}
                         value={lastName}
                       />
                     </div>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Email address
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <dt className="text-sm font-medium">Email address</dt>
+                      <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.email}
                       </dd>
                     </div>
                     <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <label
                         htmlFor="phoneNumber"
-                        className="text-sm font-medium text-gray-500"
+                        className="text-sm font-medium"
                       >
                         Phone Number
                       </label>
                       <input
-                        className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
+                        className="mt-1 text-sm sm:col-span-2 sm:mt-0 border rounded-md py-1 px-2"
                         id="phoneNumber"
                         onChange={handleChange}
                         value={phoneNumber}
