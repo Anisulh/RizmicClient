@@ -4,7 +4,7 @@ import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
 import { IClothingData } from "../../components/Wardrobe/interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/ui/spinner/Spinner";
 import { generateBlank } from "../../api/generationAPI";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
 import { useToast } from "../../contexts/ToastContext";
