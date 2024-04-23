@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useToast } from "../../contexts/ToastContext";
 import { useQuery } from "@tanstack/react-query";
 import { getOutfits } from "../../api/outfitsAPI";
-import Spinner from "../Spinner";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  PlusIcon,
-} from "@heroicons/react/20/solid";
+import Spinner from "../ui/spinner/Spinner";
+import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import OutfitsModal from "./OutfitsModal";
 import OutfitCard, { IOutfitData } from "./OutfitCard";
 import { IClothingData } from "./interface";
@@ -23,10 +19,14 @@ interface IOutfitsShow {
 
 function OutiftSection({
   clothes,
+  modalOpen,
+  setModalOpen,
 }: {
   clothes: IClothingData[];
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const {addToast} = useToast();
+  const { addToast } = useToast();
   const [outfits, setOutfits] = useState<IOutfitsSections>({
     favoriteOutfits: [],
     allOutfits: [],
@@ -127,15 +127,11 @@ function OutiftSection({
           </div>
         ) : null;
       })}
-      <div className="absolute right-20 xl:right-10 bottom-24">
-        <button className="fixed" onClick={() => setClothesModalOpen(true)}>
-          <PlusIcon className="h-12 w-12 bg-cambridgeblue rounded-full p-3 hover:bg-ultramarineBlue hover:text-white transition-all" />
-        </button>
-      </div>
+
       <OutfitsModal
         clothingItems={clothes}
-        open={clothesModalOpen}
-        setOpen={setClothesModalOpen}
+        open={modalOpen}
+        setOpen={setModalOpen}
         refetch={refetch}
       />
     </>
