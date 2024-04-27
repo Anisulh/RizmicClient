@@ -2,9 +2,8 @@ import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "./interface";
 import { useAuth } from "../../contexts/UserContext";
-import { registerAPI } from "../../api/userAPI";
+import { googleSignInAPI, registerAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
-import { IRegisterAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
 import registerImage from "../../assets/registerImage.webp";
 import { useToast } from "../../contexts/ToastContext";
@@ -46,20 +45,36 @@ function Register() {
     }
   });
 
-  const { isLoading, mutate } = useMutation({
-    mutationFn: ({ userData, credential }: IRegisterAPIParams) =>
-      registerAPI({ userData, credential }),
-    onSuccess(data) {
+  const registerMutation = useMutation({
+    mutationFn: registerAPI,
+    onSuccess: (data) => {
       if (data.message) {
         addToast({
-          title: "Something went wrong.",
+          title: "Error",
           description: data.message,
           type: "error",
         });
       } else {
         reset();
+        console.log(data);
         setUser(data);
-        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/wardrobe");
+      }
+    },
+  });
+
+  const googleSignInMutation = useMutation({
+    mutationFn: googleSignInAPI,
+    onSuccess: (data) => {
+      if (data.message) {
+        addToast({
+          title: "Error",
+          description: data.message,
+          type: "error",
+        });
+      } else {
+        console.log(data);
+        setUser(data);
         navigate("/wardrobe");
       }
     },
@@ -67,7 +82,7 @@ function Register() {
 
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     try {
-      mutate({ credential: res.credential });
+      await googleSignInMutation.mutateAsync(res.credential);
     } catch (error) {
       console.log(error);
       addToast({
@@ -82,7 +97,7 @@ function Register() {
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
     try {
-      mutate({ userData: data });
+      await registerMutation.mutateAsync({ userData: data });
     } catch (error) {
       console.log(error);
       addToast({
@@ -162,7 +177,7 @@ function Register() {
                 variant="secondary"
                 type="submit"
                 className="mt-6 w-full"
-                isLoading={isLoading}
+                isLoading={registerMutation.isPending}
               >
                 Submit
               </Button>
