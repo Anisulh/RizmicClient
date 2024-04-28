@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LoginSchema, LoginSchemaType } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "../../components/ui/Input";
+import Input from "../../components/ui/inputs/Input";
 import { useToast } from "../../contexts/ToastContext";
 import Button from "../../components/ui/Button";
 
@@ -24,12 +24,9 @@ function Login() {
     }
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
+  const { control, handleSubmit, reset } = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
+  });
 
   const loginMutation = useMutation({
     mutationFn: loginAPI,
@@ -115,9 +112,7 @@ function Login() {
                 type="email"
                 name="email"
                 placeholder="Email"
-                register={register}
-                error={errors.email}
-                errorText={errors.email?.message}
+                control={control}
               />
 
               <Input<LoginSchemaType>
@@ -125,9 +120,7 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                register={register}
-                error={errors.password}
-                errorText={errors.password?.message}
+                control={control}
               />
 
               <div className="flex justify-end -mt-2">
