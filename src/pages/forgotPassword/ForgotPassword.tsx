@@ -1,15 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
-import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgotPasswordAPI } from "../../api/userAPI";
 import { useToast } from "../../contexts/ToastContext";
+import Input from "../../components/ui/inputs/Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ForgotPasswordSchemaType,
+  forgotPasswordSchema,
+} from "./forgotPasswordSchema";
+import Button from "../../components/ui/Button";
 
 function ForgotPassword() {
   const { addToast } = useToast();
-  const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const { isLoading, mutate } = useMutation({
-    mutationFn: (email: string) => forgotPasswordAPI(email),
+
+  const { control, handleSubmit } = useForm<ForgotPasswordSchemaType>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: forgotPasswordAPI,
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -23,35 +34,19 @@ function ForgotPassword() {
     },
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const emailRegex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const isValidEmail = emailRegex.test(email);
-    if (isValidEmail) {
-      try {
-        mutate(email);
-        addToast({
-          title: "Email sent.",
-          description: `If your email was registered, you will receive an email to reset password.`,
-          type: "success",
-        });
-      } catch (error) {
-        console.error(error);
-        addToast({
-          title: "Something went wrong.",
-          description: "Please try again.",
-          type: "error",
-        });
-      }
-    } else {
+  const onSubmit: SubmitHandler<ForgotPasswordSchemaType> = async (data) => {
+    try {
+      await mutateAsync(data);
       addToast({
-        title: "Invalid email.",
-        description: "Enter a valid email.",
+        title: "Email sent.",
+        description: `If your email was registered, you will receive an email to reset password.`,
+        type: "success",
+      });
+    } catch (error) {
+      console.error(error);
+      addToast({
+        title: "Something went wrong.",
+        description: "Please try again.",
         type: "error",
       });
     }
@@ -62,34 +57,18 @@ function ForgotPassword() {
       <div className="m-auto justify-center">
         <h1 className="font-bold text-4xl">Forgot Password</h1>
         <p>Enter your email to reset your password</p>
-        <form onSubmit={handleSubmit}>
-          <input
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input<ForgotPasswordSchemaType>
+            label="Email"
             type="email"
             name="email"
             placeholder="Email"
-            className="border rounded-lg block w-full bg-ourGrey text-raisinblack my-2 py-2 px-3 placeholder-raisinblack"
-            required
-            onChange={handleChange}
-          ></input>
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="mt-2 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
-          >
-            {isLoading ? (
-              <span className="flex justify-center items-center bg-transparent">
-                <div
-                  className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
-                  role="status"
-                >
-                  <span className="sr-only">Loading</span>
-                </div>
-                Processing...
-              </span>
-            ) : (
-              "Submit"
-            )}
-          </button>
+            control={control}
+          />
+
+          <Button type="submit" isLoading={isPending}>
+            Submit
+          </Button>
         </form>
       </div>
     </div>
