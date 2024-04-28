@@ -11,22 +11,17 @@ import {
   PasswordResetSchemaType,
 } from "./passwordResetSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../../components/ui/Input";
+import Input from "../../components/ui/inputs/Input";
 import PopoverModal from "../../components/Popover/PopoverModal";
 
 function PasswordReset() {
   const { addToast } = useToast();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<PasswordResetSchemaType>({
-    resolver: zodResolver(PasswordResetSchema),
-  });
+  const { control, handleSubmit, reset, watch } =
+    useForm<PasswordResetSchemaType>({
+      resolver: zodResolver(PasswordResetSchema),
+    });
 
   const [isShowing, setIsShowing] = useState(false);
   const password = watch("password");
@@ -84,9 +79,7 @@ function PasswordReset() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                register={register}
-                error={errors.password}
-                errorText={errors.password?.message}
+                control={control}
               />
 
               <PasswordStrengthCheck password={password} />
@@ -129,9 +122,7 @@ function PasswordReset() {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                register={register}
-                error={errors.confirmPassword}
-                errorText={errors.confirmPassword?.message}
+                control={control}
               />
             </div>
           </div>
