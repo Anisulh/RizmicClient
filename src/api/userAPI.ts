@@ -133,9 +133,6 @@ export const getUserData = async () => {
   const url = new URL(baseURL + "get-user");
   const options: RequestInit = {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
     credentials: "include",
   };
   const response = await fetch(url, options);
