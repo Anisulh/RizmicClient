@@ -10,10 +10,28 @@ import { useToast } from "../../contexts/ToastContext";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
-import Input from "../../components/ui/Input";
+import Input from "../../components/ui/inputs/Input";
 import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 import Button from "../../components/ui/Button";
+const formatPhoneNumber = (input: string): string => {
+  // Strip all non-digits
+  const digits = input.replace(/\D/g, "");
+  // Capture groups of digits to format
+  const match = digits.match(/^(\d{1,3})(\d{0,3})(\d{0,4})$/);
+  if (!match) {
+    return "";
+  }
 
+  const [, areaCode, middleThree, lastFour] = match;
+
+  // Format and combine parts of the phone number
+  let result = "";
+  if (areaCode) result = `(${areaCode}`;
+  if (middleThree) result += `) ${middleThree}`;
+  if (lastFour) result += `-${lastFour}`;
+
+  return result;
+};
 declare global {
   const google: {
     accounts: {
@@ -29,13 +47,9 @@ function Register() {
   const navigate = useNavigate();
   const { setUser, isAuthenticated } = useAuth();
   const { addToast } = useToast();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<RegisterSchemaType>({ resolver: zodResolver(RegisterSchema) });
+  const { control, handleSubmit, reset, watch } = useForm<RegisterSchemaType>({
+    resolver: zodResolver(RegisterSchema),
+  });
 
   const password = watch("password");
 
@@ -97,7 +111,7 @@ function Register() {
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
     try {
-      await registerMutation.mutateAsync({ userData: data });
+      await registerMutation.mutateAsync(data);
     } catch (error) {
       console.log(error);
       addToast({
@@ -128,27 +142,21 @@ function Register() {
                 type="text"
                 name="firstName"
                 placeholder="First Name"
-                register={register}
-                error={errors.firstName}
-                errorText={errors.firstName?.message}
+                control={control}
               />
               <Input<RegisterSchemaType>
                 label="Last Name"
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
-                register={register}
-                error={errors.lastName}
-                errorText={errors.lastName?.message}
+                control={control}
               />
               <Input<RegisterSchemaType>
                 label="Email"
                 type="email"
                 name="email"
                 placeholder="Email"
-                register={register}
-                error={errors.email}
-                errorText={errors.email?.message}
+                control={control}
               />
 
               <Input<RegisterSchemaType>
@@ -156,9 +164,7 @@ function Register() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                register={register}
-                error={errors.password}
-                errorText={errors.password?.message}
+                control={control}
               />
 
               {password && <PasswordStrengthCheck password={password} />}
@@ -168,11 +174,17 @@ function Register() {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                register={register}
-                error={errors.confirmPassword}
-                errorText={errors.confirmPassword?.message}
+                control={control}
               />
-
+              <Input<RegisterSchemaType>
+                label="Phone Number"
+                type="tel"
+                name="phoneNumber"
+                required={false}
+                placeholder="Phone Number"
+                control={control}
+                formatInput={formatPhoneNumber}
+              />
               <Button
                 variant="secondary"
                 type="submit"
