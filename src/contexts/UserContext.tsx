@@ -35,14 +35,12 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const refetchUserData = async (): Promise<void> => {
-    if (!user) return;
+    if (!isAuthenticated) return;
     try {
-      const response = await getUserData();
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data);
-        localStorage.setItem("user", JSON.stringify(data));
-      }
+      const data = await getUserData();
+      console.log("User data fetched:", data);
+      setUser(data);
+      return data;
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
