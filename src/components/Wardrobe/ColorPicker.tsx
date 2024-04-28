@@ -12,7 +12,7 @@ interface IColorPicker {
 export default function ColorPicker({ color, ...rest }: IColorPicker) {
   const rgbColorString = useMemo((): RgbColor | undefined => {
     return colord(color).toRgb();
-  }, []);
+  }, [color]);
 
   return <RgbColorPicker color={rgbColorString} {...rest} />;
 }

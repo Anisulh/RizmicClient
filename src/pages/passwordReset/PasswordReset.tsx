@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Popover, Transition } from "@headlessui/react";
 import QuestionMarkCircleIcon from "@heroicons/react/20/solid/QuestionMarkCircleIcon";
 import { resetPasswordAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -12,38 +11,22 @@ import {
   PasswordResetSchemaType,
 } from "./passwordResetSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../../components/ui/Input";
-
-interface IResetPasswordAPIParams {
-  passwordInfo: PasswordResetSchemaType;
-  userId: string;
-  resetToken: string;
-}
+import Input from "../../components/ui/inputs/Input";
+import PopoverModal from "../../components/Popover/PopoverModal";
 
 function PasswordReset() {
   const { addToast } = useToast();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  let id = searchParams.get("id");
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<PasswordResetSchemaType>({
-    resolver: zodResolver(PasswordResetSchema),
-  });
+  const { control, handleSubmit, reset, watch } =
+    useForm<PasswordResetSchemaType>({
+      resolver: zodResolver(PasswordResetSchema),
+    });
 
   const [isShowing, setIsShowing] = useState(false);
   const password = watch("password");
-  const { isLoading, mutate } = useMutation({
-    mutationFn: ({
-      passwordInfo,
-      userId,
-      resetToken,
-    }: IResetPasswordAPIParams) =>
-      resetPasswordAPI(passwordInfo, userId, resetToken),
+  const { isPending, mutate } = useMutation({
+    mutationFn: resetPasswordAPI,
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -60,13 +43,8 @@ function PasswordReset() {
 
   const onSubmit: SubmitHandler<PasswordResetSchemaType> = async (data) => {
     try {
-      if (id && token) {
-        id = id.substring(0, id.length - 1);
-        mutate({
-          passwordInfo: data,
-          userId: id,
-          resetToken: token,
-        });
+      if (token) {
+        mutate({ data, token });
         reset();
         navigate("/");
       } else {
@@ -101,52 +79,40 @@ function PasswordReset() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                register={register}
-                error={errors.password}
-                errorText={errors.password?.message}
+                control={control}
               />
 
               <PasswordStrengthCheck password={password} />
             </div>
             <div className="absolute -top-1 -right-6 z-20">
-              <Popover className="relative">
-                <Popover.Button className="text-opacity-90 hover:text-opacity-100 focus:outline-none rounded-full p-0 bg-transpare">
+              <PopoverModal
+                isShowing={isShowing}
+                button={
                   <QuestionMarkCircleIcon
                     onMouseEnter={() => setIsShowing(true)}
                     onMouseLeave={() => setIsShowing(false)}
                     className="ml-2 h-5 w-5 text-cambridgeblue transition duration-150 ease-in-out hover:text-opacity-100"
                     aria-hidden="true"
                   />
-                </Popover.Button>
-                <Transition
-                  enter="transition ease-out duration-200"
-                  enterFrom="opacity-0 translate-y-1"
-                  enterTo="opacity-100 translate-y-0"
-                  leave="transition ease-in duration-150"
-                  leaveFrom="opacity-100 translate-y-0"
-                  leaveTo="opacity-0 translate-y-1"
-                  show={isShowing}
-                >
-                  <Popover.Panel className="absolute left-full  z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                    <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                      <div className="p-4">
-                        <div className=" px-2  ">
-                          <h6 className="text-sm font-medium text-gray-900 py-2">
-                            Enter new password which meets the following
-                            conditions for a strong password:
-                          </h6>
+                }
+              >
+                <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="p-4">
+                    <div className=" px-2  ">
+                      <h6 className="text-sm font-medium text-gray-900 py-2">
+                        Enter new password which meets the following conditions
+                        for a strong password:
+                      </h6>
 
-                          <ul className="list-none block text-sm text-gray-500 ">
-                            <li>Minimum of 6 characters</li>
-                            <li>Contains one lowercase and one uppercase</li>
-                            <li>A symbol</li>
-                          </ul>
-                        </div>
-                      </div>
+                      <ul className="list-none block text-sm text-gray-500 ">
+                        <li>Minimum of 6 characters</li>
+                        <li>Contains one lowercase and one uppercase</li>
+                        <li>A symbol</li>
+                      </ul>
                     </div>
-                  </Popover.Panel>
-                </Transition>
-              </Popover>
+                  </div>
+                </div>
+              </PopoverModal>
             </div>
           </div>
           <div className="flex items-center mt-6">
@@ -156,18 +122,16 @@ function PasswordReset() {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                register={register}
-                error={errors.confirmPassword}
-                errorText={errors.confirmPassword?.message}
+                control={control}
               />
             </div>
           </div>
           <button
-            disabled={isLoading}
+            disabled={isPending}
             type="submit"
             className="mt-6 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
           >
-            {isLoading ? (
+            {isPending ? (
               <span className="flex justify-center items-center bg-transparent">
                 <div
                   className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"

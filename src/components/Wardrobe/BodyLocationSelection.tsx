@@ -2,6 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Dispatch, SetStateAction } from "react";
 import { IBodyLocations, ICreateClothingData } from "./interface";
+import { IClothesModalSchema } from "./ClothesModal";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -63,7 +64,7 @@ export function BodyLocationChips({
   setClothingData,
 }: {
   bodyLocation: string[];
-  setClothingData: Dispatch<SetStateAction<ICreateClothingData>>;
+  setClothingData: Dispatch<SetStateAction<IClothesModalSchema>>;
 }) {
   return (
     <>

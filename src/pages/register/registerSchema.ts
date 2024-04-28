@@ -1,4 +1,5 @@
 import { z } from "zod";
+const phoneNumberPattern = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 export const RegisterSchema = z
   .object({
@@ -45,6 +46,10 @@ export const RegisterSchema = z
         message:
           "Confirm password must contain at least one uppercase letter, one lowercase letter, and one number.",
       }),
+    phoneNumber: z
+      .string()
+      .regex(phoneNumberPattern, "Invalid phone number format")
+      .optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match.",

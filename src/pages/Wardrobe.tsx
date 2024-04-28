@@ -3,13 +3,13 @@ import ClothesSection from "../components/Wardrobe/ClothesSection";
 import OutiftSection from "../components/Wardrobe/OutiftSection";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../api/clothesAPI";
-import { IClothingData } from "../components/Wardrobe/interface";
 import { useToast } from "../contexts/ToastContext";
 import { PlusIcon } from "@heroicons/react/20/solid";
+import { IExistingClothesData } from "../components/Wardrobe/ClothesModal";
 
 export default function Wardrobe() {
   const [openTab, setOpenTab] = useState(1);
-  const [clothes, setClothes] = useState<IClothingData[]>([]);
+  const [clothes, setClothes] = useState<{ [key: string]: IExistingClothesData[] }>({});
   const [modalOpen, setModalOpen] = useState(false);
   const { addToast } = useToast();
   const { isLoading, refetch } = useQuery({
@@ -23,6 +23,7 @@ export default function Wardrobe() {
           type: "error",
         });
       } else {
+        console.log(data)
         setClothes(data);
         return data;
       }

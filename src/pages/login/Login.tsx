@@ -2,15 +2,14 @@ import { useRef, useEffect } from "react";
 import loginImage from "../../assets/login_page.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { IGoogleResponse } from "../register/interface";
-import { ILoginAPIParams } from "../../interface/userInterface";
 import { useGoogleScript } from "../../api/googleAPI";
 import { useAuth } from "../../contexts/UserContext";
-import { loginAPI } from "../../api/userAPI";
+import { googleSignInAPI, loginAPI } from "../../api/userAPI";
 import { useMutation } from "@tanstack/react-query";
 import { LoginSchema, LoginSchemaType } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "../../components/ui/Input";
+import Input from "../../components/ui/inputs/Input";
 import { useToast } from "../../contexts/ToastContext";
 import Button from "../../components/ui/Button";
 
@@ -25,27 +24,40 @@ function Login() {
     }
   });
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<LoginSchemaType>({ resolver: zodResolver(LoginSchema) });
+  const { control, handleSubmit, reset } = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
+  });
 
-  const { isLoading, mutate } = useMutation({
-    mutationFn: ({ userData, credential }: ILoginAPIParams) =>
-      loginAPI({ userData, credential }),
-    onSuccess(data) {
+  const loginMutation = useMutation({
+    mutationFn: loginAPI,
+    onSuccess: (data) => {
       if (data.message) {
         addToast({
-          title: "Something went wrong.",
-          description: data.message,
+          title: "Error",
+          description: data.error,
           type: "error",
         });
       } else {
         reset();
+        console.log(data);
         setUser(data);
-        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/wardrobe");
+      }
+    },
+  });
+
+  const googleSignInMutation = useMutation({
+    mutationFn: googleSignInAPI,
+    onSuccess: (data) => {
+      if (data.message) {
+        addToast({
+          title: "Error",
+          description: data.message,
+          type: "error",
+        });
+      } else {
+        console.log(data);
+        setUser(data);
         navigate("/wardrobe");
       }
     },
@@ -53,7 +65,8 @@ function Login() {
 
   const handleGoogleSignIn = async (res: IGoogleResponse) => {
     try {
-      mutate({ credential: res.credential });
+      const { credential } = res;
+      await googleSignInMutation.mutateAsync(credential);
     } catch (error) {
       console.error(error);
       addToast({
@@ -68,7 +81,7 @@ function Login() {
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
     try {
-      mutate({ userData: data });
+      await loginMutation.mutateAsync(data);
     } catch (error) {
       console.log(error);
       addToast({
@@ -99,9 +112,7 @@ function Login() {
                 type="email"
                 name="email"
                 placeholder="Email"
-                register={register}
-                error={errors.email}
-                errorText={errors.email?.message}
+                control={control}
               />
 
               <Input<LoginSchemaType>
@@ -109,9 +120,7 @@ function Login() {
                 type="password"
                 name="password"
                 placeholder="Password"
-                register={register}
-                error={errors.password}
-                errorText={errors.password?.message}
+                control={control}
               />
 
               <div className="flex justify-end -mt-2">
@@ -126,7 +135,7 @@ function Login() {
                 type="submit"
                 variant="secondary"
                 className="mt-6 w-full"
-                isLoading={isLoading}
+                isLoading={loginMutation.isPending}
               >
                 Submit
               </Button>

@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
-import ClothesModal from "./ClothesModal";
+import ClothesModal, { IClothesModalSchema, IExistingClothesData } from "./ClothesModal";
 import { Menu, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
 import { deleteClothes } from "../../api/clothesAPI";
@@ -17,11 +17,11 @@ export default function ClothingCard({
   item,
   refetch,
 }: {
-  item: IClothingData;
+  item: IExistingClothesData;
   refetch?: () => void;
 }) {
   const { addToast } = useToast();
-  const { variant, color, image, _id } = item;
+  const { category, color, image, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
     mutationFn: async ({ clothingID }: { clothingID: string }) =>
@@ -60,7 +60,7 @@ export default function ClothingCard({
 
           <div className="flex justify-between w-full mt-1">
             <div>
-              <h3>{variant.charAt(0).toUpperCase() + variant.slice(1)}</h3>
+              <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
               <p className="text-slategrey text-sm">
                 Color: {color.charAt(0).toUpperCase() + color.slice(1)}
               </p>
@@ -149,7 +149,6 @@ export default function ClothingCard({
         open={editMenuOpen}
         setOpen={setEditMenuOpen}
         existingData={item}
-        refetch={refetch}
       />
     </>
   );

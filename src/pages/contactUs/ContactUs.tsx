@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { sendForm } from "@emailjs/browser";
-import Input from "../../components/ui/Input";
+import Input from "../../components/ui/inputs/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactUsSchema, ContactUsSchemaType } from "./contactUsSchema";

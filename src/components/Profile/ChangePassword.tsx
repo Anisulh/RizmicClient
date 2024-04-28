@@ -6,19 +6,12 @@ import { useMutation } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { changePasswordAPI } from "../../api/userAPI";
 import { useToast } from "../../contexts/ToastContext";
-
-export interface IChangePasswordData {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+import { IChangePasswordData } from "../../interface/userInterface";
 
 export default function ChangePassword() {
   const { addToast } = useToast();
-  const { mutate, isLoading } = useMutation({
-    mutationFn: ({ data }: { data: IChangePasswordData }) => {
-      return changePasswordAPI(data);
-    },
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: changePasswordAPI
   });
   const [changePassword, setChangePassword] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState({
@@ -46,7 +39,7 @@ export default function ChangePassword() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (newPassword === confirmPassword) {
-      mutate({ data: changePasswordData });
+      mutateAsync(changePasswordData);
     } else {
       addToast({
         title: "Error",
@@ -205,9 +198,9 @@ export default function ChangePassword() {
                 type="submit"
                 className="text-sm rounded-md py-2 px-4 bg-ultramarineBlue text-white
                      "
-                disabled={isLoading}
+                disabled={isPending}
               >
-                {isLoading ? (
+                {isPending ? (
                   <span className="flex justify-center items-center bg-transparent">
                     <div
                       className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
