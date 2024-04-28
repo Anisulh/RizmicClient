@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getUserData } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
 
@@ -15,17 +21,13 @@ export const UserContext = createContext<IUserContext | null>(null);
 
 export const useAuth = (): IUserContext => {
   const context = useContext(UserContext);
-  if (!context) throw new Error('useAuth must be used within a UserContextProvider');
+  if (!context)
+    throw new Error("useAuth must be used within a UserContextProvider");
   return context;
 };
 
-const getUser = (): IUser | null => {
-  const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null;
-};
-
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(getUser());
+  const [user, setUser] = useState<IUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!user);
 
   useEffect(() => {
@@ -39,30 +41,40 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
-        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data));
       }
     } catch (error) {
-      console.error('Failed to fetch user data:', error);
+      console.error("Failed to fetch user data:", error);
     }
   };
 
   const validateToken = async (): Promise<void> => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/validate`, { credentials: 'include' });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/user/validate`,
+        { method: "GET", credentials: "include" },
+      );
       setIsAuthenticated(response.ok);
     } catch (error) {
       setIsAuthenticated(false);
-      console.error('Error validating token:', error);
+      console.error("Error validating token:", error);
     }
   };
 
   const logout = (): void => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
   };
 
-  const value = { user, setUser, isAuthenticated, refetchUserData, logout, validateToken };
+  const value = {
+    user,
+    setUser,
+    isAuthenticated,
+    refetchUserData,
+    logout,
+    validateToken,
+  };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
