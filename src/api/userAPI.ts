@@ -1,16 +1,52 @@
-import { IChangePasswordData } from "../components/Profile/ChangePassword";
-import { IRegisterAPIParams, IUserLogin } from "../interface/userInterface";
+import {
+  IChangePasswordData,
+  IRegisterAPIParams,
+  IRegisterUser,
+  IUpdateProfile,
+  IUserLogin,
+} from "../interface/userInterface";
 import { PasswordResetSchemaType } from "../pages/passwordReset/passwordResetSchema";
 
 const baseURL = `${import.meta.env.VITE_BASE_URL}/user/`;
 
-export interface IUpdateProfile {
-  firstName?: string;
-  lastName?: string;
-  phoneNumber?: string;
-}
+export const googleSignInAPI = async (credential: string) => {
+  const url = baseURL + "google-sign-in";
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${credential}`,
+    },
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
+};
 
-export const registerAPI = async (userData: IRegisterAPIParams) => {
+export const loginAPI = async (userData: IUserLogin) => {
+  const url = baseURL + "login";
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(userData),
+  };
+
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
+};
+
+export const registerAPI = async (userData: IRegisterUser) => {
   const url = baseURL + "register";
   const options: RequestInit = {
     method: "POST",
@@ -22,10 +58,14 @@ export const registerAPI = async (userData: IRegisterAPIParams) => {
   };
 
   const response = await fetch(url, options);
-  return response.json();
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
 };
 
-export const forgotPasswordAPI = async (email: string) => {
+export const forgotPasswordAPI = async (data: { email: string }) => {
   const url = baseURL + "forgot-password";
   const options: RequestInit = {
     method: "POST",
@@ -33,10 +73,14 @@ export const forgotPasswordAPI = async (email: string) => {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(data),
   };
   const response = await fetch(url, options);
-  return response.json();
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
 };
 
 export const resetPasswordAPI = async ({
@@ -60,105 +104,94 @@ export const resetPasswordAPI = async ({
     }),
   };
   const response = await fetch(url, options);
-  return response.json();
-};
-
-export const googleSignInAPI = async (credential: string) => {
-  const url = baseURL + "google-sign-in";
-  const options: RequestInit = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${credential}`,
-    },
-    credentials: "include",
-  };
-  const response = await fetch(url, options);
-  return response.json();
-};
-
-export const loginAPI = async (userData: IUserLogin) => {
-  const url = baseURL + "login";
-  const options: RequestInit = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(userData),
-  };
-
-  const response = await fetch(url, options);
+  const responseData = await response.json();
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(responseData.message);
   }
-  return response.json();
+  return responseData;
 };
 
 export const updateProfileAPI = async (profileData: IUpdateProfile) => {
-  try {
-    const url = new URL(baseURL + "update-profile");
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(profileData),
-    };
-    const response = await fetch(url, options);
-    return response.json();
-  } catch (error) {
-    return error;
+  const url = new URL(baseURL + "update-profile");
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(profileData),
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
   }
+  return responseData;
 };
 
 export const getUserData = async () => {
-  try {
-    const url = new URL(baseURL + "get-user");
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    };
-    const response = await fetch(url, options);
-    return response.json();
-  } catch (error) {
-    return error;
+  const url = new URL(baseURL + "get-user");
+  const options: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
   }
+  return responseData;
 };
 
 export const changePasswordAPI = async (passwordData: IChangePasswordData) => {
-  try {
-    const url = new URL(baseURL + "change-password");
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(passwordData),
-    };
-    const response = await fetch(url, options);
-    return response.json();
-  } catch (error) {
-    return error;
+  const url = new URL(baseURL + "change-password");
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(passwordData),
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
   }
+  return responseData;
 };
 
 export const updateProfileImageAPI = async (image: FormData) => {
-  try {
-    const url = new URL(baseURL + "update-profile-image");
-    const options: RequestInit = {
-      method: "POST",
-      credentials: "include",
-      body: image,
-    };
-    const response = await fetch(url, options);
-    return response.json();
-  } catch (error) {
-    return error;
+  const url = new URL(baseURL + "update-profile-image");
+  const options: RequestInit = {
+    method: "POST",
+    credentials: "include",
+    body: image,
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
   }
+  return responseData;
+};
+
+export const logoutAPI = async () => {
+  const url = new URL(baseURL + "logout");
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
 };
