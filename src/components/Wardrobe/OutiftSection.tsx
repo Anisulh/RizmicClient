@@ -1,132 +1,78 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useToast } from "../../contexts/ToastContext";
-import { useQuery } from "@tanstack/react-query";
-import { getOutfits } from "../../api/outfitsAPI";
-import Spinner from "../ui/spinner/Spinner";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import OutfitsModal from "./OutfitsModal";
-import OutfitCard, { IOutfitData } from "./OutfitCard";
-import { IClothingData } from "./interface";
+import OutfitsModal, { IExistingOutfitData } from "./OutfitsModal";
+import OutfitCard from "./OutfitCard";
+import { IExistingClothesData } from "./ClothesModal";
+import { splitCamelCase } from "../../utils/splitCamelCase";
+import { IOutfitsSections } from "../../pages/Wardrobe";
 
-interface IOutfitsSections {
-  favoriteOutfits: IOutfitData[];
-  allOutfits: IOutfitData[];
-}
 interface IOutfitsShow {
   favorite: boolean;
   all: boolean;
 }
 
-function OutiftSection({
+function OutfitSection({
+  outfits,
   clothes,
   modalOpen,
   setModalOpen,
+  refetch,
 }: {
-  clothes: IClothingData[];
+  outfits: IOutfitsSections;
+  clothes: IExistingClothesData[];
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
+  refetch: () => void;
 }) {
-  const { addToast } = useToast();
-  const [outfits, setOutfits] = useState<IOutfitsSections>({
-    favoriteOutfits: [],
-    allOutfits: [],
-  });
   const [show, setShow] = useState<IOutfitsShow>({
     favorite: false,
     all: false,
   });
-  const [clothesModalOpen, setClothesModalOpen] = useState(false);
 
-  const { isLoading, refetch } = useQuery({
-    queryKey: ["outfits"],
-    queryFn: async () => {
-      const data = await getOutfits();
-      if (data?.message) {
-        addToast({
-          title: "Something went wrong.",
-          description: data?.message,
-          type: "error",
-        });
-      } else {
-        const tempFav: IOutfitData[] = [];
-        data.outfits.map((item: IOutfitData) => {
-          if (item.favorited) {
-            tempFav.push(item);
-          }
-        });
-        setOutfits({
-          favoriteOutfits: tempFav,
-          allOutfits: data.outfits,
-        });
-        return data;
-      }
-    },
-    refetchOnWindowFocus: false,
-  });
-  useEffect(() => {
-    if (!clothesModalOpen) {
-      refetch();
-    }
-  }, [clothesModalOpen, refetch]);
-
-  function splitCamelCase(str: string) {
-    // Add space before all capital letters and make everything lowercase
-    str = str.replace(/([A-Z])/g, " $1").toLowerCase();
-
-    // Capitalize the first letter of each word
-    str = str.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
-      return $1.toUpperCase();
-    });
-
-    return str;
-  }
-  if (isLoading) {
-    return <Spinner />;
-  }
   return (
     <>
-      {Object.keys(outfits).map((key) => {
-        return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
-          <div key={key}>
-            <button
-              className="flex justify-between items-center mb-6 w-full hover:bg-gray-100 py-2 px-2 transition-colors rounded-lg"
-              onClick={() =>
-                setShow((prevState) => ({
-                  ...prevState,
-                  [key]: !show[key as keyof IOutfitsShow],
-                }))
-              }
-            >
-              <h2 className="font-medium text-xl ml-6">
-                {splitCamelCase(key)}
-              </h2>
-              <div>
-                {show[key as keyof IOutfitsShow] ? (
-                  <ChevronLeftIcon className="h-6 w-6" />
-                ) : (
-                  <ChevronDownIcon className="h-6 w-6" />
-                )}
-              </div>
-            </button>
-            {show[key as keyof IOutfitsShow] && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
-                {(outfits[key as keyof IOutfitsSections] as []).map(
-                  (item: IOutfitData) => {
-                    return (
-                      <OutfitCard
-                        clothingItems={clothes}
-                        item={item}
-                        refetch={refetch}
-                        key={item._id}
-                      />
-                    );
-                  },
-                )}
-              </div>
-            )}
-          </div>
-        ) : null;
-      })}
+      <div className="px-4">
+        {Object.keys(outfits).map((key) => {
+          return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
+            <div key={key}>
+              <button
+                className="flex justify-between items-center mb-6 w-full hover:bg-gray-600 py-2 transition-colors rounded-lg"
+                onClick={() =>
+                  setShow((prevState) => ({
+                    ...prevState,
+                    [key]: !show[key as keyof IOutfitsShow],
+                  }))
+                }
+              >
+                <h2 className="font-medium text-xl">{splitCamelCase(key)}</h2>
+                <div>
+                  {show[key as keyof IOutfitsShow] ? (
+                    <ChevronLeftIcon className="h-6 w-6" />
+                  ) : (
+                    <ChevronDownIcon className="h-6 w-6" />
+                  )}
+                </div>
+              </button>
+              {show[key as keyof IOutfitsShow] && (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
+                  {(outfits[key as keyof IOutfitsSections] as []).map(
+                    (item: IExistingOutfitData) => {
+                      return (
+                        <OutfitCard
+                          clothingItems={clothes}
+                          item={item}
+                          refetch={refetch}
+                          key={item._id}
+                        />
+                      );
+                    },
+                  )}
+                </div>
+              )}
+            </div>
+          ) : null;
+        })}
+      </div>
 
       <OutfitsModal
         clothingItems={clothes}
@@ -138,4 +84,4 @@ function OutiftSection({
   );
 }
 
-export default OutiftSection;
+export default OutfitSection;
