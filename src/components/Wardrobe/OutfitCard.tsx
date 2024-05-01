@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
-import { IClothingData } from "./interface";
-import OutfitsModal from "./OutfitsModal";
+import OutfitsModal, { IExistingOutfitData } from "./OutfitsModal";
 import { Menu, Transition } from "@headlessui/react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
 import {
@@ -18,11 +17,12 @@ import {
 import { StarIcon } from "@heroicons/react/20/solid";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
 import { useToast } from "../../contexts/ToastContext";
+import { IExistingClothesData } from "./ClothesModal";
 export interface IOutfitData {
   _id: string;
-  coverImg?: string;
+  image?: string;
   name?: string;
-  clothes: IClothingData[];
+  clothes: IExistingClothesData[];
   favorited: boolean;
   createdAt: string;
   updatedAt: string;
@@ -34,14 +34,14 @@ function OutfitCard({
   refetch,
   clothingItems,
 }: {
-  item: IOutfitData;
+  item: IExistingOutfitData;
   refetch: () => void;
-  clothingItems: IClothingData[];
+  clothingItems: IExistingClothesData[];
 }) {
   const { addToast } = useToast();
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
-  const { coverImg, clothes, favorited, name, _id } = item;
+  const { image, clothes, favorited, name, _id } = item;
   const { mutate: deleteMutation } = useMutation({
     mutationFn: async ({ outfitID }: { outfitID: string }) =>
       await deleteOutfits(outfitID),
@@ -90,8 +90,8 @@ function OutfitCard({
   };
   return (
     <>
-      <div className="relative" aria-label="Oufit card">
-        <div className="h-80 w-64 relative">
+      <div className="relative w-full" aria-label="Outfit card">
+        <div className="h-full w-full relative">
           <button
             className="absolute right-2 top-2 z-10"
             onClick={() => {
@@ -101,11 +101,11 @@ function OutfitCard({
             {favorited ? (
               <StarIcon className="h-4 w-4 text-yellow-400 hover:text-yellow-100" />
             ) : (
-              <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100" />
+              <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
             )}
           </button>
 
-          {coverImg ? (
+          {image ? (
             <div
               onClick={() => setExpandModal(true)}
               onKeyDown={(e) => {
@@ -120,7 +120,7 @@ function OutfitCard({
               <img
                 className="object-cover w-full h-64 text-center rounded-md"
                 alt="Piece of clothing"
-                src={coverImg}
+                src={image}
               />
             </div>
           ) : (
@@ -136,13 +136,13 @@ function OutfitCard({
               role="button"
               tabIndex={0}
             >
-              {clothes.map(({ image, variant }, index) => {
+              {clothes.map(({ image, category }, index) => {
                 return image ? (
                   <img
                     key={index}
                     className="w-1/5 h-1/5 object-cover"
                     src={image}
-                    alt={variant}
+                    alt={category}
                   />
                 ) : (
                   <div
