@@ -1,6 +1,5 @@
 import {
   IChangePasswordData,
-  IRegisterAPIParams,
   IRegisterUser,
   IUpdateProfile,
   IUserLogin,
