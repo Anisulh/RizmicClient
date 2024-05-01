@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
-import { IClothingData } from "../../components/Wardrobe/interface";
+import { IExistingClothesData } from "../../components/Wardrobe/ClothesModal";
 
 export default function GenerateFitModal({
   open,
@@ -11,7 +11,7 @@ export default function GenerateFitModal({
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  data: IClothingData[] | null;
+  data: IExistingClothesData[] | null;
   refetch: () => void;
 }) {
   function closeModal() {
@@ -54,7 +54,7 @@ export default function GenerateFitModal({
                   </Dialog.Title>
                   <div className="mt-2">
                     {data?.length && data.length > 0 ? (
-                      data.map((item: IClothingData, index) => {
+                      data.map((item: IExistingClothesData, index) => {
                         return (
                           <ClothingCard
                             item={item}
