@@ -37,7 +37,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    "border py-2 px-4 text-center font-medium rounded-lg transition-all ease-in-out duration-150 disabled:bg-gray-200 disabled:border-gray-300 disabled:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 shadow-sm";
+    "border py-2 px-4 text-center text-sm md:text-base font-medium rounded-lg transition-all ease-in-out duration-150 disabled:bg-gray-200 disabled:border-gray-300 disabled:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 shadow-sm";
 
   return (
     <button
