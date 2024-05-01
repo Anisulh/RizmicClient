@@ -1,37 +1,73 @@
 import { Dialog, Listbox, Transition } from "@headlessui/react";
-import {
-  ChangeEvent,
-  Dispatch,
-  Fragment,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { IOutfitData } from "./OutfitCard";
-import { IClothingData } from "./interface";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createOutfits, updateOutfits } from "../../api/outfitsAPI";
-import { closeModal, handleChange, removeImageFromUpload } from "./formLogic";
-import InfoPopover from "./InfoPopover";
 import {
   CheckIcon,
+  ChevronRightIcon,
   ChevronUpDownIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import ClothingCard from "./ClothingCard";
 import { useToast } from "../../contexts/ToastContext";
-export interface ICreateOutfitData {
-  coverImg: Blob | null;
-  name: string | undefined;
-  clothes: IClothingData[];
-  favorited: boolean;
-}
-export interface IUpdateOutfitData {
-  coverImg?: Blob | string;
-  name?: string | undefined;
-  clothes?: IClothingData[];
-  favorited?: boolean;
+import { IExistingClothesData } from "./ClothesModal";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { filterData } from "../../utils/filterData";
+import DialogModal from "../ui/modal/DialogModal";
+import Input from "../ui/inputs/Input";
+import Select from "../ui/inputs/Select";
+import Button from "../ui/Button";
+import { DevTool } from "@hookform/devtools";
+import TagsInput from "../ui/inputs/TagsInput";
+import cn from "../ui/cn";
+import valuesToSelectOptions from "../../utils/valuesToSelectOptions";
+
+const occasionValues = [
+  "casual",
+  "formal",
+  "sport",
+  "business",
+  "party",
+  "home",
+  "travel",
+  "festival",
+] as const; // Mark it as a constant tuple to infer literal types
+
+const seasonValues = ["spring", "summer", "autumn", "winter"] as const;
+
+const OutfitsSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  clothes: z.array(z.string()).nonempty(),
+  occasion: z
+    .enum(occasionValues, {
+      errorMap: () => ({ message: "Invalid clothing occasion" }),
+    })
+    .optional(),
+  season: z
+    .enum(seasonValues, {
+      errorMap: () => ({ message: "Invalid clothing season" }),
+    })
+    .optional(),
+  image: z.any().optional(),
+  tags: z.array(z.string()).optional(),
+  favorited: z.boolean().default(false),
+});
+
+export type IOutfitData = z.infer<typeof OutfitsSchema>;
+export type PartialOutfitDataSchema = Partial<IOutfitData>;
+
+const occasionOptions = valuesToSelectOptions(occasionValues);
+const seasonOptions = valuesToSelectOptions(seasonValues);
+
+export interface IExistingOutfitData extends Omit<IOutfitData, "clothes"> {
+  _id: string;
+  clothes: IExistingClothesData[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 function OutfitsModal({
@@ -43,38 +79,59 @@ function OutfitsModal({
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  existingData?: IOutfitData | undefined;
-  clothingItems?: IClothingData[];
+  existingData?: IExistingOutfitData | undefined;
+  clothingItems?: IExistingClothesData[];
   refetch: () => void;
 }) {
   const { addToast } = useToast();
-  const [outfitClothes, setOutfitClothes] = useState<IClothingData[]>([]);
-  const [outfitData, setOutfitData] = useState<ICreateOutfitData>(
-    existingData
-      ? {
-          name: existingData.name,
-          coverImg: null,
-          clothes: existingData.clothes,
-          favorited: existingData.favorited,
-        }
-      : {
-          name: "",
-          coverImg: null,
-          clothes: [],
-          favorited: false,
-        },
-  );
-  const { name, coverImg, favorited } = outfitData;
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const imageUploadRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (coverImg && coverImg instanceof Blob) {
-      setImageUrl(URL.createObjectURL(coverImg));
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.onerror = () => {
+        setImagePreview(null);
+        addToast({
+          title: "File Error",
+          description: "Error reading the file",
+          type: "error",
+        });
+      };
+      reader.readAsDataURL(file);
     }
-  }, [coverImg]);
-  const isLoading = true;
-  const { mutate } = useMutation({
-    mutationFn: async ({ data }: { data: FormData }) =>
+  };
+
+  const getClothesIds = (clothes: IExistingClothesData[]): string[] =>
+    clothes.map((c) => c._id);
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<IOutfitData>({
+    resolver: zodResolver(OutfitsSchema),
+    defaultValues: {
+      name: existingData?.name ?? "",
+      description: existingData?.description ?? "",
+      clothes: existingData ? getClothesIds(existingData.clothes) : [],
+      occasion: existingData?.occasion ?? undefined,
+      season: existingData?.season ?? undefined,
+      image: existingData?.image ?? undefined,
+      tags: existingData?.tags ?? [],
+      favorited: existingData?.favorited ?? false,
+    },
+  });
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async (data: FormData) =>
       existingData && existingData._id
         ? await updateOutfits(existingData._id, data)
         : await createOutfits(data),
@@ -86,382 +143,316 @@ function OutfitsModal({
           type: "error",
         });
       } else {
+        reset();
         setOpen(false);
         refetch();
+        addToast({
+          title: "Success",
+          description: "Your changes have been saved",
+          type: "success",
+        });
       }
     },
   });
 
-  const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (existingData) {
-      const tempExistingData: IUpdateOutfitData = {
-        coverImg: existingData.coverImg || undefined,
-        name: existingData.name,
-        favorited: existingData.favorited,
-        clothes: existingData.clothes,
-      };
-      const changedData: Record<string, unknown> = {};
-      const filterData = (
-        object1: IUpdateOutfitData,
-        object2: ICreateOutfitData,
-      ) => {
-        for (const key in object1) {
-          if (
-            Object.prototype.hasOwnProperty.call(object1, key) &&
-            Object.prototype.hasOwnProperty.call(object2, key)
-          ) {
-            const element1 = object1[key as keyof IUpdateOutfitData];
-            const element2 = object2[key as keyof ICreateOutfitData];
-            if (element1 !== element2) {
-              changedData[key] = element2;
-            }
-          }
-        }
-      };
-      filterData(tempExistingData, outfitData);
-      if (Object.keys(changedData).length === 0) {
-        setOpen(false);
-        return;
-      } else {
-        const formData = new FormData();
-
-        Object.keys(changedData).map((key) => {
-          if (key === "clothes") {
-            for (let index = 0; index < outfitClothes.length; index++) {
-              const element = outfitClothes[index];
-              formData.append("clothes[]", element._id as string);
-            }
-          } else if (changedData[key] !== "null") {
-            formData.append(String(key), changedData[key] as string | Blob);
-          }
-        });
-        mutate({ data: formData });
-      }
-    } else {
-      if (!outfitClothes || outfitClothes.length < 1) {
-        addToast({
-          title: "Something went wrong.",
-          description: "Please add at least one piece of clothing",
-          type: "error",
-        });
-        return;
-      }
-      const formData = new FormData();
-
-      Object.keys(outfitData).map((key) => {
-        if (key === "clothes") {
-          for (let index = 0; index < outfitClothes.length; index++) {
-            const element = outfitClothes[index];
-            formData.append("clothes[]", element._id as string);
-          }
-        } else if (key === "coverImg") {
-          formData.append(String(key), coverImg ?? "");
-        } else if (key !== "image") {
-          formData.append(
-            String(key),
-            String(outfitData[key as keyof ICreateOutfitData]),
-          );
-        }
+  const onSubmit: SubmitHandler<IOutfitData> = async (data) => {
+    if (!data.clothes || data.clothes.length < 1) {
+      addToast({
+        title: "No Clothes Added.",
+        description: "Please add at least one piece of clothing",
+        type: "error",
       });
-      mutate({ data: formData });
+      return;
+    }
+    const formData = new FormData();
+    const keys = Object.keys(data) as Array<keyof IOutfitData>;
+
+    const changedData = existingData ? filterData(existingData, data) : data;
+
+    if (Object.keys(changedData).length === 0 && existingData) {
+      setOpen(false);
+      return;
+    }
+
+    keys.forEach((key) => {
+      const value = changedData[key];
+      if (value instanceof Array) {
+        value.forEach((val) => {
+          formData.append(key, val);
+        });
+      } else if (value instanceof FileList) {
+        value.length > 0 && formData.append(key, value[0]);
+      } else if (value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    });
+
+    try {
+      await mutateAsync(formData);
+    } catch (error) {
+      addToast({
+        title: "Something went wrong.",
+        description: "An error occurred",
+        type: "error",
+      });
     }
   };
 
   return (
-    <>
-      <Transition appear show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => closeModal(setOpen)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+    <DialogModal title="Create an outfit" open={open} setOpen={setOpen}>
+      <p className="text-sm">Fill in all required fields before submitting</p>
+      <div className="mt-2 transition-all">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input<IOutfitData>
+            type="text"
+            label="Name"
+            name="name"
+            control={control}
+            placeholder="Enter name"
+          />
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform  rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Create an Outfit
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <form onSubmit={onSubmit}>
-                      <div className="flex items-center mt-6">
-                        <div className="w-full">
-                          <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700"
+          <div className="mb-2">
+            <label
+              className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+              htmlFor="clothes"
+            >
+              Clothes <span className="text-red-500">*</span>
+            </label>
+            <Controller
+              name="clothes"
+              control={control}
+              render={({ field }) => (
+                <Listbox {...field} multiple>
+                  {({ open }) => (
+                    <>
+                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm dark:text-gray-500">
+                        {field.value.length > 0
+                          ? `${field.value.length} pieces added`
+                          : "Please choose the pieces to add"}
+                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                          <ChevronUpDownIcon
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Listbox.Button>
+                      {open && (
+                        <Transition appear show={open} as={Fragment}>
+                          <Dialog
+                            as="div"
+                            className="relative z-30"
+                            onClose={() => {
+                              !open;
+                            }}
                           >
-                            Outfit Name:
-                          </label>
-                          <input
-                            id="name"
-                            className="shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:outline-none focus:ring-1 focus:ring-ultra  rounded-lg block w-full  text-raisinblack  py-2 px-3 placeholder-gray-600 text-sm"
-                            placeholder="Please choose a category:"
-                            onChange={(e) => handleChange(e, setOutfitData)}
-                            value={name}
-                          ></input>
-                        </div>
-
-                        <InfoPopover
-                          title={"Outfit Name"}
-                          text={"Optional. Choose a name for your outfit"}
-                        />
-                      </div>
-                      <div className="flex items-center mt-6 ">
-                        <div className="w-full">
-                          <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Clothes
-                          </label>
-                          <Listbox
-                            value={outfitClothes}
-                            onChange={setOutfitClothes}
-                            multiple
-                          >
-                            {({ open }) => (
-                              <>
-                                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                                  {outfitClothes.length > 0
-                                    ? outfitClothes.length + " pieces added"
-                                    : "Please choose the pieces to add"}
-                                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon
-                                      className="h-5 w-5 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                </Listbox.Button>
-                                {open && (
-                                  <Transition appear show={open} as={Fragment}>
-                                    <Dialog
-                                      as="div"
-                                      className="relative z-10"
-                                      onClose={() => {
-                                        !open;
-                                      }}
-                                    >
-                                      <Transition.Child
-                                        as={Fragment}
-                                        enter="ease-out duration-300"
-                                        enterFrom="opacity-0"
-                                        enterTo="opacity-100"
-                                        leave="ease-in duration-200"
-                                        leaveFrom="opacity-100"
-                                        leaveTo="opacity-0"
-                                      >
-                                        <div className="fixed inset-0 bg-black bg-opacity-25" />
-                                      </Transition.Child>
-
-                                      <div className="fixed inset-0 overflow-y-auto">
-                                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                                          <Transition.Child
-                                            as={Fragment}
-                                            enter="ease-out duration-300"
-                                            enterFrom="opacity-0 scale-95"
-                                            enterTo="opacity-100 scale-100"
-                                            leave="ease-in duration-200"
-                                            leaveFrom="opacity-100 scale-100"
-                                            leaveTo="opacity-0 scale-95"
-                                          >
-                                            <Dialog.Panel className="w-fit transform  rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all overflow-auto">
-                                              <Dialog.Title
-                                                as="h3"
-                                                className="text-lg font-medium leading-6 text-gray-900"
-                                              >
-                                                Choose the pieces to add
-                                              </Dialog.Title>
-
-                                              <Listbox.Options>
-                                                {" "}
-                                                <div className="mt-2 grid grid-cols-3 gap-x-10 gap-y-2">
-                                                  {clothingItems.length > 0 &&
-                                                    clothingItems?.map(
-                                                      (item) => (
-                                                        <Listbox.Option
-                                                          key={item._id}
-                                                          className={({
-                                                            active,
-                                                          }) =>
-                                                            `relative select-none py-2 pr-8 pl-4 rounded-lg ${
-                                                              active
-                                                                ? "bg-green-100 text-green-900"
-                                                                : "text-gray-900"
-                                                            }`
-                                                          }
-                                                          value={item}
-                                                        >
-                                                          {({ selected }) => (
-                                                            <>
-                                                              <ClothingCard
-                                                                item={item}
-                                                                refetch={
-                                                                  refetch
-                                                                }
-                                                              />
-                                                              {selected ? (
-                                                                <span className="absolute top-1 right-1 flex items-center text-blue-600">
-                                                                  <CheckIcon
-                                                                    className="h-5 w-5"
-                                                                    aria-hidden="true"
-                                                                  />
-                                                                </span>
-                                                              ) : null}
-                                                            </>
-                                                          )}
-                                                        </Listbox.Option>
-                                                      ),
-                                                    )}
-                                                </div>
-                                              </Listbox.Options>
-                                              <div className="flex justify-end mt-4">
-                                                <button
-                                                  type="button"
-                                                  className="rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
-                                                  onClick={() => !open}
-                                                >
-                                                  Done
-                                                </button>
-                                              </div>
-                                            </Dialog.Panel>
-                                          </Transition.Child>
-                                        </div>
-                                      </div>
-                                    </Dialog>
-                                  </Transition>
-                                )}
-                              </>
-                            )}
-                          </Listbox>
-                        </div>
-
-                        <InfoPopover
-                          title={"Outfit Name"}
-                          text={"Optional. Choose a name for your outfit"}
-                        />
-                      </div>
-                      <div className="flex items-center mt-6 gap-4">
-                        <label
-                          htmlFor="favorited"
-                          className=" block text-sm font-medium text-gray-700 "
-                        >
-                          Favorite:
-                        </label>
-                        <input
-                          id="favorited"
-                          type="checkbox"
-                          className="rounded-sm shadow-sm border border-gray-400 hover:bg-ultramarineBlue focus:border-ultramarineBlue focus:outline-none focus:ring-1 focus:ring-ultra "
-                          onChange={(e) => handleChange(e, setOutfitData)}
-                          checked={favorited}
-                        />
-                      </div>
-                      <div>
-                        <div className="flex justify-center">
-                          <div className="my-3 w-full">
-                            <label
-                              htmlFor="image"
-                              className="block text-sm font-medium text-gray-700"
+                            <Transition.Child
+                              as={Fragment}
+                              enter="ease-out duration-300"
+                              enterFrom="opacity-0"
+                              enterTo="opacity-100"
+                              leave="ease-in duration-200"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
                             >
-                              Image:
-                            </label>
-                            <input
-                              ref={imageUploadRef}
-                              className="block w-full px-3 py-1.5 bg-white border border-solid border-gray-300 rounded-md focus:text-gray-700 focus:bg-white focus:border-ultramarineBlue focus:outline-none text-sm text-gray-700 file:rounded-md file:border file:border-gray-200 file:bg-cambridgeblue file:shadow-sm"
-                              onChange={(e) => handleChange(e, setOutfitData)}
-                              accept="image/png, image/jpeg, image/jpg"
-                              type="file"
-                              id="coverImg"
-                            />
-                          </div>
-                        </div>
-                        {imageUrl && coverImg && (
-                          <div>
-                            <p className="mb-2">Cover Image Preview:</p>
-                            <div className="relative w-32">
-                              <img
-                                src={imageUrl}
-                                alt="Outfit cover"
-                                width="100px"
-                              />
-                              <button
-                                type="button"
-                                className="absolute -top-3 right-2 text-raisinblack hover:text-red-600"
-                                onClick={() =>
-                                  removeImageFromUpload(
-                                    setOutfitData,
-                                    imageUploadRef,
-                                  )
-                                }
-                              >
-                                <XMarkIcon className="h-5 w-5 " />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                              <div className="fixed inset-0 bg-black bg-opacity-25" />
+                            </Transition.Child>
 
-                      <div className="mt-4 flex justify-end gap-4">
-                        <button
-                          type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-ourGrey px-4 py-2 text-sm font-medium text-raisinblack hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
-                          onClick={() => closeModal(setOpen)}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? (
-                            <span className="flex justify-center items-center bg-transparent">
-                              <div
-                                className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
-                                role="status"
-                              >
-                                <span className="sr-only">Loading</span>
+                            <div className="fixed inset-0 overflow-y-auto">
+                              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                <Transition.Child
+                                  as={Fragment}
+                                  enter="ease-out duration-300"
+                                  enterFrom="opacity-0 scale-95"
+                                  enterTo="opacity-100 scale-100"
+                                  leave="ease-in duration-200"
+                                  leaveFrom="opacity-100 scale-100"
+                                  leaveTo="opacity-0 scale-95"
+                                >
+                                  <Dialog.Panel className="w-fit transform bg-white dark:bg-slate-700 rounded-2xl p-6 text-left align-middle shadow-xl transition-all overflow-auto">
+                                    <Dialog.Title
+                                      as="h3"
+                                      className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
+                                    >
+                                      Choose the pieces to add
+                                    </Dialog.Title>
+
+                                    <Listbox.Options>
+                                      <div className="mt-2 grid grid-cols-3 gap-x-10 gap-y-2">
+                                        {clothingItems.length > 0 &&
+                                          clothingItems.map((item) => (
+                                            <Listbox.Option
+                                              key={item._id}
+                                              className={({ active }) =>
+                                                `relative select-none py-2 pr-8 pl-4 rounded-lg ${
+                                                  active
+                                                    ? "bg-green-100 text-green-900"
+                                                    : "text-gray-900 "
+                                                }`
+                                              }
+                                              value={item._id}
+                                            >
+                                              {({ selected }) => (
+                                                <>
+                                                  <ClothingCard
+                                                    item={item}
+                                                    refetch={refetch}
+                                                  />
+                                                  {selected && (
+                                                    <span className="absolute top-1 right-1 flex items-center text-blue-600">
+                                                      <CheckIcon
+                                                        className="h-5 w-5"
+                                                        aria-hidden="true"
+                                                      />
+                                                    </span>
+                                                  )}
+                                                </>
+                                              )}
+                                            </Listbox.Option>
+                                          ))}
+                                      </div>
+                                    </Listbox.Options>
+                                    <div className="flex justify-end mt-4">
+                                      <button
+                                        type="button"
+                                        className="rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
+                                        onClick={() => !open}
+                                      >
+                                        Done
+                                      </button>
+                                    </div>
+                                  </Dialog.Panel>
+                                </Transition.Child>
                               </div>
-                              Processing...
-                            </span>
-                          ) : (
-                            "Submit"
-                          )}
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                            </div>
+                          </Dialog>
+                        </Transition>
+                      )}
+                    </>
+                  )}
+                </Listbox>
+              )}
+            />
           </div>
-        </Dialog>
-      </Transition>
-    </>
+
+          <button
+            type="button"
+            className="flex items-center gap-1 text-sm"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+          >
+            Advanced
+            <ChevronRightIcon
+              className={cn("w-5 h-5", showAdvanced ? "rotate-90" : "rotate-0")}
+            />
+          </button>
+          <Transition
+            show={showAdvanced}
+            enter="transition duration-150 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-125 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <Input<IOutfitData>
+                type="text"
+                label="Description"
+                name="description"
+                control={control}
+                placeholder="Enter description"
+                required={false}
+              />
+              <Select<IOutfitData>
+                label="Season"
+                name="season"
+                control={control}
+                options={seasonOptions}
+                required={false}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <Select<IOutfitData>
+                label="Occasion"
+                name="occasion"
+                control={control}
+                options={occasionOptions}
+                required={false}
+              />
+              <Controller
+                name="tags"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <TagsInput tags={value || []} setTags={onChange} />
+                )}
+              />
+            </div>
+            <div>
+              <div className="my-2 w-full">
+                <label
+                  className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+                  htmlFor="image"
+                >
+                  Upload Image
+                </label>
+
+                <input
+                  type="file"
+                  {...register("image")}
+                  onChange={handleFileChange}
+                  className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+                  accept="image/*"
+                />
+                {errors.image && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.image.message as string}
+                  </p>
+                )}
+              </div>
+              {imagePreview && (
+                <div>
+                  <p className="mb-2">Image Preview:</p>
+                  <div className="relative w-20">
+                    <img
+                      src={imagePreview}
+                      alt="Chosen clothing"
+                      width="40px"
+                    />{" "}
+                    <button
+                      type="button"
+                      className="absolute -top-3 right-2 text-raisinblack hover:text-red-600"
+                      onClick={() => {
+                        setValue("image", undefined);
+                        setImagePreview(null);
+                      }}
+                    >
+                      <XMarkIcon className="h-5 w-5 " />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <Input<IOutfitData>
+                type="checkbox"
+                label="Favorite"
+                name="favorited"
+                control={control}
+                className="flex items-center w-5 gap-2"
+                required={false}
+              />
+            </div>
+          </Transition>
+          <div className="w-full text-center">
+            <Button type="submit" isLoading={isPending}>
+              {existingData ? "Update" : "Add"}
+            </Button>
+          </div>
+        </form>
+      </div>
+      {/* <DevTool control={control} /> */}
+    </DialogModal>
   );
 }
 
