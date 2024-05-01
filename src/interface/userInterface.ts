@@ -13,6 +13,7 @@ export interface IRegisterUser {
   email: string;
   password: string;
   confirmPassword: string;
+  phoneNumber?: string;
 }
 
 export interface IRegisterAPIParams {
@@ -28,4 +29,16 @@ export interface IUserLogin {
 export interface ILoginAPIParams{
   userData?: IUserLogin;
   credential?: string;
+}
+
+export interface IUpdateProfile {
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+}
+
+export interface IChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
