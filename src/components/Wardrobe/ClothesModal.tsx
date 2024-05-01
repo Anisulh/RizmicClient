@@ -13,9 +13,8 @@ import Button from "../ui/Button";
 import DialogModal from "../ui/modal/DialogModal";
 import Select from "../ui/inputs/Select";
 import cn from "../ui/cn";
-import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
 import { DevTool } from "@hookform/devtools";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import TagsInput from "../ui/inputs/TagsInput";
 import { filterData } from "../../utils/filterData";
 import valuesToSelectOptions from "../../utils/valuesToSelectOptions";
@@ -289,8 +288,8 @@ export default function ClothesModal({
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             Advanced
-            <ChevronDownIcon
-              className={cn("w-6 h-6", showAdvanced ? "rotate-90" : "rotate-0")}
+            <ChevronRightIcon
+              className={cn("w-5 h-5", showAdvanced ? "rotate-90" : "rotate-0")}
             />
           </button>
           <Transition
@@ -436,7 +435,7 @@ export default function ClothesModal({
           </div>
         </form>
       </div>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </DialogModal>
   );
 }
