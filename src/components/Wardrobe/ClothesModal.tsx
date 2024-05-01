@@ -13,37 +13,42 @@ import Button from "../ui/Button";
 import DialogModal from "../ui/modal/DialogModal";
 import Select from "../ui/inputs/Select";
 import cn from "../ui/cn";
-import ChevronDownIcon from "@heroicons/react/20/solid/ChevronDownIcon";
 import { DevTool } from "@hookform/devtools";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import TagsInput from "../ui/inputs/TagsInput";
+import { filterData } from "../../utils/filterData";
+import valuesToSelectOptions from "../../utils/valuesToSelectOptions";
 
+const categoryValues =  [
+  "t-shirt",
+  "jacket",
+  "sweater",
+  "top",
+  "shirt",
+  "dress",
+  "pants",
+  "skirt",
+  "shorts",
+  "accessories",
+] as const
+
+const sizeValues = ["xs", "s", "m", "l", "xl", "xxl", "xxxl"] as const
+const conditionValues = ["new", "like new", "good", "fair", "poor"] as const
 const ClothesModalSchema = z.object({
   name: z.string().min(1).max(100),
   category: z.enum(
-    [
-      "t-shirt",
-      "jacket",
-      "sweater",
-      "top",
-      "shirt",
-      "dress",
-      "pants",
-      "skirt",
-      "shorts",
-      "accessories",
-    ],
+   categoryValues,
     {
       errorMap: () => ({ message: "Invalid clothing category" }),
     },
   ),
-  size: z.enum(["xs", "s", "m", "l", "xl", "xxl", "xxxl"], {
+  size: z.enum(sizeValues, {
     errorMap: () => ({ message: "Invalid clothing size" }),
   }),
   color: z.string().min(1).max(50),
   material: z.string().optional(),
   brand: z.string().optional(),
-  condition: z.enum(["new", "like new", "good", "fair", "poor"], {
+  condition: z.enum(conditionValues, {
     errorMap: () => ({ message: "Invalid clothing condition" }),
   }),
   purchaseDate: z.date().optional(),
@@ -65,59 +70,20 @@ export interface IExistingClothesData extends IClothesModalSchema {
   __v: number;
 }
 
-const categoryOptions = [
-  { label: "T-Shirt", value: "t-shirt" },
-  { label: "Jacket", value: "jacket" },
-  { label: "Sweater", value: "sweater" },
-  { label: "Top", value: "top" },
-  { label: "Shirt", value: "shirt" },
-  { label: "Dress", value: "dress" },
-  { label: "Pants", value: "pants" },
-  { label: "Skirt", value: "skirt" },
-  { label: "Shorts", value: "shorts" },
-  { label: "Accessories", value: "accessories" },
-];
-const sizeOptions = [
-  { label: "XS", value: "xs" },
-  { label: "S", value: "s" },
-  { label: "M", value: "m" },
-  { label: "L", value: "l" },
-  { label: "XL", value: "xl" },
-  { label: "XXL", value: "xxl" },
-  { label: "XXXL", value: "xxxl" },
-];
+const categoryOptions = valuesToSelectOptions(categoryValues);
+const sizeOptions = valuesToSelectOptions(sizeValues)
+const conditionOptions = valuesToSelectOptions(conditionValues)
 
-const conditionOptions = [
-  { label: "New", value: "new" },
-  { label: "Like New", value: "like new" },
-  { label: "Good", value: "good" },
-  { label: "Fair", value: "fair" },
-  { label: "Poor", value: "poor" },
-];
-
-const filterData = (
-  object1: IClothesModalSchema,
-  object2: IClothesModalSchema,
-): Partial<IClothesModalSchema> => {
-  return Object.keys(object1).reduce((acc, key) => {
-    if (
-      object1[key as keyof IClothesModalSchema] !==
-      object2[key as keyof IClothesModalSchema]
-    ) {
-      acc[key as keyof IClothesModalSchema] =
-        object2[key as keyof IClothesModalSchema];
-    }
-    return acc;
-  }, {} as Partial<IClothesModalSchema>);
-};
 export default function ClothesModal({
   open,
   setOpen,
   existingData = undefined,
+  refetch
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   existingData?: IExistingClothesData | undefined;
+  refetch?: () => void;
 }) {
   const { addToast } = useToast();
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -190,6 +156,8 @@ export default function ClothesModal({
       } else {
         setOpen(false);
         reset();
+        setShowAdvanced(false);
+        refetch && refetch();
         addToast({
           title: "Success",
           description: "Your changes have been saved",
@@ -197,8 +165,7 @@ export default function ClothesModal({
         });
       }
     },
-    onError: (error) => {
-      console.error("Mutation error:", error);
+    onError: () => {
       addToast({
         title: "Error",
         description: "There was an error saving your changes",
@@ -226,7 +193,7 @@ export default function ClothesModal({
           formData.append(key, val);
         });
       } else if (value instanceof FileList) {
-        formData.append(key, value[0]);
+        value.length > 0 && formData.append(key, value[0]);
       } else if (value !== undefined) {
         formData.append(key, value.toString());
       }
@@ -240,12 +207,11 @@ export default function ClothesModal({
         type: "error",
       });
     }
-    console.log(data);
   };
 
   return (
     <DialogModal title="Add Clothing" open={open} setOpen={setOpen}>
-      <p className="text-sm">Fill in all fields before submitting</p>
+      <p className="text-sm">Fill in all required fields before submitting</p>
       <div className="mt-2 transition-all">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input<IClothesModalSchema>
@@ -322,8 +288,8 @@ export default function ClothesModal({
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             Advanced
-            <ChevronDownIcon
-              className={cn("w-6 h-6", showAdvanced ? "rotate-90" : "rotate-0")}
+            <ChevronRightIcon
+              className={cn("w-5 h-5", showAdvanced ? "rotate-90" : "rotate-0")}
             />
           </button>
           <Transition
@@ -469,7 +435,7 @@ export default function ClothesModal({
           </div>
         </form>
       </div>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </DialogModal>
   );
 }

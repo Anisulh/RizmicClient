@@ -10,7 +10,11 @@ export const getOutfits = async () => {
   };
   try {
     const response = await fetch(baseURL, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -26,7 +30,11 @@ export const createOutfits = async (outfitsData: FormData) => {
 
   try {
     const response = await fetch(baseURL, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -46,7 +54,11 @@ export const updateOutfits = async (
 
   try {
     const response = await fetch(url, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -63,7 +75,11 @@ export const getFavoriteOutfits = async () => {
 
   try {
     const response = await fetch(url, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -81,7 +97,11 @@ export const favoriteOutfits = async (outfitsId: string) => {
 
   try {
     const response = await fetch(url, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -98,7 +118,11 @@ export const unfavoriteOutfits = async (outfitsId: string) => {
 
   try {
     const response = await fetch(url, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -116,7 +140,11 @@ export const deleteOutfits = async (outfitsId: string) => {
 
   try {
     const response = await fetch(url, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }

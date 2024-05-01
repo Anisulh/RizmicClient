@@ -1,8 +1,8 @@
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IUserContext, UserContext, useAuth } from "../contexts/UserContext";
+import { useAuth } from "../contexts/UserContext";
 import userAvatar from "../assets/userAvatar.webp";
 import RizmicIcon from "../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
@@ -43,17 +43,17 @@ export default function Navbar() {
           <div className="relative">
             <div className="mx-auto max-w-7xl px-2 lg:px-4">
               <div className="flex items-center justify-between border-gray-100 my-4 lg:my-6 md:justify-start md:space-x-10">
-                  <Link
-                    to="/"
-                    className="font-semibold text-2xl hover:bg-transparent flex gap-1 lg:flex-1"
-                  >
-                    <img
-                      src={RizmicIcon}
-                      alt="RizmicFits"
-                      className="w-8 h-8 rounded-full"
-                    />
-                   <span className="hidden md:block">RizmicFits</span> 
-                  </Link>
+                <Link
+                  to="/"
+                  className="font-semibold text-2xl hover:bg-transparent flex gap-1 lg:flex-1"
+                >
+                  <img
+                    src={RizmicIcon}
+                    alt="RizmicFits"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="hidden md:block">RizmicFits</span>
+                </Link>
                 <Disclosure.Button className=" md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
@@ -69,13 +69,13 @@ export default function Navbar() {
                     <div className="hidden space-x-10 md:flex">
                       <Link
                         to="/wardrobe"
-                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900  mix-blend-difference"
+                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 "
                       >
                         Wardrobe
                       </Link>
                       <Link
                         to="/generate-fit"
-                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 mix-blend-difference"
+                        className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900"
                       >
                         Fit Generator
                       </Link>
@@ -86,7 +86,7 @@ export default function Navbar() {
                           <Menu.Button className="flex rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 border">
                             <span className="sr-only">Open user menu</span>
                             <img
-                              className="h-8 w-8 rounded-full "
+                              className="h-8 w-8 rounded-full bg-white"
                               src={user?.profilePicture ?? userAvatar}
                               alt=""
                             />
@@ -101,14 +101,14 @@ export default function Navbar() {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
                                 <Link
                                   to="/profile"
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 hover:text-gray-700",
+                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   Your Profile

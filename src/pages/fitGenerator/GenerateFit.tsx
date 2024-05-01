@@ -1,19 +1,19 @@
 import { useState } from "react";
 import GenerateFitModal from "./GenerateFitModal";
 import PlusIcon from "@heroicons/react/24/outline/PlusIcon";
-import { IClothingData } from "../../components/Wardrobe/interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { generateBlank } from "../../api/generationAPI";
 import ClothingCard from "../../components/Wardrobe/ClothingCard";
 import { useToast } from "../../contexts/ToastContext";
+import { IExistingClothesData } from "../../components/Wardrobe/ClothesModal";
 
 export interface IBodyParts {
-  head: IClothingData[];
-  top: IClothingData[];
-  bottom: IClothingData[];
-  shoes: IClothingData[];
+  head: IExistingClothesData[];
+  top: IExistingClothesData[];
+  bottom: IExistingClothesData[];
+  shoes: IExistingClothesData[];
 }
 
 function GenerateFit() {
@@ -28,8 +28,12 @@ function GenerateFit() {
     bottom: [],
     shoes: [],
   });
-  const [generatedFits, setGeneratedFits] = useState<IClothingData[][]>([]);
-  const [modalData, setModalData] = useState<IClothingData[] | null>(null);
+  const [generatedFits, setGeneratedFits] = useState<IExistingClothesData[][]>(
+    [],
+  );
+  const [modalData, setModalData] = useState<IExistingClothesData[] | null>(
+    null,
+  );
 
   const { head, top, bottom, shoes } = wardrobe;
   const { isLoading: queryIsLoading, refetch } = useQuery({
@@ -49,35 +53,19 @@ function GenerateFit() {
           bottom: [],
           shoes: [],
         };
-        data.map((item: IClothingData) => {
-          const bodyLocationsArray = item.bodyLocation;
-          bodyLocationsArray.map((locations: string) => {
-            if (locations === "upperBody") {
-              temp.top.push(item);
-            } else if (locations === "lowerBody") {
-              temp.bottom.push(item);
-            } else if (locations === "head") {
-              temp.head.push(item);
-            } else if (locations === "feet") {
-              temp.shoes.push(item);
-            } else {
-              return;
-            }
-          });
-        });
         setWardrobe(temp);
         return data;
       }
     },
     refetchOnWindowFocus: false,
   });
-  const { mutate, isLoading: mutationIsLoading } = useMutation({
+  const { mutate, isPending: mutationIsLoading } = useMutation({
     mutationFn: async ({ body }: { body: { style: string } }) => {
       return await generateBlank(body);
     },
     onSuccess(data) {
       data.fits.map((fit: string[]) => {
-        const fits: IClothingData[] = [];
+        const fits: IExistingClothesData[] = [];
         fit.map((item) => {
           const top = wardrobe.top.find((clothes) => {
             return clothes._id === item;
@@ -262,7 +250,7 @@ function GenerateFit() {
       {mutationIsLoading && <Spinner />}
       <div className="flex gap-10 items-center justify-center mt-10">
         {generatedFits.map((fit) => {
-          return fit.map((item: IClothingData) => {
+          return fit.map((item: IExistingClothesData) => {
             return (
               <ClothingCard key={item._id} item={item} refetch={refetch} />
             );

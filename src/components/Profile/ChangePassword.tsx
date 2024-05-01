@@ -80,7 +80,7 @@ export default function ChangePassword() {
         </button>
       </div>
       <div className="border-t border-gray-200 ">
-        <form onSubmit={handleSubmit} className="">
+        {changePassword && <form onSubmit={handleSubmit} className="">
           <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <p className="text-sm font-medium">Change Password</p>
             <div className="flex flex-col w-full sm:col-span-2 mt-1 sm:mt-0 ">
@@ -216,7 +216,7 @@ export default function ChangePassword() {
               </button>
             </div>
           )}
-        </form>
+        </form>}
       </div>
     </div>
   );

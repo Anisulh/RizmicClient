@@ -11,7 +11,11 @@ export const getClothes = async () => {
 
   try {
     const response = await fetch(baseURL, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -27,7 +31,11 @@ export const createClothes = async (clothesData: FormData) => {
 
   try {
     const response = await fetch(baseURL, options);
-    return response.json();
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
   } catch (error) {
     return error;
   }
@@ -44,9 +52,16 @@ export const updateClothes = async (
     credentials: "include",
     body: clothingData,
   };
-
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
 
 export const deleteClothes = async (clothesId: string) => {
@@ -59,6 +74,57 @@ export const deleteClothes = async (clothesId: string) => {
     credentials: "include",
   };
 
-  const response = await fetch(url, options);
-  return response.json();
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const favoriteClothes = async (clothesId: string) => {
+  const url = new URL(clothesId, baseURL + "favorite/");
+  const options: RequestInit = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+export const unfavoriteClothes = async (clothesId: string) => {
+  const url = new URL(clothesId, baseURL + "unfavorite/");
+  const options: RequestInit = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
