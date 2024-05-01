@@ -1,12 +1,15 @@
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IUpdateProfile, updateProfileAPI } from "../api/userAPI";
+import { updateProfileAPI } from "../api/userAPI";
 import ChangePassword from "../components/Profile/ChangePassword";
 import ProfileImageModal from "../components/Profile/ProfileImageModal";
 import { useAuth } from "../contexts/UserContext";
 import { useToast } from "../contexts/ToastContext";
+import Button from "../components/ui/Button";
+import Spinner from "../components/ui/spinner/Spinner";
+import Avatar from "../assets/userAvatar.webp";
 
 export default function Profile() {
   const { addToast } = useToast();
@@ -22,9 +25,13 @@ export default function Profile() {
 
   const [showProfileImageEdit, setShowProfileImageEdit] = useState(false);
   const [showProfileImageModal, setShowProfileImageModal] = useState(false);
+  const { isPending: queryPending } = useQuery({
+    queryKey: ["user"],
+    queryFn: refetchUserData,
+  });
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: ({ data }: { data: IUpdateProfile }) => updateProfileAPI(data),
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateProfileAPI,
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -47,7 +54,7 @@ export default function Profile() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    mutate({ data: profileData });
+    mutate(profileData);
     setProfileData({
       firstName: user?.firstName,
       lastName: user?.lastName,
@@ -56,16 +63,20 @@ export default function Profile() {
     setEditingProfile(false);
   };
 
+  if (queryPending) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="max-w-screen mb-40 content-container">
+    <div className="max-w-screen content-container">
       <div className=" w-full h-60 bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
 
       <div className="flex flex-col max-w-7xl mx-auto gap-10">
         <div className="flex gap-2">
           <div className="relative flex items-center justify-center h-full">
             <img
-              className="rounded-full h-24 w-24 -mt-10"
-              src={user?.profilePicture}
+              className="rounded-full h-24 w-24 -mt-10 bg-white p-2"
+              src={user?.profilePicture ?? Avatar}
               alt="Profile"
               onMouseOver={() => setShowProfileImageEdit(true)}
               onMouseLeave={() => setShowProfileImageEdit(false)}
@@ -94,7 +105,7 @@ export default function Profile() {
           <div className="max-w-5xl w-full ">
             <div className="overflow-hidden ">
               <div className="flex justify-between items-center">
-                <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
+                <div className="px-4 py-4 sm:px-6 flex justify-between items-center">
                   <div>
                     <h3 className="text-lg font-medium leading-6">
                       Profile Information
@@ -121,26 +132,26 @@ export default function Profile() {
               <div className="border-t border-gray-200">
                 {!editingProfile ? (
                   <dl>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium">First name</dt>
                       <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.firstName}
                       </dd>
                     </div>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium">Last name</dt>
                       <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.lastName}
                       </dd>
                     </div>
 
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium">Email address</dt>
                       <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.email}
                       </dd>
                     </div>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium">Phone Number</dt>
                       <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.phoneNumber || "N/A"}
@@ -149,7 +160,7 @@ export default function Profile() {
                   </dl>
                 ) : (
                   <form onSubmit={handleSubmit}>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <label
                         htmlFor="firstName"
                         className="text-sm font-medium"
@@ -163,7 +174,7 @@ export default function Profile() {
                         value={firstName}
                       />
                     </div>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <label htmlFor="lastName" className="text-sm font-medium">
                         Last name
                       </label>
@@ -174,13 +185,13 @@ export default function Profile() {
                         value={lastName}
                       />
                     </div>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium">Email address</dt>
                       <dd className="mt-1 text-sm sm:col-span-2 sm:mt-0">
                         {user?.email}
                       </dd>
                     </div>
-                    <div className=" px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className=" px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <label
                         htmlFor="phoneNumber"
                         className="text-sm font-medium"
@@ -195,26 +206,9 @@ export default function Profile() {
                       />
                     </div>
                     <div className="flex items-center justify-center mt-10">
-                      <button
-                        type="submit"
-                        className="text-sm rounded-md py-2 px-4 bg-ultramarineBlue text-white
-                     "
-                        disabled={isLoading}
-                      >
-                        {isLoading ? (
-                          <span className="flex justify-center items-center bg-transparent">
-                            <div
-                              className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
-                              role="status"
-                            >
-                              <span className="sr-only">Loading</span>
-                            </div>
-                            Processing...
-                          </span>
-                        ) : (
-                          "Submit"
-                        )}
-                      </button>
+                      <Button type="submit" isLoading={isPending}>
+                        Save Changes
+                      </Button>
                     </div>
                   </form>
                 )}
