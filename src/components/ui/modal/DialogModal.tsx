@@ -1,5 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import React, { Fragment } from "react";
+import Button from "../Button";
 
 interface DialogModalProps {
   title: string;
@@ -41,12 +43,20 @@ export default function DialogModal({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-lg transform  rounded-2xl bg-white dark:bg-slate-700 p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
-                >
-                  {title}
-                </Dialog.Title>
+                <div className="flex justify-between">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
+                  >
+                    {title}
+                  </Dialog.Title>
+                  <Button variant="ghost" onClick={() => setOpen(false)}>
+                    <XMarkIcon
+                      className="block h-6 w-6 text-white hover:text-red-500 transition-all"
+                      aria-hidden="true"
+                    />
+                  </Button>
+                </div>
                 {children}
               </Dialog.Panel>
             </Transition.Child>
