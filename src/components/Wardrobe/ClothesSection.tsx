@@ -1,5 +1,4 @@
 import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import Spinner from "../ui/spinner/Spinner";
 import { IClothingData } from "./interface";
 import ClothingCard from "./ClothingCard";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -23,13 +22,11 @@ const categories = [
 function ClothesSection({
   clothes,
   refetch,
-  isLoading,
   modalOpen,
   setModalOpen,
 }: {
   clothes: { [key: string]: IExistingClothesData[] };
   refetch: () => void;
-  isLoading: boolean;
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -61,19 +58,17 @@ function ClothesSection({
     }
   }, [modalOpen, refetch]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+
   return (
     <>
-      <div>
+      <div className="px-4">
         {Object.keys(clothes).map((key) => (
           <div key={key}>
             <button
-              className="flex justify-between items-center mb-6 w-full mx-auto hover:bg-gray-600 py-2 px-2 transition-colors rounded-lg"
+              className="flex justify-between items-center mb-6 w-full mx-auto hover:bg-gray-600 py-2 transition-colors rounded-lg"
               onClick={() => toggleCategory(key)}
             >
-              <h2 className="font-medium text-xl ml-6">
+              <h2 className="font-medium text-xl">
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </h2>
               <div>
@@ -85,7 +80,7 @@ function ClothesSection({
               </div>
             </button>
             {categoryOpen[key] && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
                 {(clothes[key as keyof IClothingData] as []).map(
                   (item, index) => {
                     return (
