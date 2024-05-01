@@ -98,7 +98,7 @@ function ClothesSection({
           </div>
         ))}
       </div>
-      <ClothesModal open={modalOpen} setOpen={setModalOpen} />
+      <ClothesModal open={modalOpen} setOpen={setModalOpen} refetch={refetch} />
     </>
   );
 }
