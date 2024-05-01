@@ -41,7 +41,7 @@ export default function ProfileImageModal({
       imageUploadRef.current.value = "";
     }
   };
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async ({ data }: { data: FormData }) =>
       updateProfileImageAPI(data),
     onSuccess(data) {
@@ -137,9 +137,9 @@ export default function ProfileImageModal({
                         <button
                           type="submit"
                           className="inline-flex justify-center rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          disabled={isLoading}
+                          disabled={isPending}
                         >
-                          {isLoading ? (
+                          {isPending ? (
                             <span className="flex justify-center items-center bg-transparent">
                               <div
                                 className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
