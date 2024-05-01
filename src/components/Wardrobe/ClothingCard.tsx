@@ -1,10 +1,13 @@
 import { Fragment, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
-import ClothesModal, { IClothesModalSchema, IExistingClothesData } from "./ClothesModal";
+import ClothesModal, { IExistingClothesData } from "./ClothesModal";
 import { Menu, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
-import { deleteClothes } from "../../api/clothesAPI";
-import { IClothingData } from "./interface";
+import {
+  deleteClothes,
+  favoriteClothes,
+  unfavoriteClothes,
+} from "../../api/clothesAPI";
 import {
   DeleteActiveIcon,
   DeleteInactiveIcon,
@@ -12,6 +15,7 @@ import {
   EditInactiveIcon,
 } from "../Icons";
 import { useToast } from "../../contexts/ToastContext";
+import { StarIcon } from "@heroicons/react/20/solid";
 
 export default function ClothingCard({
   item,
@@ -21,7 +25,7 @@ export default function ClothingCard({
   refetch?: () => void;
 }) {
   const { addToast } = useToast();
-  const { category, color, image, _id } = item;
+  const { category, color, image, favorited, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
     mutationFn: async ({ clothingID }: { clothingID: string }) =>
@@ -38,16 +42,55 @@ export default function ClothingCard({
       }
     },
   });
+  const { mutate: favoriteMutation } = useMutation({
+    mutationFn: async ({
+      clothesId,
+      favorite,
+    }: {
+      clothesId: string;
+      favorite: boolean;
+    }) =>
+      favorite
+        ? await unfavoriteClothes(clothesId)
+        : favoriteClothes(clothesId),
+    onSuccess(data) {
+      if (data.message) {
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
+      } else {
+        refetch && refetch();
+      }
+    },
+  });
   const handleDelete = () => {
     if (_id) {
       mutate({ clothingID: _id });
     }
   };
-
+  const handleFavoriting = (favorite: boolean) => {
+    if (_id) {
+      favoriteMutation({ clothesId: _id, favorite });
+    }
+  };
   return (
     <>
-      <div className="relative">
-        <div className="h-80 w-64 relative">
+      <div className="relative w-full" aria-label="Clothing card">
+        <div className="h-full w-full relative">
+          <button
+            className="absolute right-2 top-2 z-10"
+            onClick={() => {
+              handleFavoriting(favorited);
+            }}
+          >
+            {favorited ? (
+              <StarIcon className="h-4 w-4 text-yellow-400 hover:text-yellow-100" />
+            ) : (
+              <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
+            )}
+          </button>
           {image ? (
             <img
               className="object-cover w-full h-64 text-center rounded-md"
@@ -71,7 +114,7 @@ export default function ClothingCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="  h-5 w-5  hover:text-ourGrey"
+                      className="  h-5 w-5 dark:text-white hover:text-ourGrey"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -149,6 +192,7 @@ export default function ClothingCard({
         open={editMenuOpen}
         setOpen={setEditMenuOpen}
         existingData={item}
+        refetch={refetch}
       />
     </>
   );
