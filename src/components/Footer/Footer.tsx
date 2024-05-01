@@ -4,13 +4,13 @@ function Footer() {
   return (
     <footer className="py-6">
       <div className="flex flex-col justify-start gap-y-1 px-4 sm:px-8 md:px-16 lg:px-32 text-sm">
-        <div className="text-xl font-semibold">Site Links</div>
-        <Link to="/about-us">About Us</Link>
-        <Link to="/contact-us">Contact Us</Link>
+        <h3 className="text-lg font-semibold">Site Links</h3>
+        <Link to="/about-us" className="text-sm">About Us</Link>
+        <Link to="/contact-us" className="text-sm">Contact Us</Link>
       </div>
-      <div className="container mx-auto px-4 text-center my-4">
+      <p className="container mx-auto px-4 text-center my-4 text-sm">
         &copy; {new Date().getFullYear()} RizmicFits. All rights reserved.
-      </div>
+      </p>
     </footer>
   );
 }
