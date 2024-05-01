@@ -10,17 +10,17 @@ export default function ContactUs() {
   const form = useRef<HTMLFormElement>(null);
   const { addToast } = useToast();
   const {
+    control,
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<ContactUsSchemaType>({ resolver: zodResolver(ContactUsSchema) });
 
-  const onSubmit: SubmitHandler<ContactUsSchemaType> = async (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ContactUsSchemaType> = async () => {
     if (form.current == null) return;
     try {
-      const result = await sendForm(
+      await sendForm(
         import.meta.env.VITE_SERVICE_ID,
         import.meta.env.VITE_TEMPLATE_ID,
         form.current,
@@ -32,14 +32,12 @@ export default function ContactUs() {
         type: "success",
       });
       reset();
-      console.log(result);
     } catch (error) {
       addToast({
         title: "Something went wrong.",
         description: "Please try again.",
         type: "error",
       });
-      console.log(error);
     }
   };
   return (
@@ -61,9 +59,7 @@ export default function ContactUs() {
             type="email"
             name="email"
             placeholder="Your email"
-            register={register}
-            error={errors.email}
-            errorText={errors.email?.message}
+            control={control}
           />
 
           <Input<ContactUsSchemaType>
@@ -71,9 +67,7 @@ export default function ContactUs() {
             type="text"
             name="subject"
             placeholder="Subject"
-            register={register}
-            error={errors.subject}
-            errorText={errors.subject?.message}
+            control={control}
           />
 
           <div className="sm:col-span-2">
@@ -87,6 +81,9 @@ export default function ContactUs() {
               className="block p-2.5 w-full text-sm bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-ultramarineBlue focus:border-ultramarineBlue "
               placeholder="Leave a comment..."
             />
+            {errors.message && (
+              <p className="text-red-500 text-sm">{errors.message.message}</p>
+            )}
           </div>
           <div className="w-full text-center">
             <button
