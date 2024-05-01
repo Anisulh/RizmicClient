@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
 import ClothingCard from "./ClothingCard";
-import { IClothingData } from "./interface";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { IExistingClothesData } from "./ClothesModal";
 
 export default function ExpandOutfitsModal({
   open,
@@ -14,7 +14,7 @@ export default function ExpandOutfitsModal({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   name: string | undefined;
-  clothes: IClothingData[];
+  clothes: IExistingClothesData[];
   refetch?: () => void;
 }) {
   function closeModal() {
@@ -48,10 +48,10 @@ export default function ExpandOutfitsModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className=" relative w-fit transform  rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className=" relative w-fit transform  rounded-2xl bg-white dark:bg-slate-700 p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                   >
                     {name}
                   </Dialog.Title>
@@ -65,7 +65,7 @@ export default function ExpandOutfitsModal({
                   </button>
                   <div className="mt-2 grid grid-cols-3 gap-10 overflow-auto">
                     {clothes?.length && clothes.length > 0 ? (
-                      clothes.map((item: IClothingData, index) => {
+                      clothes.map((item, index) => {
                         return (
                           <ClothingCard
                             key={index}
