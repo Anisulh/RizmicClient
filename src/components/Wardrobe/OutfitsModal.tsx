@@ -268,7 +268,7 @@ function OutfitsModal({
                                   leaveFrom="opacity-100 scale-100"
                                   leaveTo="opacity-0 scale-95"
                                 >
-                                  <Dialog.Panel className="w-fit transform bg-white dark:bg-slate-700 rounded-2xl p-6 text-left align-middle shadow-xl transition-all overflow-auto">
+                                  <Dialog.Panel className="min-w-fit max-w-md w-full transform bg-white dark:bg-slate-700 rounded-2xl p-6 text-left align-middle shadow-xl transition-all overflow-auto">
                                     <Dialog.Title
                                       as="h3"
                                       className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -277,7 +277,7 @@ function OutfitsModal({
                                     </Dialog.Title>
 
                                     <Listbox.Options>
-                                      <div className="mt-2 grid grid-cols-3 gap-x-10 gap-y-2">
+                                      <div className="mt-2 grid md:grid-cols-3 gap-x-10 gap-y-2">
                                         {clothingItems.length > 0 &&
                                           clothingItems.map((item) => (
                                             <Listbox.Option
