@@ -62,7 +62,7 @@ export default function Toast({
           <XMarkIcon className="h-6 w-6" />
         </button>
         <strong>{title}</strong>
-        {description && <p>{description}</p>}
+        <span className="block">{description}</span>
       </div>
     </Transition>
   );

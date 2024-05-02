@@ -123,7 +123,7 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center overflow-auto min-h-screen">
+    <div className="flex items-center justify-center content-container">
       <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
         <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
           <div>
@@ -134,7 +134,7 @@ function Register() {
               Fill in your details or continue with google with a simple click.
             </p>
             <form
-              className="lg:px-10 py-2 lg:py-5 max-w-lg"
+              className="lg:px-10 py-2 lg:py-5 max-w-lg h-full overflow-auto"
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<RegisterSchemaType>
@@ -208,7 +208,7 @@ function Register() {
         </div>
       </div>
       <img
-        className="hidden md:block object-cover w-full lg:w-[60%] h-screen absolute right-0 rounded-2xl"
+        className="hidden md:block object-cover w-full lg:w-[60%] h-screen absolute top-0 right-0 rounded-2xl"
         src={registerImage}
         alt="Clothing on a rack"
       />
