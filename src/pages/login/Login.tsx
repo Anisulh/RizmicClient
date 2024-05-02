@@ -39,7 +39,6 @@ function Login() {
         });
       } else {
         reset();
-        console.log(data);
         setUser(data);
         navigate("/wardrobe");
       }
@@ -56,7 +55,6 @@ function Login() {
           type: "error",
         });
       } else {
-        console.log(data);
         setUser(data);
         navigate("/wardrobe");
       }
@@ -68,10 +66,9 @@ function Login() {
       const { credential } = res;
       await googleSignInMutation.mutateAsync(credential);
     } catch (error) {
-      console.error(error);
       addToast({
         title: "Something went wrong.",
-        description: "Please try again.",
+        description: "Unable to sign in via google. Please try again.",
         type: "error",
       });
     }
@@ -83,10 +80,9 @@ function Login() {
     try {
       await loginMutation.mutateAsync(data);
     } catch (error) {
-      console.log(error);
       addToast({
         title: "Something went wrong.",
-        description: "Please try again.",
+        description: "Invalid email or password.",
         type: "error",
       });
     }
