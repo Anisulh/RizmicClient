@@ -13,25 +13,8 @@ import { RegisterSchema, RegisterSchemaType } from "./registerSchema";
 import Input from "../../components/ui/inputs/Input";
 import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 import Button from "../../components/ui/Button";
-const formatPhoneNumber = (input: string): string => {
-  // Strip all non-digits
-  const digits = input.replace(/\D/g, "");
-  // Capture groups of digits to format
-  const match = digits.match(/^(\d{1,3})(\d{0,3})(\d{0,4})$/);
-  if (!match) {
-    return "";
-  }
+import formatPhoneNumber from "../../utils/formatPhoneNumber";
 
-  const [, areaCode, middleThree, lastFour] = match;
-
-  // Format and combine parts of the phone number
-  let result = "";
-  if (areaCode) result = `(${areaCode}`;
-  if (middleThree) result += `) ${middleThree}`;
-  if (lastFour) result += `-${lastFour}`;
-
-  return result;
-};
 declare global {
   const google: {
     accounts: {
@@ -70,7 +53,6 @@ function Register() {
         });
       } else {
         reset();
-        console.log(data);
         setUser(data);
         navigate("/wardrobe");
       }
@@ -87,7 +69,6 @@ function Register() {
           type: "error",
         });
       } else {
-        console.log(data);
         setUser(data);
         navigate("/wardrobe");
       }
@@ -98,7 +79,6 @@ function Register() {
     try {
       await googleSignInMutation.mutateAsync(res.credential);
     } catch (error) {
-      console.log(error);
       addToast({
         title: "Something went wrong.",
         description: "An error occurred.",
@@ -113,10 +93,9 @@ function Register() {
     try {
       await registerMutation.mutateAsync(data);
     } catch (error) {
-      console.log(error);
       addToast({
         title: "Something went wrong.",
-        description: "An error occurred.",
+        description: "Unable to register. Please try again.",
         type: "error",
       });
     }
