@@ -43,7 +43,6 @@ function ForgotPassword() {
         type: "success",
       });
     } catch (error) {
-      console.error(error);
       addToast({
         title: "Something went wrong.",
         description: "Please try again.",
@@ -53,11 +52,11 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="flex content-container">
-      <div className="m-auto justify-center">
+    <div className="min-h-screen max-w-lg w-full mx-auto flex items-center">
+      <div className="w-full">
         <h1 className="font-bold text-4xl">Forgot Password</h1>
         <p>Enter your email to reset your password</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-10 ">
           <Input<ForgotPasswordSchemaType>
             label="Email"
             type="email"
@@ -65,10 +64,11 @@ function ForgotPassword() {
             placeholder="Email"
             control={control}
           />
-
-          <Button type="submit" isLoading={isPending}>
-            Submit
-          </Button>
+          <div className="text-center mt-6">
+            <Button type="submit" isLoading={isPending}>
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     </div>
