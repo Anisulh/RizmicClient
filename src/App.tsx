@@ -17,6 +17,8 @@ import Profile from "./pages/Profile";
 import Footer from "./components/Footer/Footer";
 import Pricing from "./pages/subscription/Pricing";
 import ToastContainer from "./components/ui/toast/ToastContainer";
+import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
+import TermsOfService from "./pages/termsOfService/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
