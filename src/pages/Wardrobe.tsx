@@ -40,7 +40,7 @@ export default function Wardrobe() {
       if (data?.message) {
         addToast({
           title: "Something went wrong.",
-          description: data?.message,
+          description: "Unable to fetch clothes",
           type: "error",
         });
       } else {
@@ -68,7 +68,7 @@ export default function Wardrobe() {
       if (data?.message) {
         addToast({
           title: "Something went wrong.",
-          description: data?.message,
+          description: "Unable to fetch outfits",
           type: "error",
         });
       } else {
