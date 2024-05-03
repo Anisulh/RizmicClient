@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getUserData } from "../api/userAPI";
+import { getUserData, logoutAPI } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
 
 export interface IUserContext {
@@ -59,9 +59,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = (): void => {
+  const logout = async (): Promise<void> => {
     setUser(null);
     setIsAuthenticated(false);
+    await logoutAPI();
   };
 
   const value = {
