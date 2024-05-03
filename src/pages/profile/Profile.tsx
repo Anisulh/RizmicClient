@@ -2,14 +2,14 @@ import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { updateProfileAPI } from "../api/userAPI";
-import ChangePassword from "../components/Profile/ChangePassword";
-import ProfileImageModal from "../components/Profile/ProfileImageModal";
-import { useAuth } from "../contexts/UserContext";
-import { useToast } from "../contexts/ToastContext";
-import Button from "../components/ui/Button";
-import Spinner from "../components/ui/spinner/Spinner";
-import Avatar from "../assets/userAvatar.webp";
+import { updateProfileAPI } from "../../api/userAPI";
+import ChangePassword from "../../components/Profile/ChangePassword";
+import ProfileImageModal from "../../components/Profile/ProfileImageModal";
+import { useAuth } from "../../contexts/UserContext";
+import { useToast } from "../../contexts/ToastContext";
+import Button from "../../components/ui/Button";
+import Spinner from "../../components/ui/spinner/Spinner";
+import Avatar from "../../assets/userAvatar.webp";
 
 export default function Profile() {
   const { addToast } = useToast();
