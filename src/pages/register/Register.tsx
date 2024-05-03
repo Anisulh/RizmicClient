@@ -14,6 +14,7 @@ import Input from "../../components/ui/inputs/Input";
 import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 import Button from "../../components/ui/Button";
 import formatPhoneNumber from "../../utils/formatPhoneNumber";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 declare global {
   const google: {
@@ -30,7 +31,14 @@ function Register() {
   const navigate = useNavigate();
   const { setUser, isAuthenticated } = useAuth();
   const { addToast } = useToast();
-  const { control, handleSubmit, reset, watch } = useForm<RegisterSchemaType>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
   });
 
@@ -102,7 +110,7 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center content-container">
+    <div className="flex items-center justify-center content-container mb-10">
       <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
         <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
           <div>
@@ -113,7 +121,7 @@ function Register() {
               Fill in your details or continue with google with a simple click.
             </p>
             <form
-              className="lg:px-10 py-2 lg:py-5 max-w-lg h-full overflow-auto"
+              className="lg:px-10 py-2 lg:py-5 max-w-lg h-full overflow-auto "
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<RegisterSchemaType>
@@ -137,7 +145,6 @@ function Register() {
                 placeholder="Email"
                 control={control}
               />
-
               <Input<RegisterSchemaType>
                 label="Password"
                 type="password"
@@ -145,9 +152,7 @@ function Register() {
                 placeholder="Password"
                 control={control}
               />
-
               {password && <PasswordStrengthCheck password={password} />}
-
               <Input<RegisterSchemaType>
                 label="Confirm Password"
                 type="password"
@@ -163,7 +168,42 @@ function Register() {
                 placeholder="Phone Number"
                 control={control}
                 formatInput={formatPhoneNumber}
-              />
+              />{" "}
+              <div className="flex items-center justify-center gap-2  mt-4 mb-2">
+                <input
+                  type="checkbox"
+                  {...register("termsAndPolicy", { required: true })}
+                  className="h-4 w-4 text-raisinblack border-gray-300 rounded-sm focus:ring-raisinblack focus:border-raisinblack dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                />
+                <label
+                  htmlFor="termsAndPolicy"
+                  className="text-sm md:text-base text-gray-700 dark:text-white"
+                >
+                  I agree to the{" "}
+                  <Link
+                    to="/terms-of-service"
+                    target="_blank"
+                    className="text-ultramarineBlue p-1 "
+                  >
+                    Terms of Service
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 inline ml-1" />
+                  </Link>{" "}
+                  and{" "}
+                  <Link
+                    to="/privacy-policy"
+                    target="_blank"
+                    className="text-ultramarineBlue p-1"
+                  >
+                    Privacy Policy
+                    <ArrowTopRightOnSquareIcon className="h-4 w-4 inline ml-1" />
+                  </Link>
+                </label>
+              </div>
+              {errors.termsAndPolicy && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.termsAndPolicy.message}
+                </p>
+              )}
               <Button
                 variant="secondary"
                 type="submit"
@@ -175,7 +215,7 @@ function Register() {
             </form>
             <div className="flex text-base items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
-              <Link to="/login" className="text-ultramarineBlue font-medium">
+              <Link to="/login" className="text-ultramarineBlue font-medium p-1">
                 Login
               </Link>
             </div>
