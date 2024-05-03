@@ -9,7 +9,7 @@ interface InputProps<T extends FieldValues> {
   required?: boolean;
   placeholder?: string;
   className?: string;
-  formatInput?: (value: string) => string|void; // Optional prop for custom input formatting
+  formatInput?: (value: string) => string | void; // Optional prop for custom input formatting
   customRef?: React.RefObject<HTMLElement>;
 }
 
@@ -47,8 +47,8 @@ const Input = <T extends FieldValues>({
                 let val = e.target.value;
                 if (type === "tel" && formatInput) {
                   val = formatInput(val) || val; // Apply formatting if specified
-                } else if (formatInput){
-                  formatInput(val)
+                } else if (formatInput) {
+                  formatInput(val);
                 }
                 val = val.trim(); // Trim value
                 onChange(val); // Update form state
