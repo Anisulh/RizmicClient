@@ -60,7 +60,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = (): void => {
-    localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
   };
