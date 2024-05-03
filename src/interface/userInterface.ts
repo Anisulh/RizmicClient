@@ -2,9 +2,16 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  token: string;
   profilePicture: string;
-  phoneNumber: string
+  phoneNumber: string;
+  termsOfService: {
+    agreed: boolean;
+    dateAgreed: string;
+  };
+  privacyPolicy: {
+    agreed: boolean;
+    dateAgreed: string;
+  };
 }
 
 export interface IRegisterUser {
@@ -26,7 +33,7 @@ export interface IUserLogin {
   password: string;
 }
 
-export interface ILoginAPIParams{
+export interface ILoginAPIParams {
   userData?: IUserLogin;
   credential?: string;
 }
