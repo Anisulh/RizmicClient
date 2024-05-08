@@ -9,7 +9,7 @@ const variantClasses = {
     "bg-cambridgeblue hover:bg-blue-500 text-raisinblack focus-visible:outline-cambridgeblue",
   destructive: "bg-red-600 hover:bg-red-400 border-red-600 text-white",
   outline: "hover:bg-ultramarineBlue",
-  ghost: "bg-transparent text-gray-700 border-none p-0",
+  ghost: "bg-transparent text-gray-700 dark:text-white hover:text-gray-300 border-none p-0",
   link: "bg-transparent text-blue-500 underline border-none p-0",
   icon: "p-2 bg-transparent border-none",
   textWithIcon: "flex items-center space-x-2",
