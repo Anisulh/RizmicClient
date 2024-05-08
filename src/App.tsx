@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import AboutUs from "./pages/aboutUs/AboutUs";
@@ -9,16 +9,17 @@ import ContactUs from "./pages/contactUs/ContactUs";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import { ToastProvider } from "./contexts/ToastContext";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
-import Wardrobe from "./pages/Wardrobe";
+import Wardrobe from "./pages/wardrobe/Wardrobe";
 import PrivateRoute from "./components/PrivateRoute";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GenerateFit from "./pages/fitGenerator/GenerateFit";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile/Profile";
 import Footer from "./components/Footer/Footer";
 import Pricing from "./pages/subscription/Pricing";
 import ToastContainer from "./components/ui/toast/ToastContainer";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/termsOfService/TermsOfService";
+import Settings from "./pages/settings/Settings";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
                 </PrivateRoute>
               }
             />

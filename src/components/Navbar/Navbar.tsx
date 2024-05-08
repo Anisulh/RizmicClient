@@ -2,9 +2,9 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/UserContext";
-import userAvatar from "../assets/userAvatar.webp";
-import RizmicIcon from "../assets/RFIcon.png";
+import { useAuth } from "../../contexts/UserContext";
+import userAvatar from "../../assets/userAvatar.webp";
+import RizmicIcon from "../../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 
 function classNames(...classes: string[]) {
@@ -112,6 +112,19 @@ export default function Navbar() {
                                   )}
                                 >
                                   Your Profile
+                                </Link>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link
+                                  to="/settings"
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                  )}
+                                >
+                                  Settings
                                 </Link>
                               )}
                             </Menu.Item>

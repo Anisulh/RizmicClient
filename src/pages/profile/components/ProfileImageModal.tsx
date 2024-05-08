@@ -8,9 +8,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { updateProfileImageAPI } from "../../api/userAPI";
-import { useToast } from "../../contexts/ToastContext";
-import DialogModal from "../ui/modal/DialogModal";
+import { updateProfileImageAPI } from "../../../api/userAPI";
+import { useToast } from "../../../contexts/ToastContext";
+import DialogModal from "../../../components/ui/modal/DialogModal";
 
 export default function ProfileImageModal({
   open,

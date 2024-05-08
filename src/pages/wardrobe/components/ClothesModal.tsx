@@ -1,23 +1,23 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { createClothes, updateClothes } from "../../api/clothesAPI";
+import { createClothes, updateClothes } from "../../../api/clothesAPI";
 import ColorPicker from "./ColorPicker";
 import { colord } from "colord";
-import { useToast } from "../../contexts/ToastContext";
+import { useToast } from "../../../contexts/ToastContext";
 import { z } from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Input from "../ui/inputs/Input";
-import Button from "../ui/Button";
-import DialogModal from "../ui/modal/DialogModal";
-import Select from "../ui/inputs/Select";
-import cn from "../ui/cn";
+import Input from "../../../components/ui/inputs/Input";
+import Button from "../../../components/ui/Button";
+import DialogModal from "../../../components/ui/modal/DialogModal";
+import Select from "../../../components/ui/inputs/Select";
+import cn from "../../../components/ui/cn";
 import { DevTool } from "@hookform/devtools";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import TagsInput from "../ui/inputs/TagsInput";
-import { filterData } from "../../utils/filterData";
-import valuesToSelectOptions from "../../utils/valuesToSelectOptions";
+import TagsInput from "../../../components/ui/inputs/TagsInput";
+import { filterData } from "../../../utils/filterData";
+import valuesToSelectOptions from "../../../utils/valuesToSelectOptions";
 
 const categoryValues =  [
   "t-shirt",
