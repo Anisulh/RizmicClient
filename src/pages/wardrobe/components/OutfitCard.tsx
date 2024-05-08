@@ -6,17 +6,17 @@ import {
   deleteOutfits,
   favoriteOutfits,
   unfavoriteOutfits,
-} from "../../api/outfitsAPI";
+} from "../../../api/outfitsAPI";
 import { useMutation } from "@tanstack/react-query";
 import {
   DeleteActiveIcon,
   DeleteInactiveIcon,
   EditActiveIcon,
   EditInactiveIcon,
-} from "../Icons";
+} from "../../../components/Icons";
 import { StarIcon } from "@heroicons/react/20/solid";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
-import { useToast } from "../../contexts/ToastContext";
+import { useToast } from "../../../contexts/ToastContext";
 import { IExistingClothesData } from "./ClothesModal";
 export interface IOutfitData {
   _id: string;

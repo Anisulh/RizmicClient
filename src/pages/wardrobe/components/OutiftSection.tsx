@@ -3,8 +3,8 @@ import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import OutfitsModal, { IExistingOutfitData } from "./OutfitsModal";
 import OutfitCard from "./OutfitCard";
 import { IExistingClothesData } from "./ClothesModal";
-import { splitCamelCase } from "../../utils/splitCamelCase";
-import { IOutfitsSections } from "../../pages/Wardrobe";
+import { splitCamelCase } from "../../../utils/splitCamelCase";
+import { IOutfitsSections } from "../Wardrobe";
 
 interface IOutfitsShow {
   favorite: boolean;

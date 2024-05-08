@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import ClothingCard from "./ClothingCard";
+import ClothingCard from "../../../components/ClothingCard";
 import { IExistingClothesData } from "./ClothesModal";
-import DialogModal from "../ui/modal/DialogModal";
+import DialogModal from "../../../components/ui/modal/DialogModal";
 
 export default function ExpandOutfitsModal({
   open,
@@ -16,7 +16,6 @@ export default function ExpandOutfitsModal({
   clothes: IExistingClothesData[];
   refetch?: () => void;
 }) {
-
   return (
     <>
       <DialogModal open={open} setOpen={setOpen} title={name}>

@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { IClothingData } from "./interface";
-import ClothingCard from "./ClothingCard";
+import ClothingCard from "../../../components/ClothingCard";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ClothesModal, { IExistingClothesData } from "./ClothesModal";
 interface CategoryOpenState {
@@ -57,7 +57,6 @@ function ClothesSection({
       refetch();
     }
   }, [modalOpen, refetch]);
-
 
   return (
     <>

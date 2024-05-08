@@ -1,15 +1,15 @@
 import { useState } from "react";
-import ClothesSection from "../components/Wardrobe/ClothesSection";
+import ClothesSection from "./components/ClothesSection";
 import { useQuery } from "@tanstack/react-query";
-import { getClothes } from "../api/clothesAPI";
-import { useToast } from "../contexts/ToastContext";
+import { getClothes } from "../../api/clothesAPI";
+import { useToast } from "../../contexts/ToastContext";
 import { PlusIcon } from "@heroicons/react/20/solid";
-import { IExistingClothesData } from "../components/Wardrobe/ClothesModal";
-import Button from "../components/ui/Button";
-import Spinner from "../components/ui/spinner/Spinner";
-import { IExistingOutfitData } from "../components/Wardrobe/OutfitsModal";
-import { getOutfits } from "../api/outfitsAPI";
-import OutfitSection from "../components/Wardrobe/OutiftSection";
+import { IExistingClothesData } from "./components/ClothesModal";
+import Button from "../../components/ui/Button";
+import Spinner from "../../components/ui/spinner/Spinner";
+import { IExistingOutfitData } from "./components/OutfitsModal";
+import { getOutfits } from "../../api/outfitsAPI";
+import OutfitSection from "./components/OutiftSection";
 
 type GroupedClothes = {
   [key in IExistingClothesData["category"]]?: IExistingClothesData[];
