@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction } from "react";
-import ClothingCard from "../../components/Wardrobe/ClothingCard";
-import { IExistingClothesData } from "../../components/Wardrobe/ClothesModal";
+import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
+import ClothingCard from "../../components/ClothingCard";
 
 export default function GenerateFitModal({
   open,

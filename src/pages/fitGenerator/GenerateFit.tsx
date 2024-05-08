@@ -5,9 +5,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { generateBlank } from "../../api/generationAPI";
-import ClothingCard from "../../components/Wardrobe/ClothingCard";
 import { useToast } from "../../contexts/ToastContext";
-import { IExistingClothesData } from "../../components/Wardrobe/ClothesModal";
+import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
+import ClothingCard from "../../components/ClothingCard";
 
 export interface IBodyParts {
   head: IExistingClothesData[];
