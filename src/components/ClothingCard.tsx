@@ -1,20 +1,22 @@
 import { Fragment, useState } from "react";
 import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIcon";
-import ClothesModal, { IExistingClothesData } from "./ClothesModal";
+import ClothesModal, {
+  IExistingClothesData,
+} from "../pages/wardrobe/components/ClothesModal";
 import { Menu, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
 import {
   deleteClothes,
   favoriteClothes,
   unfavoriteClothes,
-} from "../../api/clothesAPI";
+} from "../api/clothesAPI";
 import {
   DeleteActiveIcon,
   DeleteInactiveIcon,
   EditActiveIcon,
   EditInactiveIcon,
-} from "../Icons";
-import { useToast } from "../../contexts/ToastContext";
+} from "./Icons";
+import { useToast } from "../contexts/ToastContext";
 import { StarIcon } from "@heroicons/react/20/solid";
 
 export default function ClothingCard({
