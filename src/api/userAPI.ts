@@ -191,3 +191,17 @@ export const logoutAPI = async () => {
   }
   return responseData;
 };
+
+export const deleteAccountAPI = async () => {
+  const url = new URL(baseURL + "delete-account");
+  const options: RequestInit = {
+    method: "DELETE",
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
+}
