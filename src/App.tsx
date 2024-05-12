@@ -20,6 +20,7 @@ import ToastContainer from "./components/ui/toast/ToastContainer";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/termsOfService/TermsOfService";
 import Settings from "./pages/settings/Settings";
+import Friends from "./pages/friends/Friends";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <GenerateFit />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/friends"
+              element={
+                <PrivateRoute>
+                  <Friends />
                 </PrivateRoute>
               }
             />
