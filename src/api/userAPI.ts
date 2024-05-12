@@ -205,3 +205,18 @@ export const deleteAccountAPI = async () => {
   }
   return responseData;
 }
+
+export const searchUsersAPI = async (search: string) => {
+  const url = new URL(baseURL + "search");
+  url.searchParams.append("query", search);
+  const options: RequestInit = {
+    method: "GET",
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message);
+  }
+  return responseData;
+}
