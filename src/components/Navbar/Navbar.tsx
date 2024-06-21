@@ -7,7 +7,6 @@ import userAvatar from "../../assets/userAvatar.webp";
 import RizmicIcon from "../../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import useInstallPrompt from "../../hooks/useInstallPrompt";
-import Button from "../ui/Button";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -89,14 +88,59 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   {index === 0 ? "Wardrobe" : "Fit Generator"}
                                 </Link>
                               )}
                             </Menu.Item>
-                          ))}
+                          ))}{" "}
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/friends"
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 dark:text-gray-900"
+                                    : "",
+                                  "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                                )}
+                              >
+                                Friends
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/profile"
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 dark:text-gray-900"
+                                    : "",
+                                  "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                                )}
+                              >
+                                Your Profile
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/settings"
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 dark:text-gray-900"
+                                    : "",
+                                  "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                                )}
+                              >
+                                Settings
+                              </Link>
+                            )}
+                          </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <button
@@ -108,7 +152,7 @@ export default function Navbar() {
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
-                                  "block px-4 py-2 text-sm font-medium text-gray-900 dark:text-white hover:text-gray-700",
+                                  "block px-4 py-2  font-medium text-gray-900 dark:text-white hover:text-gray-700",
                                 )}
                               >
                                 Log out
@@ -127,7 +171,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   {item.name}
@@ -144,7 +188,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   {item.name}
@@ -164,7 +208,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   {item.name}
@@ -183,7 +227,7 @@ export default function Navbar() {
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
-                                  "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700",
+                                  "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2  font-medium text-white shadow-sm hover:bg-blue-700",
                                 )}
                                 onClick={showInstallPrompt}
                               >
@@ -216,7 +260,7 @@ export default function Navbar() {
                     <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
                       <Menu as="div" className="relative ml-3">
                         <div>
-                          <Menu.Button className="flex rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 border">
+                          <Menu.Button className="flex rounded-full  focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 border">
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full bg-white"
@@ -243,7 +287,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   Friends
@@ -258,7 +302,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   Your Profile
@@ -273,7 +317,7 @@ export default function Navbar() {
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
-                                    "block px-4 py-2 text-sm  text-gray-900 dark:text-white hover:text-gray-700",
+                                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
                                   )}
                                 >
                                   Settings
@@ -292,7 +336,7 @@ export default function Navbar() {
                                       active
                                         ? "bg-gray-100 dark:text-gray-900"
                                         : "",
-                                      "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700",
+                                      "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2  font-medium text-white shadow-sm hover:bg-blue-700",
                                     )}
                                   >
                                     Log out
