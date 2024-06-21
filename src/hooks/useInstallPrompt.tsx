@@ -5,22 +5,29 @@ const useInstallPrompt = () => {
     null,
   );
   const [isInstallPromptVisible, setInstallPromptVisible] = useState(false);
+  const [isSafari, setIsSafari] = useState(false);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (event: Event) => {
-      event.preventDefault();
-      setInstallPromptEvent(event);
-      setInstallPromptVisible(true);
-    };
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isSafariBrowser =
+      /safari/.test(userAgent) && !/chrome/.test(userAgent);
+    setIsSafari(isSafariBrowser);
 
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    if (!isSafariBrowser) {
+      const handleBeforeInstallPrompt = (event: Event) => {
+        event.preventDefault();
+        setInstallPromptVisible(true);
+      };
 
-    return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt,
-      );
-    };
+      window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+      return () => {
+        window.removeEventListener(
+          "beforeinstallprompt",
+          handleBeforeInstallPrompt,
+        );
+      };
+    }
   }, []);
 
   const showInstallPrompt = () => {
@@ -38,7 +45,7 @@ const useInstallPrompt = () => {
     }
   };
 
-  return { isInstallPromptVisible, showInstallPrompt };
+  return { isInstallPromptVisible, showInstallPrompt, isSafari };
 };
 
 export default useInstallPrompt;

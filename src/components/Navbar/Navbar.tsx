@@ -6,11 +6,9 @@ import { useAuth } from "../../contexts/UserContext";
 import userAvatar from "../../assets/userAvatar.webp";
 import RizmicIcon from "../../assets/RFIcon.png";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
-import useInstallPrompt from "../../hooks/useInstallPrompt";
+import PWAInstallPrompt from "./components/PWAInstallPrompt";
+import cn from "../ui/cn";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 const homeNavigation = [
   { name: "Features", href: "#features" },
   { name: "Pricing", href: "#pricing" },
@@ -24,7 +22,7 @@ const loginRegisterNav = [
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
-  const { isInstallPromptVisible, showInstallPrompt } = useInstallPrompt();
+
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -84,7 +82,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to={path}
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -100,7 +98,7 @@ export default function Navbar() {
                             {({ active }) => (
                               <Link
                                 to="/friends"
-                                className={classNames(
+                                className={cn(
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
@@ -115,7 +113,7 @@ export default function Navbar() {
                             {({ active }) => (
                               <Link
                                 to="/profile"
-                                className={classNames(
+                                className={cn(
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
@@ -130,7 +128,7 @@ export default function Navbar() {
                             {({ active }) => (
                               <Link
                                 to="/settings"
-                                className={classNames(
+                                className={cn(
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
@@ -148,7 +146,7 @@ export default function Navbar() {
                                   logout();
                                   navigate("/login");
                                 }}
-                                className={classNames(
+                                className={cn(
                                   active
                                     ? "bg-gray-100 dark:text-gray-900"
                                     : "",
@@ -167,7 +165,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <a
                                   href={item.href}
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -184,7 +182,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to={item.href}
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -204,7 +202,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to={item.href}
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -218,25 +216,7 @@ export default function Navbar() {
                           ))}
                         </div>
                       )}
-                      {isInstallPromptVisible && (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <div className="w-full flex justify-center py-2">
-                              <button
-                                className={classNames(
-                                  active
-                                    ? "bg-gray-100 dark:text-gray-900"
-                                    : "",
-                                  "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2  font-medium text-white shadow-sm hover:bg-blue-700",
-                                )}
-                                onClick={showInstallPrompt}
-                              >
-                                Install App
-                              </button>
-                            </div>
-                          )}
-                        </Menu.Item>
-                      )}
+                      <PWAInstallPrompt />
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -283,7 +263,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to="/friends"
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -298,7 +278,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to="/profile"
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -313,7 +293,7 @@ export default function Navbar() {
                               {({ active }) => (
                                 <Link
                                   to="/settings"
-                                  className={classNames(
+                                  className={cn(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
                                       : "",
@@ -332,7 +312,7 @@ export default function Navbar() {
                                       logout();
                                       navigate("/login");
                                     }}
-                                    className={classNames(
+                                    className={cn(
                                       active
                                         ? "bg-gray-100 dark:text-gray-900"
                                         : "",
