@@ -114,7 +114,7 @@ function Register() {
       <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
         <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
           <div>
-            <h1 className="font-bold text-3xl lg:text-5xl tracking-wide">
+            <h1 className="font-bold text-4xl lg:text-6xl tracking-wide">
               Register
             </h1>
             <p className="text-slategrey lg:text-lg">
@@ -215,7 +215,10 @@ function Register() {
             </form>
             <div className="flex text-base items-center justify-center gap-1 py-4 ">
               <p>Already have an account?</p>
-              <Link to="/login" className="text-ultramarineBlue font-medium p-1">
+              <Link
+                to="/login"
+                className="text-ultramarineBlue font-medium p-1"
+              >
                 Login
               </Link>
             </div>

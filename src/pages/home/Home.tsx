@@ -107,7 +107,7 @@ export default function Home() {
         <section className="text-center mt-24 flex justify-center items-center py-28">
           <div className="hero-text py-20 flex flex-col items-center justify-center gap-10">
             <div>
-              <h1 className="text-5xl font-bold  mb-4">
+              <h1 className="text-5xl font-bold  mb-4 sm:text-7xl">
                 Your Personal Wardrobe Manager
               </h1>
               <p className="text-xl text-slategrey max-w-4xl">
@@ -126,7 +126,7 @@ export default function Home() {
         </section>
 
         <section id="features" className="py-24">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-6xl">
             Features
           </h2>
 
@@ -138,7 +138,7 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Shop more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-6xl">
                       Virtual Wardrobe
                     </p>
                     <p className="mt-6">
@@ -172,7 +172,7 @@ export default function Home() {
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Style more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-6xl">
                       Outfit Generator
                     </p>
                     <p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-200">
@@ -202,7 +202,7 @@ export default function Home() {
         </section>
 
         <section id="pricing" className="py-24">
-          <h2 className="text-4xl font-bold  mb-8">Pricing</h2>
+          <h2 className="text-4xl font-bold  mb-8 sm:text-6xl">Pricing</h2>
           <div className=" py-24 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">

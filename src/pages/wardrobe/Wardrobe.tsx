@@ -94,6 +94,7 @@ export default function Wardrobe() {
 
   return (
     <div className="content-container max-w-7xl w-full mb-10 relative mx-auto">
+      <h1 className="text-4xl font-bold lg:text-6xl ml-4">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
         <ul className="flex items-center pt-3 pb-4" role="tablist">
           <li className=" mr-2 text-center">
@@ -139,14 +140,6 @@ export default function Wardrobe() {
         >
           Add Item
         </Button>
-
-        {/* <button
-          className="flex items-center bg-ultramarineBlue text-white hover:bg-cambridgeblue hover:text-black rounded-lg px-2 py-1 transition-all"
-          onClick={() => setModalOpen(true)}
-        >
-          Add item
-          <PlusIcon className="h-6 w-6" />
-        </button> */}
       </div>
 
       {openTab === 1 ? (
