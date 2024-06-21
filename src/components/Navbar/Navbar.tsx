@@ -61,9 +61,6 @@ export default function Navbar() {
                   <Menu.Button className=" md:hidden relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
-                    {isInstallPromptVisible && (
-                      <Button onClick={showInstallPrompt}>Install App</Button>
-                    )}
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                     ) : (
@@ -177,18 +174,23 @@ export default function Navbar() {
                           ))}
                         </div>
                       )}
+
                       {isInstallPromptVisible && (
                         <Menu.Item>
                           {({ active }) => (
-                            <button
-                              className={classNames(
-                                active ? "bg-gray-100 dark:text-gray-900" : "",
-                                "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700",
-                              )}
-                              onClick={showInstallPrompt}
-                            >
-                              Install App
-                            </button>
+                            <div className="w-full flex justify-center py-2">
+                              <button
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 dark:text-gray-900"
+                                    : "",
+                                  "flex  items-center justify-center rounded-md border border-transparent bg-ultramarineBlue px-8  py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700",
+                                )}
+                                onClick={showInstallPrompt}
+                              >
+                                Install App
+                              </button>
+                            </div>
                           )}
                         </Menu.Item>
                       )}
