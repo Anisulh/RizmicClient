@@ -121,8 +121,8 @@ export default function Navbar() {
                           {homeNavigation.map((item, index) => (
                             <Menu.Item key={index}>
                               {({ active }) => (
-                                <Link
-                                  to={item.href}
+                                <a
+                                  href={item.href}
                                   className={classNames(
                                     active
                                       ? "bg-gray-100 dark:text-gray-900"
@@ -131,7 +131,7 @@ export default function Navbar() {
                                   )}
                                 >
                                   {item.name}
-                                </Link>
+                                </a>
                               )}
                             </Menu.Item>
                           ))}
@@ -174,7 +174,6 @@ export default function Navbar() {
                           ))}
                         </div>
                       )}
-
                       {isInstallPromptVisible && (
                         <Menu.Item>
                           {({ active }) => (
