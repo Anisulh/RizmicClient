@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClothesSection from "./components/ClothesSection";
 import { useQuery } from "@tanstack/react-query";
 import { getClothes } from "../../api/clothesAPI";
@@ -11,6 +11,7 @@ import { IExistingOutfitData } from "./components/OutfitsModal";
 import { getOutfits } from "../../api/outfitsAPI";
 import OutfitSection from "./components/OutiftSection";
 import cn from "../../components/ui/cn";
+import { useLocation } from "react-router";
 
 type GroupedClothes = {
   [key in IExistingClothesData["category"]]?: IExistingClothesData[];
@@ -34,6 +35,27 @@ export default function Wardrobe() {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const { addToast } = useToast();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleQueryParams = () => {
+      const params = new URLSearchParams(location.search);
+      const tab = params.get("tab");
+      const action = params.get("action");
+
+      if (tab === "outfits") {
+        setOpenTab(2);
+      } else {
+        setOpenTab(1);
+      }
+
+      if (action === "add") {
+        setModalOpen(true);
+      }
+    };
+
+    handleQueryParams();
+  }, [location.search]);
   const { isLoading: isLoadingClothes, refetch: refetchClothes } = useQuery({
     queryKey: ["clothes"],
     queryFn: async () => {
