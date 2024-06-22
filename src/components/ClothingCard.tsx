@@ -30,7 +30,7 @@ export default function ClothingCard({
 }) {
   const { addToast } = useToast();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
-  const { category, color, image, favorited, _id } = item;
+  const { color, image, favorited, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
     mutationFn: async ({ clothingID }: { clothingID: string }) =>
@@ -228,7 +228,7 @@ export default function ClothingCard({
             Are you sure you want to delete this clothing? This cannot be
             undone.
           </p>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center w-full">
             <Button
               variant="destructive"
               onClick={() => {
