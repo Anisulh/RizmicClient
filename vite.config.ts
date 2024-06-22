@@ -13,6 +13,7 @@ export default defineConfig({
         name: "RizmicFits",
         short_name: "Rizmic",
         description: "All in one app to manage all your clothing needs.",
+        background_color: "#1e293b",
         theme_color: "#ffffff",
         icons: [
           {
