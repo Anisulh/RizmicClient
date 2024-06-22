@@ -27,7 +27,7 @@ export default function Profile() {
   return (
     <div className="max-w-7xl mx-auto content-container">
       <div className="w-full h-60 bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue rounded-2xl"></div>
-      <div className="flex flex-col max-w-5xl mx-auto gap-10">
+      <div className="flex flex-col max-w-5xl mx-auto gap-10 px-2">
         <div className="flex gap-2">
           <div className="relative flex items-center justify-center h-full">
             <img
@@ -57,11 +57,11 @@ export default function Profile() {
             <p className="font-medium">{user?.email}</p>
           </div>
         </div>
-        <div className="max-w-4xl mx-auto w-full">
-          <div className="border-2 dark:border-gray-700 dark:bg-gray-700 rounded-xl px-8  py-4">
+        <div className="max-w-4xl mx-auto w-full px-2">
+          <div className="border-2 dark:border-gray-700 dark:bg-gray-700 rounded-xl p-4">
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h1 className="text-lg font-medium">Profile Information</h1>
+                <h1 className="text-xl font-medium">Profile Information</h1>
                 <Button
                   variant="outline"
                   onClick={() => setEditingProfile(true)}

@@ -64,7 +64,7 @@ function ClothesSection({
         {Object.keys(clothes).map((key) => (
           <div key={key}>
             <button
-              className="flex justify-between items-center mb-6 w-full mx-auto hover:bg-gray-600 py-2 transition-colors rounded-lg"
+              className="flex justify-between items-center mb-6 w-full mx-auto hover:bg-gray-600 p-2 transition-colors rounded-lg"
               onClick={() => toggleCategory(key)}
             >
               <h2 className="font-medium text-xl">

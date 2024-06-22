@@ -79,7 +79,7 @@ export default function Friends() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto content-container px-2 lg:px-4 space-y-10">
+    <div className="max-w-7xl mx-auto content-container px-4 space-y-10">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Friends</h1>
         <Button variant="primary" onClick={() => setAddFriendModalOpen(true)}>

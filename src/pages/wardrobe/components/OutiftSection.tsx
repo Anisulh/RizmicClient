@@ -36,7 +36,7 @@ function OutfitSection({
           return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
             <div key={key}>
               <button
-                className="flex justify-between items-center mb-6 w-full hover:bg-gray-600 py-2 transition-colors rounded-lg"
+                className="flex justify-between items-center mb-6 w-full hover:bg-gray-600 p-2 transition-colors rounded-lg"
                 onClick={() =>
                   setShow((prevState) => ({
                     ...prevState,
