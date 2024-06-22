@@ -9,8 +9,8 @@ export function WardrobeIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "#334155"}
+        stroke={active ? "#334155" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -25,8 +25,8 @@ export function ShareIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "#334155"}
+        stroke={active ? "#CDD6F4" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -41,8 +41,8 @@ export function EditIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "none" : "none"}
+        stroke={active ? "#CDD6F4" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -50,15 +50,12 @@ export function EditIcon({ active = false, ...props }: IIconProps) {
       >
         <path
           color="#000000"
-          fill={active ? "#8B5CF6" : "#B7D1C1"}
-          stroke={active ? "#C4B5FD" : "#446DF6"}
-          d="m16.214 4.982l1.402-1.401a1.982 1.982 0 0 1 2.803 2.803l-1.401 1.402m-2.804-2.804l-5.234 5.234c-1.045 1.046-1.568 1.568-1.924 2.205S8.342 14.561 8 16c1.438-.342 2.942-.7 3.579-1.056s1.16-.879 2.205-1.924l5.234-5.234m-2.804-2.804l2.804 2.804"
-        ></path>
+          d="M21 12c0 4.243 0 6.364-1.318 7.682S16.242 21 12 21s-6.364 0-7.682-1.318S3 16.242 3 12s0-6.364 1.318-7.682S7.758 3 12 3"
+        ></path>{" "}
         <path
           color="#000000"
-          fill={active ? "#8B5CF6" : "#B7D1C1"}
-          stroke={active ? "#C4B5FD" : "#446DF6"}
-          d="M21 12c0 4.243 0 6.364-1.318 7.682S16.242 21 12 21s-6.364 0-7.682-1.318S3 16.242 3 12s0-6.364 1.318-7.682S7.758 3 12 3"
+          fill={active ? "#CDD7F4" : "none"}
+          d="m16.214 4.982l1.402-1.401a1.982 1.982 0 0 1 2.803 2.803l-1.401 1.402m-2.804-2.804l-5.234 5.234c-1.045 1.046-1.568 1.568-1.924 2.205S8.342 14.561 8 16c1.438-.342 2.942-.7 3.579-1.056s1.16-.879 2.205-1.924l5.234-5.234m-2.804-2.804l2.804 2.804"
         ></path>
       </g>
     </svg>
@@ -68,8 +65,8 @@ export function SettingIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "#334155"}
+        stroke={active ? "#334155" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -86,8 +83,8 @@ export function ProfileIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "#334155"}
+        stroke={active ? "#334155" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -104,8 +101,8 @@ export function FriendsIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "none"}
+        stroke={active ? "#334155" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -119,14 +116,31 @@ export function TrashIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#8B5CF6" : "#B7D1C1"}
-        stroke={active ? "#C4B5FD" : "#446DF6"}
+        fill={active ? "#CDD6F4" : "none"}
+        stroke={active ? "#334155" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
         d="m19.5 5.5l-.62 10.025c-.158 2.561-.237 3.842-.88 4.763a4 4 0 0 1-1.2 1.128c-.957.584-2.24.584-4.806.584c-2.57 0-3.855 0-4.814-.585a4 4 0 0 1-1.2-1.13c-.642-.922-.72-2.205-.874-4.77L4.5 5.5M3 5.5h18m-4.944 0l-.683-1.408c-.453-.936-.68-1.403-1.071-1.695a2 2 0 0 0-.275-.172C13.594 2 13.074 2 12.035 2c-1.066 0-1.599 0-2.04.234a2 2 0 0 0-.278.18c-.395.303-.616.788-1.058 1.757L8.053 5.5"
         color="#000000"
       ></path>
+    </svg>
+  );
+}
+export function TestTubeIcon({ active = false, ...props }: IIconProps) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+      <g
+        fill={active ? "#CDD6F4" : "none"}
+        stroke={active ? "#334155" : "#CDD6F4"}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        color="#000000"
+      >
+        <path d="M14.54 2v2.486c0 1.748 0 2.622.215 3.461c.213.84.633 1.61 1.472 3.15l1.136 2.088c2.138 3.926 3.207 5.89 2.33 7.345l-.014.022C18.79 22 16.526 22 12 22s-6.79 0-7.68-1.448l-.013-.022c-.877-1.455.192-3.419 2.33-7.345l1.136-2.088c.84-1.54 1.258-2.31 1.472-3.15s.214-1.713.214-3.46V2M9 16.002L9.009 16M15 18.002l.009-.002M8 2h8"></path>
+        <path d="M7.5 11.556c1-1.153 2.6-.322 4.5.762c2.5 1.426 4 .332 4.5-.703"></path>
+      </g>
     </svg>
   );
 }
