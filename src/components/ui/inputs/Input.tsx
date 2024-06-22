@@ -50,7 +50,6 @@ const Input = <T extends FieldValues>({
                 } else if (formatInput) {
                   formatInput(val);
                 }
-                val = val.trim(); // Trim value
                 onChange(val); // Update form state
               }}
               onBlur={onBlur}
