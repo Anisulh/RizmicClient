@@ -117,7 +117,7 @@ export default function Wardrobe() {
 
   return (
     <div className="content-container max-w-7xl w-full my-10 relative mx-auto">
-      <h1 className="text-4xl font-bold ml-4">Wardrobe</h1>
+      <h1 className="text-3xl md:text-4xl font-bold ml-4">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
         <ul
           className="flex items-center py-1 md:py-3 bg-slate-700 w-full justify-center rounded-xl px-4 my-4"

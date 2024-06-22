@@ -81,12 +81,12 @@ export default function Friends() {
   return (
     <div className="max-w-7xl mx-auto content-container px-4 space-y-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold">Friends</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">Friends</h1>
         <Button variant="primary" onClick={() => setAddFriendModalOpen(true)}>
           Add Friend
         </Button>
       </div>
-      <h2 className="font-medium text-2xl">Your Friends</h2>
+      <h2 className="font-medium text-xl md:text-2xl">Your Friends</h2>
       <div>
         {friends?.map((friend: IFriend) => (
           <div
@@ -119,7 +119,7 @@ export default function Friends() {
           </div>
         ))}
       </div>
-      <h2 className="font-medium text-2xl">Friend Requests</h2>
+      <h2 className="font-medium text-xl md:text-2xl">Friend Requests</h2>
       <div>
         {friendRequests?.map(({ requester }: { requester: IFriend }) => (
           <div
