@@ -1,6 +1,11 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { FriendsIcon, SettingIcon, WardrobeIcon } from "../../Icons";
+import {
+  FriendsIcon,
+  SettingIcon,
+  TestTubeIcon,
+  WardrobeIcon,
+} from "../../Icons";
 import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import Bars3Icon from "@heroicons/react/24/outline/Bars3Icon";
 import { Fragment } from "react";
@@ -25,7 +30,7 @@ const tabs = [
   {
     name: "Generate",
     href: "/fit-generator",
-    icon: WardrobeIcon,
+    icon: TestTubeIcon,
   },
   {
     name: "Settings",
