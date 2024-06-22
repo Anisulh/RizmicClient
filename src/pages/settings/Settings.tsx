@@ -8,7 +8,7 @@ export default function Settings() {
   const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
   return (
     <div className="max-w-7xl mx-auto content-container px-2 lg:px-4 space-y-10">
-      <h1 className="text-4xl font-bold lg:text-6xl ml-4">Settings</h1>
+      <h1 className="text-4xl font-bold ml-4">Settings</h1>
       <section
         aria-labelledby="account-settings-title"
         className="space-y-5 border-2 dark:border-gray-700 dark:bg-gray-700 rounded-xl px-8  py-4"

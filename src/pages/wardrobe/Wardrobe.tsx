@@ -94,7 +94,7 @@ export default function Wardrobe() {
 
   return (
     <div className="content-container max-w-7xl w-full mb-10 relative mx-auto">
-      <h1 className="text-4xl font-bold lg:text-6xl ml-4">Wardrobe</h1>
+      <h1 className="text-4xl font-bold ml-4">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
         <ul className="flex items-center pt-3 pb-4" role="tablist">
           <li className=" mr-2 text-center">
