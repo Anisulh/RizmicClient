@@ -32,7 +32,7 @@ export default defineConfig({
             purpose: "any maskable",
           },
         ],
-        start_url: ".",
+        start_url: "/",
         display: "standalone",
         shortcuts: [
           {
