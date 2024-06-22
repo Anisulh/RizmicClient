@@ -98,7 +98,7 @@ export default function Wardrobe() {
       <h1 className="text-4xl font-bold ml-4">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
         <ul
-          className="flex items-center py-1 md:py-3 bg-slate-700 w-full justify-center rounded-xl px-4 mt-4"
+          className="flex items-center py-1 md:py-3 bg-slate-700 w-full justify-center rounded-xl px-4 my-4"
           role="tablist"
         >
           <li className=" text-center w-full">
