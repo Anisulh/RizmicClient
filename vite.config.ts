@@ -44,7 +44,7 @@ export default defineConfig({
             icons: [
               {
                 src: "/icons/add-outfits.svg",
-                sizes: "any",
+                sizes: "96x96",
                 type: "image/svg+xml",
               },
             ],
@@ -57,7 +57,7 @@ export default defineConfig({
             icons: [
               {
                 src: "/icons/add-clothes.svg",
-                sizes: "any",
+                sizes: "96x96",
                 type: "image/svg+xml",
               },
             ],
@@ -70,7 +70,7 @@ export default defineConfig({
             icons: [
               {
                 src: "/icons/wardrobe.svg",
-                sizes: "any",
+                sizes: "96x96",
                 type: "image/svg+xml",
               },
             ],
@@ -83,7 +83,7 @@ export default defineConfig({
             icons: [
               {
                 src: "/icons/friends.svg",
-                sizes: "any",
+                sizes: "96x96",
                 type: "image/svg+xml",
               },
             ],
