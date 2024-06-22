@@ -32,6 +32,62 @@ export default defineConfig({
             purpose: "any maskable",
           },
         ],
+        start_url: ".",
+        display: "standalone",
+        shortcuts: [
+          {
+            name: "Add Outfit",
+            short_name: "Add Outfit",
+            description: "Quickly add a new outfit",
+            url: "/wardrobe?action=add&tab=outfits",
+            icons: [
+              {
+                src: "/icons/add-outfit.svg",
+                sizes: "any",
+                type: "image/svg+xml",
+              },
+            ],
+          },
+          {
+            name: "Add Clothes",
+            short_name: "Add Clothes",
+            description: "Quickly add new clothes",
+            url: "/wardrobe?action=add&tab=clothes",
+            icons: [
+              {
+                src: "/icons/add-clothes.svg",
+                sizes: "any",
+                type: "image/svg+xml",
+              },
+            ],
+          },
+          {
+            name: "Open Wardrobe",
+            short_name: "Wardrobe",
+            description: "Open your wardrobe",
+            url: "/wardrobe",
+            icons: [
+              {
+                src: "/icons/wardrobe.svg",
+                sizes: "any",
+                type: "image/svg+xml",
+              },
+            ],
+          },
+          {
+            name: "Find Friends",
+            short_name: "Find Friends",
+            description: "Find and add friends",
+            url: "/friends",
+            icons: [
+              {
+                src: "/icons/friends.svg",
+                sizes: "any",
+                type: "image/svg+xml",
+              },
+            ],
+          },
+        ],
       },
     }),
   ],
