@@ -53,7 +53,7 @@ export const HamburgerMenu = ({
   isHomePage: boolean;
 }) => {
   return (
-    <Menu as="div" className="relative">
+    <Menu as="div" className="relative px-4">
       <Menu.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
         <span className="absolute -inset-0.5" />
         <span className="sr-only">Open main menu</span>
@@ -138,7 +138,7 @@ export const ProfileMenu = () => {
 
   const navigate = useNavigate();
   return (
-    <Menu as="div" className="relative">
+    <Menu as="div" className="relative px-4">
       <Menu.Button className="flex rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 ">
         <span className="sr-only">Open user menu</span>
         <img
@@ -229,7 +229,7 @@ export default function MobileNav() {
       {({ open }) => (
         <>
           <div className="relative">
-            <div className="mx-auto max-w-7xl px-4">
+            <div className="mx-auto max-w-7xl ">
               <div className="flex items-center justify-end border-gray-100 dark:text-gray-900 py-2 pt-4  md:justify-start md:space-x-10">
                 {(isHomePage || isRegisterPage || isLoginPage) && <Logo />}
                 {isAuthenticated ? (
@@ -238,13 +238,13 @@ export default function MobileNav() {
                   <HamburgerMenu open={open} isHomePage={isHomePage} />
                 )}
                 {isAuthenticated && (
-                  <div className=" w-full px-4 py-1 flex items-center justify-evenly bg-white shadow fixed bottom-0 dark:bg-slate-600">
+                  <div className=" w-full px-4 py-1 flex items-center justify-evenly bg-white shadow fixed bottom-0 dark:bg-slate-700">
                     {tabs.map((tab, index) => {
                       return (
                         <NavLink
                           key={index}
                           to={tab.href}
-                          className="flex flex-col items-center justify-center"
+                          className="flex flex-col items-center justify-center hover:bg-slate-600"
                         >
                           {({ isActive }) => (
                             <>
