@@ -13,13 +13,12 @@ import Button from "../../../components/ui/Button";
 import DialogModal from "../../../components/ui/modal/DialogModal";
 import Select from "../../../components/ui/inputs/Select";
 import cn from "../../../components/ui/cn";
-import { DevTool } from "@hookform/devtools";
 import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import TagsInput from "../../../components/ui/inputs/TagsInput";
 import { filterData } from "../../../utils/filterData";
 import valuesToSelectOptions from "../../../utils/valuesToSelectOptions";
 
-const categoryValues =  [
+const categoryValues = [
   "t-shirt",
   "jacket",
   "sweater",
@@ -30,18 +29,15 @@ const categoryValues =  [
   "skirt",
   "shorts",
   "accessories",
-] as const
+] as const;
 
-const sizeValues = ["xs", "s", "m", "l", "xl", "xxl", "xxxl"] as const
-const conditionValues = ["new", "like new", "good", "fair", "poor"] as const
+const sizeValues = ["xs", "s", "m", "l", "xl", "xxl", "xxxl"] as const;
+const conditionValues = ["new", "like new", "good", "fair", "poor"] as const;
 const ClothesModalSchema = z.object({
   name: z.string().min(1).max(100),
-  category: z.enum(
-   categoryValues,
-    {
-      errorMap: () => ({ message: "Invalid clothing category" }),
-    },
-  ),
+  category: z.enum(categoryValues, {
+    errorMap: () => ({ message: "Invalid clothing category" }),
+  }),
   size: z.enum(sizeValues, {
     errorMap: () => ({ message: "Invalid clothing size" }),
   }),
@@ -71,14 +67,14 @@ export interface IExistingClothesData extends IClothesModalSchema {
 }
 
 const categoryOptions = valuesToSelectOptions(categoryValues);
-const sizeOptions = valuesToSelectOptions(sizeValues)
-const conditionOptions = valuesToSelectOptions(conditionValues)
+const sizeOptions = valuesToSelectOptions(sizeValues);
+const conditionOptions = valuesToSelectOptions(conditionValues);
 
 export default function ClothesModal({
   open,
   setOpen,
   existingData = undefined,
-  refetch
+  refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
