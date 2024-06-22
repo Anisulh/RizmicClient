@@ -21,6 +21,27 @@ export const getClothes = async () => {
   }
 };
 
+export const getClothesById = async (clothesId: string) => {
+  const url = new URL(clothesId, baseURL);
+  const options: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const createClothes = async (clothesData: FormData) => {
   const options: RequestInit = {
     method: "POST",
