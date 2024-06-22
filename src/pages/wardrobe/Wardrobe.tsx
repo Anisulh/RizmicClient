@@ -10,6 +10,7 @@ import Spinner from "../../components/ui/spinner/Spinner";
 import { IExistingOutfitData } from "./components/OutfitsModal";
 import { getOutfits } from "../../api/outfitsAPI";
 import OutfitSection from "./components/OutiftSection";
+import cn from "../../components/ui/cn";
 
 type GroupedClothes = {
   [key in IExistingClothesData["category"]]?: IExistingClothesData[];
@@ -93,16 +94,19 @@ export default function Wardrobe() {
   }
 
   return (
-    <div className="content-container max-w-7xl w-full mb-10 relative mx-auto">
+    <div className="content-container max-w-7xl w-full my-10 relative mx-auto">
       <h1 className="text-4xl font-bold ml-4">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
-        <ul className="flex items-center pt-3 pb-4" role="tablist">
-          <li className=" mr-2 text-center">
+        <ul
+          className="flex items-center py-1 md:py-3 bg-slate-700 w-full justify-center rounded-xl px-4 mt-4"
+          role="tablist"
+        >
+          <li className=" text-center w-full">
             <button
-              className={
-                "text-xs font-bold uppercase pr-5 py-3 block leading-normal " +
-                (openTab === 1 && "text-cambridgeblue")
-              }
+              className={cn(
+                "text-xs md:text-sm font-bold uppercase py-2  block leading-normal w-full rounded-lg transition-all",
+                openTab === 1 && "text-cambridgeblue  bg-slate-800",
+              )}
               onClick={(e) => {
                 e.preventDefault();
                 setOpenTab(1);
@@ -113,13 +117,13 @@ export default function Wardrobe() {
               Clothes
             </button>
           </li>
-          <p className="text-gray-400">|</p>
-          <li className=" mr-2 text-center">
+          <p className="text-gray-400 px-4">|</p>
+          <li className="text-center w-full">
             <button
-              className={
-                "text-xs font-bold uppercase pl-5 py-3 block leading-normal " +
-                (openTab === 2 && "text-cambridgeblue")
-              }
+              className={cn(
+                "text-xs md:text-sm font-bold uppercase py-2 block leading-normal w-full rounded-lg transition-all",
+                openTab === 2 && "text-cambridgeblue  bg-slate-800",
+              )}
               onClick={(e) => {
                 e.preventDefault();
                 setOpenTab(2);
@@ -134,11 +138,10 @@ export default function Wardrobe() {
 
         <Button
           variant="textWithIcon"
-          icon={<PlusIcon className="h-6 w-6" />}
           onClick={() => setModalOpen(true)}
-          className="p-2 hover:bg-cambridgeblue"
+          className="px-4 py-3.5 hover:bg-cambridgeblue fixed bottom-28 right-8 md:right-32 rounded-full bg-ultramarineBlue border-none transition-colors"
         >
-          Add Item
+          <PlusIcon className="h-7 w-6" />
         </Button>
       </div>
 
