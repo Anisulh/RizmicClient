@@ -18,6 +18,8 @@ import {
 } from "./Icons";
 import { useToast } from "../contexts/ToastContext";
 import { StarIcon } from "@heroicons/react/20/solid";
+import DialogModal from "./ui/modal/DialogModal";
+import Button from "./ui/Button";
 
 export default function ClothingCard({
   item,
@@ -27,6 +29,7 @@ export default function ClothingCard({
   refetch?: () => void;
 }) {
   const { addToast } = useToast();
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const { category, color, image, favorited, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
@@ -160,7 +163,7 @@ export default function ClothingCard({
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={handleDelete}
+                            onClick={() => setDeleteModalOpen(true)}
                             className={`${
                               active
                                 ? "bg-ultramarineBlue text-white"
@@ -190,6 +193,30 @@ export default function ClothingCard({
           </div>
         </div>
       </div>
+      <DialogModal
+        title="Delete Clothing"
+        open={deleteModalOpen}
+        setOpen={setDeleteModalOpen}
+      >
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <p>
+            Are you sure you want to delete this clothing? This cannot be
+            undone.
+          </p>
+          <div className="flex justify-between items-center">
+            <Button
+              variant="destructive"
+              onClick={() => {
+                handleDelete();
+                setDeleteModalOpen(false);
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={() => setDeleteModalOpen(false)}>No</Button>
+          </div>
+        </div>
+      </DialogModal>
       <ClothesModal
         open={editMenuOpen}
         setOpen={setEditMenuOpen}
