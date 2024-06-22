@@ -10,16 +10,11 @@ import {
   favoriteClothes,
   unfavoriteClothes,
 } from "../api/clothesAPI";
-import {
-  DeleteActiveIcon,
-  DeleteInactiveIcon,
-  EditActiveIcon,
-  EditInactiveIcon,
-} from "./Icons";
+import { EditIcon, ShareIcon, TrashIcon } from "./Icons";
 import { useToast } from "../contexts/ToastContext";
-import { StarIcon } from "@heroicons/react/20/solid";
 import DialogModal from "./ui/modal/DialogModal";
 import Button from "./ui/Button";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 export default function ClothingCard({
   item,
@@ -82,7 +77,10 @@ export default function ClothingCard({
   };
   return (
     <>
-      <div className="relative w-full" aria-label="Clothing card">
+      <div
+        className="relative w-full bg-slate-700 h-64 p-2 rounded-lg"
+        aria-label="Clothing card"
+      >
         <div className="h-full w-full relative">
           <button
             className="absolute right-2 top-2 z-10"
@@ -98,20 +96,24 @@ export default function ClothingCard({
           </button>
           {image ? (
             <img
-              className="object-cover w-full h-64 text-center rounded-md"
+              className="w-full object-contain h-48 text-center rounded-md"
               alt="Piece of clothing"
               src={image}
             />
           ) : (
-            <div className=" w-full h-64  rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
+            <div className=" w-full h-48 rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
           )}
 
-          <div className="flex justify-between w-full mt-1">
+          <div className="flex justify-between w-full mt-2">
             <div>
               <h3>{item.name}</h3>
-              <p className="text-slategrey text-sm">
-                Color: {color.charAt(0).toUpperCase() + color.slice(1)}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-slate-300 text-sm">Color:</p>
+                <div
+                  className="h-4 w-4 border rounded-md"
+                  style={{ background: color }}
+                ></div>
+              </div>
             </div>
 
             <div>
@@ -119,7 +121,7 @@ export default function ClothingCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="  h-5 w-5 dark:text-white hover:text-ourGrey"
+                      className="  h-5 w-5 transition-colors dark:text-white hover:text-ourGrey"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -133,29 +135,20 @@ export default function ClothingCard({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
+                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-slate-600 dark:text-gray-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
                     <div className="px-1 py-1 ">
                       <Menu.Item>
                         {({ active }) => (
                           <button
                             onClick={() => setEditMenuOpen(true)}
                             className={`${
-                              active
-                                ? "bg-ultramarineBlue text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active && "bg-ultramarineBlue"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
-                            {active ? (
-                              <EditActiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <EditInactiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            )}
+                            <EditIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors"
+                            />
                             Edit
                           </button>
                         )}
@@ -165,22 +158,13 @@ export default function ClothingCard({
                           <button
                             onClick={() => setEditMenuOpen(true)}
                             className={`${
-                              active
-                                ? "bg-ultramarineBlue text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active && "bg-ultramarineBlue "
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
-                            {active ? (
-                              <EditActiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <EditInactiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            )}
+                            <ShareIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                            />
                             Share
                           </button>
                         )}
@@ -190,22 +174,13 @@ export default function ClothingCard({
                           <button
                             onClick={() => setDeleteModalOpen(true)}
                             className={`${
-                              active
-                                ? "bg-ultramarineBlue text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active && "bg-ultramarineBlue"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
-                            {active ? (
-                              <DeleteActiveIcon
-                                className="mr-2 h-5 w-5 text-ultramarineBlue"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <DeleteInactiveIcon
-                                className="mr-2 h-5 w-5 text-ultramarineBlue"
-                                aria-hidden="true"
-                              />
-                            )}
+                            <TrashIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                            />
                             Delete
                           </button>
                         )}
