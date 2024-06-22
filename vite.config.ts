@@ -14,7 +14,7 @@ export default defineConfig({
         short_name: "Rizmic",
         description: "All in one app to manage all your clothing needs.",
         background_color: "#1e293b",
-        theme_color: "#ffffff",
+        theme_color: "#1e293b",
         icons: [
           {
             src: "android-icon-192x192.png",
@@ -43,7 +43,7 @@ export default defineConfig({
             url: "/wardrobe?action=add&tab=outfits",
             icons: [
               {
-                src: "/icons/add-outfit.svg",
+                src: "/icons/add-outfits.svg",
                 sizes: "any",
                 type: "image/svg+xml",
               },
