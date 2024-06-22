@@ -258,7 +258,7 @@ export default function MobileNav() {
                                 className="h-7 w-7 transition-all"
                               />
                               <p
-                                className={`text-sm font-bold ${
+                                className={`text-xs font-bold ${
                                   isActive
                                     ? "text-blue-500 dark:text-blue-200"
                                     : "text-gray-500 dark:text-gray-200"
