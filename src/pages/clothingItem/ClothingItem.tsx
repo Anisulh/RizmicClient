@@ -50,7 +50,7 @@ const ClothingItem = () => {
                   className="w-full h-auto rounded-lg"
                 />
               ) : (
-                <div className=" w-full h-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
+                <div className=" w-full h-64 md:h-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
               )}
             </div>
             <div className="w-full md:w-1/2 md:pl-6">
