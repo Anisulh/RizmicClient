@@ -149,3 +149,25 @@ export const unfavoriteClothes = async (clothesId: string) => {
     return error;
   }
 };
+
+export const shareClothes = async (clothesId: string, friends: string[]) => {
+  const url = new URL(clothesId, baseURL + "share/");
+  const options: RequestInit = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ friends }),
+  };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
