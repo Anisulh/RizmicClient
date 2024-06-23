@@ -17,6 +17,7 @@ import DialogModal from "./ui/modal/DialogModal";
 import Button from "./ui/Button";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ShareModal from "./ui/modal/ShareModal";
+import { useNavigate } from "react-router-dom";
 
 export default function ClothingCard({
   item,
@@ -26,6 +27,7 @@ export default function ClothingCard({
   refetch?: () => void;
 }) {
   const { addToast } = useToast();
+  const navigate = useNavigate();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { color, image, favorited, _id } = item;
@@ -122,16 +124,20 @@ export default function ClothingCard({
               <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
             )}
           </button>
-          {image ? (
-            <img
-              className="w-full object-contain h-48 text-center rounded-md"
-              alt="Piece of clothing"
-              src={image}
-            />
-          ) : (
-            <div className=" w-full h-48 rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
-          )}
-
+          <button
+            onClick={() => navigate(`/clothing/${_id}`)}
+            className="w-full"
+          >
+            {image ? (
+              <img
+                className="w-full object-contain h-48 text-center rounded-md"
+                alt="Piece of clothing"
+                src={image}
+              />
+            ) : (
+              <div className=" w-full h-48 rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
+            )}
+          </button>
           <div className="flex justify-between w-full mt-2">
             <div>
               <h3>{item.name}</h3>
