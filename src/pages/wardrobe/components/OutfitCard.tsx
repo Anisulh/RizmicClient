@@ -17,6 +17,7 @@ import { IExistingClothesData } from "./ClothesModal";
 import DialogModal from "../../../components/ui/modal/DialogModal";
 import Button from "../../../components/ui/Button";
 import ShareModal from "../../../components/ui/modal/ShareModal";
+import { useNavigate } from "react-router-dom";
 export interface IOutfitData {
   _id: string;
   image?: string;
@@ -38,6 +39,7 @@ function OutfitCard({
   clothingItems: IExistingClothesData[];
 }) {
   const { addToast } = useToast();
+  const navigate = useNavigate();
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
@@ -138,55 +140,56 @@ function OutfitCard({
               <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
             )}
           </button>
-
-          {image ? (
-            <div
-              onClick={() => setExpandModal(true)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  setExpandModal(true);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              <img
-                className="object-cover w-full h-64 text-center rounded-md"
-                alt="Piece of clothing"
-                src={image}
-              />
-            </div>
-          ) : (
-            <div
-              className=" w-full h-64  rounded-md grid grid-cols-2 grid-rows-2 gap-5 hover:bg-cambridgeblue hover:opacity-80 transition-all"
-              onClick={() => setExpandModal(true)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  setExpandModal(true);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              {clothes.map(({ image, category }, index) => {
-                return image ? (
-                  <img
-                    key={index}
-                    className="w-1/5 h-1/5 object-cover"
-                    src={image}
-                    alt={category}
-                  />
-                ) : (
-                  <div
-                    key={index}
-                    className="rounded-lg bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"
-                  ></div>
-                );
-              })}
-            </div>
-          )}
+          <button className="w-full" onClick={() => navigate(`/outfit/${_id}`)}>
+            {image ? (
+              <div
+                onClick={() => setExpandModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setExpandModal(true);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <img
+                  className="object-cover w-full h-64 text-center rounded-md"
+                  alt="Piece of clothing"
+                  src={image}
+                />
+              </div>
+            ) : (
+              <div
+                className=" w-full h-64  rounded-md grid grid-cols-2 grid-rows-2 gap-5 hover:bg-cambridgeblue hover:opacity-80 transition-all"
+                onClick={() => setExpandModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setExpandModal(true);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {clothes.map(({ image, category }, index) => {
+                  return image ? (
+                    <img
+                      key={index}
+                      className="w-1/5 h-1/5 object-cover"
+                      src={image}
+                      alt={category}
+                    />
+                  ) : (
+                    <div
+                      key={index}
+                      className="rounded-lg bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"
+                    ></div>
+                  );
+                })}
+              </div>
+            )}
+          </button>
 
           <div className="flex justify-between w-full mt-1">
             <div>
