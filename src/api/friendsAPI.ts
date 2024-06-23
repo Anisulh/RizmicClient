@@ -5,14 +5,12 @@ export interface IFriend {
   firstName: string;
   lastName: string;
   profilePicture: string;
-  email: string;
 }
 
 export interface IFriendRequest {
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-  email: string;
+  status: string;
+  recipient: string;
+  requester: IFriend;
 }
 export const getFriends = async (): Promise<IFriend[]> => {
   const url = new URL(baseURL);
