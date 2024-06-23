@@ -76,9 +76,7 @@ export default function ClothingCard({
     }: {
       clothesId: string;
       userId: string[];
-    }) => {
-      await shareClothes(clothesId, userId);
-    },
+    }) => await shareClothes(clothesId, userId),
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -100,7 +98,6 @@ export default function ClothingCard({
     }
   };
   const handleShare = (userIds?: string[]) => {
-    console.log(userIds);
     if (_id && userIds) {
       shareMutation({ clothesId: _id, userId: userIds });
     }
