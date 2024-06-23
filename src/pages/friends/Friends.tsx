@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   acceptFriendRequestAPI,
   getFriendRequests,
-  getFriends,
   unfriendAPI,
 } from "../../api/friendsAPI";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +10,7 @@ import Button from "../../components/ui/Button";
 import AddFriendModal from "./components/AddFriendModal";
 import { useToast } from "../../contexts/ToastContext";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import useFriends from "../../hooks/useFriends";
 
 export default function Friends() {
   const { addToast } = useToast();
@@ -20,11 +20,7 @@ export default function Friends() {
     isPending: friendQueryPending,
     data: friends,
     refetch: refetchFriends,
-  } = useQuery({
-    queryKey: ["friends"],
-    queryFn: getFriends,
-  });
-
+  } = useFriends();
   const {
     isPending: friendRequestQueryPending,
     data: friendRequests,

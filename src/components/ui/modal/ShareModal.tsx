@@ -1,13 +1,12 @@
 import Button from "../Button";
 import DialogModal from "./DialogModal";
 import UserAvatar from "../../../assets/userAvatar.webp";
-import { useQuery } from "@tanstack/react-query";
-import { getFriends } from "../../../api/friendsAPI";
 import { useToast } from "../../../contexts/ToastContext";
 import { ClipboardIcon } from "@heroicons/react/24/solid";
 import { ShareIcon } from "../../Icons";
 import { Dispatch, SetStateAction, useState } from "react";
 import ButtonSpinner from "../spinner/ButtonSpinner";
+import useFriends from "../../../hooks/useFriends";
 
 interface IShareModal {
   open: boolean;
@@ -23,11 +22,7 @@ export default function ShareModal({
   handleShare,
 }: IShareModal) {
   const { addToast } = useToast();
-  const { isPending, data: friends } = useQuery({
-    queryKey: ["friends"],
-    queryFn: getFriends,
-  });
-
+  const { isPending, data: friends } = useFriends();
   const [selectedFriends, setSelectedFriends] = useState<string[]>([]);
 
   const handleSelectFriend = (friendId: string) => {
