@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getClothesById } from "../../api/clothesAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
+import { useToast } from "../../contexts/ToastContext";
 import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
 
 const ClothingItem = () => {
   const { itemId } = useParams<{ itemId: string }>();
+  const { addToast } = useToast();
   const [item, setItem] = useState<IExistingClothesData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -19,13 +21,13 @@ const ClothingItem = () => {
         const data = await getClothesById(itemId);
         setItem(data);
       } catch (error) {
-        console.error(error);
+        addToast({ title: "Unable to fetch item", type: "error" });
       } finally {
         setLoading(false);
       }
     };
     fetchItem();
-  }, [itemId]);
+  });
 
   if (loading) {
     return <Spinner />;
