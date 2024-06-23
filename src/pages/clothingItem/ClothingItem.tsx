@@ -1,37 +1,16 @@
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getClothesById } from "../../api/clothesAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
-import { useToast } from "../../contexts/ToastContext";
-import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
+import useFetchClothingItem from "../../hooks/useFetchClothingItem";
 
 const ClothingItem = () => {
   const { itemId } = useParams<{ itemId: string }>();
-  const { addToast } = useToast();
-  const [item, setItem] = useState<IExistingClothesData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { data: item, isPending } = useFetchClothingItem(itemId);
 
-  useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        if (!itemId) {
-          throw new Error("No item ID provided");
-        }
-        const data = await getClothesById(itemId);
-        setItem(data);
-      } catch (error) {
-        addToast({ title: "Unable to fetch item", type: "error" });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchItem();
-  }, [itemId, addToast]);
-
-  if (loading) {
+  if (isPending) {
     return <Spinner />;
   }
+
   return (
     <div className="content-container max-w-7xl w-full my-10 relative mx-auto">
       {!item ? (
