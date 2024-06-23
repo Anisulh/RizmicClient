@@ -78,7 +78,7 @@ export const HamburgerMenu = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {isHomePage ? (
             <div className="space-y-1 px-2 pb-3 pt-2 shadow-md">
               {homeNavigation.map((item, index) => (
@@ -161,7 +161,7 @@ export const ProfileMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="space-y-1 px-2 pb-3 pt-2 shadow-md">
             <Menu.Item>
               {({ active }) => (
@@ -223,8 +223,6 @@ export default function MobileNav() {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  const isRegisterPage = location.pathname === "/register";
-  const isLoginPage = location.pathname === "/login";
 
   return (
     <Disclosure
@@ -236,7 +234,7 @@ export default function MobileNav() {
           <div className="relative">
             <div className="mx-auto max-w-7xl ">
               <div className="flex items-center justify-end border-gray-100 dark:text-gray-900 py-2 pt-4  md:justify-start md:space-x-10">
-                {(isHomePage || isRegisterPage || isLoginPage) && <Logo />}
+                <Logo />
                 {isAuthenticated ? (
                   <ProfileMenu />
                 ) : (
