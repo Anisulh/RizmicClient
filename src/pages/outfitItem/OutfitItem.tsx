@@ -1,35 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { IExistingOutfitData } from "../wardrobe/components/OutfitsModal";
+import React from "react";
 import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOutfitsById } from "../../api/outfitsAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
-import { useToast } from "../../contexts/ToastContext";
+import useFetchOutfitItem from "../../hooks/useFetchOutfitItem";
 
 const OutfitItem = () => {
   const { itemId } = useParams<{ itemId: string }>();
-  const { addToast } = useToast();
-  const [item, setItem] = useState<IExistingOutfitData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        if (!itemId) {
-          throw new Error("No item ID provided");
-        }
-        const data = await getOutfitsById(itemId);
-        setItem(data);
-      } catch (error) {
-        addToast({ title: "Unable to fetch item", type: "error" });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchItem();
-  }, [itemId, addToast]);
-
-  if (loading) {
+  const { data: item, isPending } = useFetchOutfitItem(itemId);
+  if (isPending) {
     return <Spinner />;
   }
   return (

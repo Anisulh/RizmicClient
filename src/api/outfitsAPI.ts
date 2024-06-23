@@ -1,3 +1,5 @@
+import { IExistingOutfitData } from "../pages/wardrobe/components/OutfitsModal";
+
 const baseURL = `${import.meta.env.VITE_BASE_URL}/outfits/`;
 
 export const getOutfits = async () => {
@@ -20,7 +22,9 @@ export const getOutfits = async () => {
   }
 };
 
-export const getOutfitsById = async (outfitsId: string) => {
+export const getOutfitsById = async (
+  outfitsId: string,
+): Promise<IExistingOutfitData> => {
   const url = new URL(outfitsId, baseURL);
   const options: RequestInit = {
     method: "GET",
@@ -29,16 +33,12 @@ export const getOutfitsById = async (outfitsId: string) => {
     },
     credentials: "include",
   };
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-    return data;
-  } catch (error) {
-    return error;
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
   }
+  return data;
 };
 
 export const createOutfits = async (outfitsData: FormData) => {
