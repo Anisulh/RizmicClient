@@ -19,7 +19,6 @@ import DialogModal from "../../../components/ui/modal/DialogModal";
 import Input from "../../../components/ui/inputs/Input";
 import Select from "../../../components/ui/inputs/Select";
 import Button from "../../../components/ui/Button";
-import { DevTool } from "@hookform/devtools";
 import TagsInput from "../../../components/ui/inputs/TagsInput";
 import cn from "../../../components/ui/cn";
 import valuesToSelectOptions from "../../../utils/valuesToSelectOptions";
