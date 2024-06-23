@@ -208,7 +208,9 @@ function Register() {
                 variant="secondary"
                 type="submit"
                 className="mt-6 w-full"
-                isLoading={registerMutation.isPending}
+                isLoading={
+                  registerMutation.isPending || googleSignInMutation.isPending
+                }
               >
                 Submit
               </Button>
