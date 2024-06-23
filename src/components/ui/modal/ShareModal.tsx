@@ -88,27 +88,29 @@ export default function ShareModal({
           </div>
         ) : friends && friends.length > 0 ? (
           <>
-            {friends.map((friend, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <img
-                    src={friend.profilePicture || UserAvatar}
-                    alt={friend.firstName}
-                    className="w-8 h-8 rounded-full bg-white"
+            <div className="py-4 px-2">
+              {friends.map((friend, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={friend.profilePicture || UserAvatar}
+                      alt={friend.firstName}
+                      className="w-8 h-8 rounded-full bg-white"
+                    />
+                    <p>{friend.firstName}</p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={selectedFriends.includes(friend._id)}
+                    onChange={() => handleSelectFriend(friend._id)}
+                    className="h-5 w-5 text-blue-600"
                   />
-                  <p>{friend.firstName}</p>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={selectedFriends.includes(friend._id)}
-                  onChange={() => handleSelectFriend(friend._id)}
-                  className="h-5 w-5 text-blue-600"
-                />
-              </div>
-            ))}
+              ))}
+            </div>
             <Button
               variant="primary"
-              className="w-full"
+              className="w-full border-none "
               onClick={handleShareSelected}
             >
               Share Selected
@@ -120,10 +122,10 @@ export default function ShareModal({
           </p>
         )}
       </div>
-      <p className="my-2 mt-4 text-white text-xl font-medium">
+      <p className="my-4 mt-8 text-white text-xl font-medium">
         Share publicly:
       </p>
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-col gap-4 w-full">
         <Button
           variant="textWithIcon"
           onClick={handleCopy}
