@@ -131,7 +131,9 @@ function Login() {
                 type="submit"
                 variant="secondary"
                 className="mt-6 w-full"
-                isLoading={loginMutation.isPending}
+                isLoading={
+                  loginMutation.isPending || googleSignInMutation.isPending
+                }
               >
                 Submit
               </Button>
