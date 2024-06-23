@@ -46,9 +46,7 @@ export default function ShareModal({
     };
     try {
       await navigator.share(shareData);
-      console.log("Shared successfully");
     } catch (err) {
-      console.error(err);
       addToast({
         title: "Error sharing",
         description:
