@@ -21,6 +21,8 @@ import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/termsOfService/TermsOfService";
 import Settings from "./pages/settings/Settings";
 import Friends from "./pages/friends/Friends";
+import ClothingItem from "./pages/clothingItem/ClothingItem";
+import OutfitItem from "./pages/outfitItem/OutfitItem";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,8 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/clothing/:itemId" element={<ClothingItem />} />
+            <Route path="/outfit/:itemId" element={<OutfitItem />} />
             <Route
               path="/password-reset:token:id"
               element={<PasswordReset />}
