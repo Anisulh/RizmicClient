@@ -3,6 +3,7 @@ import {
   acceptFriendRequestAPI,
   getFriendRequests,
   getFriends,
+  IFriend,
   unfriendAPI,
 } from "../../api/friendsAPI";
 import { useQuery } from "@tanstack/react-query";
@@ -10,14 +11,7 @@ import Spinner from "../../components/ui/spinner/Spinner";
 import Button from "../../components/ui/Button";
 import AddFriendModal from "./components/AddFriendModal";
 import { useToast } from "../../contexts/ToastContext";
-
-export interface IFriend {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  profilePicture?: string;
-}
+import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 export default function Friends() {
   const { addToast } = useToast();
@@ -53,6 +47,7 @@ export default function Friends() {
         type: "success",
       });
       refetchFriendRequests();
+      refetchFriends();
     } catch (error) {
       addToast({
         title: "Unable to accept request",
@@ -88,7 +83,7 @@ export default function Friends() {
       </div>
       <h2 className="font-medium text-xl md:text-2xl">Your Friends</h2>
       <div>
-        {friends?.map((friend: IFriend) => (
+        {friends?.map((friend) => (
           <div
             key={friend._id}
             className="flex justify-between items-center p-4 bg-slate-600 rounded-xl"
@@ -146,13 +141,13 @@ export default function Friends() {
                 variant="primary"
                 onClick={() => handleAcceptRequest(requester._id)}
               >
-                Accept
+                <CheckIcon className="h-5 w-5" />
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleUnfriend(requester._id)}
               >
-                Decline
+                <XMarkIcon className="h-5 w-5" />
               </Button>
             </div>
           </div>
