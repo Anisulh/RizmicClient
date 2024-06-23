@@ -9,15 +9,7 @@ import {
   unfavoriteOutfits,
 } from "../../../api/outfitsAPI";
 import { useMutation } from "@tanstack/react-query";
-import {
-  DeleteActiveIcon,
-  DeleteInactiveIcon,
-  EditActiveIcon,
-  EditIcon,
-  EditInactiveIcon,
-  ShareIcon,
-  TrashIcon,
-} from "../../../components/Icons";
+import { EditIcon, ShareIcon, TrashIcon } from "../../../components/Icons";
 import { StarIcon } from "@heroicons/react/20/solid";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
 import { useToast } from "../../../contexts/ToastContext";
@@ -94,9 +86,7 @@ function OutfitCard({
     }: {
       outfitId: string;
       userId: string[];
-    }) => {
-      await shareOutfits(outfitId, userId);
-    },
+    }) => await shareOutfits(outfitId, userId),
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -120,7 +110,7 @@ function OutfitCard({
   const handleShare = async (userId: string[]) => {
     if (_id) {
       try {
-        await shareMutation({ outfitId: _id, userId });
+        shareMutation({ outfitId: _id, userId });
       } catch (error) {
         addToast({
           title: "Unable to share outfit",
