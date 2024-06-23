@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import cn from "../cn";
+import { IToast } from "../../../contexts/ToastContext";
 
-interface IToast {
-  id: number;
-  title: string;
-  description?: string;
-  type: "success" | "error" | "info";
-  duration?: number;
+interface IToastComponent extends IToast {
   removeToast: (id: number) => void;
 }
 
@@ -16,6 +12,7 @@ const variantClasses = {
   success: "bg-green-200 text-green-800",
   error: "bg-red-200 text-red-800",
   info: "bg-blue-200 text-blue-800",
+  warning: "bg-yellow-200 text-yellow-800",
 };
 
 export default function Toast({
@@ -25,7 +22,7 @@ export default function Toast({
   type = "info",
   duration = 5000,
   removeToast,
-}: IToast) {
+}: IToastComponent) {
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
