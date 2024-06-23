@@ -5,9 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { searchUsersAPI } from "../../../api/userAPI";
 import useDebounce from "../../../hooks/useDebounce";
 import Spinner from "../../../components/ui/spinner/Spinner";
-import { sendFriendRequestAPI } from "../../../api/friendsAPI";
+import { IFriend, sendFriendRequestAPI } from "../../../api/friendsAPI";
 import { useToast } from "../../../contexts/ToastContext";
-import { IFriend } from "../Friends";
 
 export default function AddFriendModal({
   open,
@@ -31,7 +30,7 @@ export default function AddFriendModal({
     setSearchTerm(event.target.value);
   };
 
-  const handleSendRequest = async(userId: string) => {
+  const handleSendRequest = async (userId: string) => {
     setSendRequestLoading(true);
     try {
       await sendFriendRequestAPI(userId);
@@ -46,9 +45,7 @@ export default function AddFriendModal({
       });
     }
     setSendRequestLoading(false);
-  }
-
-
+  };
 
   return (
     <DialogModal open={open} setOpen={setOpen} title="Add Friends">
@@ -83,11 +80,16 @@ export default function AddFriendModal({
                   <h2 className="font-bold">
                     {user.firstName} {user.lastName}
                   </h2>
-                  <p>{user.email}</p>
                 </div>
               </div>
 
-              <Button variant="primary" onClick={() => handleSendRequest(user._id)} isLoading={sendRequestLoading}>Request</Button>
+              <Button
+                variant="primary"
+                onClick={() => handleSendRequest(user._id)}
+                isLoading={sendRequestLoading}
+              >
+                Request
+              </Button>
             </div>
           ))
         )}
