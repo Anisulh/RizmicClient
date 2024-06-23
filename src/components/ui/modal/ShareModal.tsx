@@ -97,21 +97,24 @@ export default function ShareModal({
                       alt={friend.firstName}
                       className="w-8 h-8 rounded-full bg-white"
                     />
-                    <p>{friend.firstName}</p>
+                    <p>
+                      {friend.firstName} {friend.lastName}
+                    </p>
                   </div>
                   <input
                     type="checkbox"
                     checked={selectedFriends.includes(friend._id)}
                     onChange={() => handleSelectFriend(friend._id)}
-                    className="h-5 w-5 text-blue-600"
+                    className="h-5 w-5 text-ultramarineBlue rounded-md"
                   />
                 </div>
               ))}
             </div>
             <Button
               variant="primary"
-              className="w-full border-none "
+              className="w-full border-none"
               onClick={handleShareSelected}
+              disabled={selectedFriends.length === 0}
             >
               Share Selected
             </Button>
@@ -122,9 +125,7 @@ export default function ShareModal({
           </p>
         )}
       </div>
-      <p className="my-4 mt-8 text-white text-xl font-medium">
-        Share publicly:
-      </p>
+      <p className="my-4 text-white text-xl font-medium">Share publicly:</p>
       <div className="flex flex-col gap-4 w-full">
         <Button
           variant="textWithIcon"
