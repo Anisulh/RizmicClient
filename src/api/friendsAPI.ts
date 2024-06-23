@@ -1,6 +1,20 @@
 const baseURL = `${import.meta.env.VITE_BASE_URL}/friends/`;
 
-export const getFriends = async () => {
+export interface IFriend {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
+  email: string;
+}
+
+export interface IFriendRequest {
+  firstName: string;
+  lastName: string;
+  profilePicture: string;
+  email: string;
+}
+export const getFriends = async (): Promise<IFriend[]> => {
   const url = new URL(baseURL);
   const options: RequestInit = {
     method: "GET",
@@ -17,7 +31,7 @@ export const getFriends = async () => {
   return data;
 };
 
-export const getFriendRequests = async () => {
+export const getFriendRequests = async (): Promise<IFriendRequest[]> => {
   const url = new URL(baseURL + "requests");
   const options: RequestInit = {
     method: "GET",
