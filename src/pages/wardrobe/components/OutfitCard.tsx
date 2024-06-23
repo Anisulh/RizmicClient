@@ -5,6 +5,7 @@ import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIc
 import {
   deleteOutfits,
   favoriteOutfits,
+  shareOutfits,
   unfavoriteOutfits,
 } from "../../../api/outfitsAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ import { useToast } from "../../../contexts/ToastContext";
 import { IExistingClothesData } from "./ClothesModal";
 import DialogModal from "../../../components/ui/modal/DialogModal";
 import Button from "../../../components/ui/Button";
+import ShareModal from "../../../components/ui/modal/ShareModal";
 export interface IOutfitData {
   _id: string;
   image?: string;
@@ -44,6 +46,7 @@ function OutfitCard({
   clothingItems: IExistingClothesData[];
 }) {
   const { addToast } = useToast();
+  const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
@@ -84,6 +87,26 @@ function OutfitCard({
       }
     },
   });
+  const { mutate: shareMutation } = useMutation({
+    mutationFn: async ({
+      outfitId,
+      userId,
+    }: {
+      outfitId: string;
+      userId: string[];
+    }) => {
+      await shareOutfits(outfitId, userId);
+    },
+    onSuccess(data) {
+      if (data.message) {
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
+      }
+    },
+  });
   const handleDelete = () => {
     if (_id) {
       deleteMutation({ outfitID: _id });
@@ -92,6 +115,18 @@ function OutfitCard({
   const handleFavoriting = (favorite: boolean) => {
     if (_id) {
       favoriteMutation({ outfitID: _id, favorite });
+    }
+  };
+  const handleShare = async (userId: string[]) => {
+    if (_id) {
+      try {
+        await shareMutation({ outfitId: _id, userId });
+      } catch (error) {
+        addToast({
+          title: "Unable to share outfit",
+          type: "error",
+        });
+      }
     }
   };
   return (
@@ -211,26 +246,7 @@ function OutfitCard({
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={async () => {
-                              const shareData = {
-                                title: "Rizmic Fits Outfit Share",
-                                text: "Check out this outfit I created on Rizmic Fits!",
-                                url: `/outfit/${_id}`,
-                              };
-                              try {
-                                await navigator.share(shareData);
-                                console.log("Shared successfully");
-                              } catch (err) {
-                                console.error(err);
-                                addToast({
-                                  title: "Error sharing",
-                                  description:
-                                    "An error occurred while trying to share this clothing. The link has been copied to your clipboard.",
-                                  type: "info",
-                                });
-                                navigator.clipboard.writeText(shareData.url);
-                              }
-                            }}
+                            onClick={() => setShareModalOpen(true)}
                             className={`${
                               active && "bg-ultramarineBlue "
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
@@ -298,6 +314,12 @@ function OutfitCard({
         name={item.name}
         clothes={item.clothes}
         refetch={refetch}
+      />
+      <ShareModal
+        open={shareModalOpen}
+        setOpen={setShareModalOpen}
+        url={`${window.location.origin}/outfit/${_id}`}
+        handleShare={handleShare}
       />
       <OutfitsModal
         open={editMenuOpen}

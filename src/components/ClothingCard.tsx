@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   deleteClothes,
   favoriteClothes,
+  shareClothes,
   unfavoriteClothes,
 } from "../api/clothesAPI";
 import { EditIcon, ShareIcon, TrashIcon } from "./Icons";
@@ -15,6 +16,7 @@ import { useToast } from "../contexts/ToastContext";
 import DialogModal from "./ui/modal/DialogModal";
 import Button from "./ui/Button";
 import { StarIcon } from "@heroicons/react/24/solid";
+import ShareModal from "./ui/modal/ShareModal";
 
 export default function ClothingCard({
   item,
@@ -25,6 +27,7 @@ export default function ClothingCard({
 }) {
   const { addToast } = useToast();
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
   const { color, image, favorited, _id } = item;
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const { mutate } = useMutation({
@@ -52,7 +55,7 @@ export default function ClothingCard({
     }) =>
       favorite
         ? await unfavoriteClothes(clothesId)
-        : favoriteClothes(clothesId),
+        : await favoriteClothes(clothesId),
     onSuccess(data) {
       if (data.message) {
         addToast({
@@ -65,6 +68,27 @@ export default function ClothingCard({
       }
     },
   });
+
+  const { mutate: shareMutation } = useMutation({
+    mutationFn: async ({
+      clothesId,
+      userId,
+    }: {
+      clothesId: string;
+      userId: string[];
+    }) => {
+      await shareClothes(clothesId, userId);
+    },
+    onSuccess(data) {
+      if (data.message) {
+        addToast({
+          title: "Something went wrong.",
+          description: data.message,
+          type: "error",
+        });
+      }
+    },
+  });
   const handleDelete = () => {
     if (_id) {
       mutate({ clothingID: _id });
@@ -74,6 +98,13 @@ export default function ClothingCard({
     if (_id) {
       favoriteMutation({ clothesId: _id, favorite });
     }
+  };
+  const handleShare = (userIds?: string[]) => {
+    console.log(userIds);
+    if (_id && userIds) {
+      shareMutation({ clothesId: _id, userId: userIds });
+    }
+    return;
   };
   return (
     <>
@@ -156,26 +187,7 @@ export default function ClothingCard({
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={async () => {
-                              const shareData = {
-                                title: "Rizmic Fits Clothing Share",
-                                text: "Check out this clothing!",
-                                url: `/clothing/${_id}`,
-                              };
-                              try {
-                                await navigator.share(shareData);
-                                console.log("Shared successfully");
-                              } catch (err) {
-                                console.error(err);
-                                addToast({
-                                  title: "Error sharing",
-                                  description:
-                                    "An error occurred while trying to share this clothing. The link has been copied to your clipboard.",
-                                  type: "info",
-                                });
-                                navigator.clipboard.writeText(shareData.url);
-                              }
-                            }}
+                            onClick={() => setShareModalOpen(true)}
                             className={`${
                               active && "bg-ultramarineBlue "
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
@@ -236,6 +248,12 @@ export default function ClothingCard({
           </div>
         </div>
       </DialogModal>
+      <ShareModal
+        open={shareModalOpen}
+        setOpen={setShareModalOpen}
+        url={`${window.location.origin}/clothing/${_id}`}
+        handleShare={handleShare}
+      />
       <ClothesModal
         open={editMenuOpen}
         setOpen={setEditMenuOpen}
