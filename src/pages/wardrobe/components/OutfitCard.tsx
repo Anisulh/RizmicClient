@@ -213,8 +213,8 @@ function OutfitCard({
                           <button
                             onClick={async () => {
                               const shareData = {
-                                title: "Check out this clothing!",
-                                text: "Share this clothing with your friends!",
+                                title: "Rizmic Fits Outfit Share",
+                                text: "Check out this outfit I created on Rizmic Fits!",
                                 url: `/outfit/${_id}`,
                               };
                               try {

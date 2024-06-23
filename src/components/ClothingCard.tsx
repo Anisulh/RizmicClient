@@ -158,8 +158,8 @@ export default function ClothingCard({
                           <button
                             onClick={async () => {
                               const shareData = {
-                                title: "Check out this clothing!",
-                                text: "Share this clothing with your friends!",
+                                title: "Rizmic Fits Clothing Share",
+                                text: "Check out this clothing!",
                                 url: `/clothing/${_id}`,
                               };
                               try {
