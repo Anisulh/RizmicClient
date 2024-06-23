@@ -121,7 +121,7 @@ export default function ClothingCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="  h-5 w-5 transition-colors dark:text-white hover:text-ourGrey"
+                      className="  h-6 w-6 transition-colors dark:text-white hover:text-ourGrey"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -156,7 +156,26 @@ export default function ClothingCard({
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={() => setEditMenuOpen(true)}
+                            onClick={async () => {
+                              const shareData = {
+                                title: "Check out this clothing!",
+                                text: "Share this clothing with your friends!",
+                                url: `/clothing/${_id}`,
+                              };
+                              try {
+                                await navigator.share(shareData);
+                                console.log("Shared successfully");
+                              } catch (err) {
+                                console.error(err);
+                                addToast({
+                                  title: "Error sharing",
+                                  description:
+                                    "An error occurred while trying to share this clothing. The link has been copied to your clipboard.",
+                                  type: "info",
+                                });
+                                navigator.clipboard.writeText(shareData.url);
+                              }
+                            }}
                             className={`${
                               active && "bg-ultramarineBlue "
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
