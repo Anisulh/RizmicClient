@@ -12,12 +12,17 @@ import {
   DeleteActiveIcon,
   DeleteInactiveIcon,
   EditActiveIcon,
+  EditIcon,
   EditInactiveIcon,
+  ShareIcon,
+  TrashIcon,
 } from "../../../components/Icons";
 import { StarIcon } from "@heroicons/react/20/solid";
 import ExpandOutfitsModal from "./ExpandOutfitsModal";
 import { useToast } from "../../../contexts/ToastContext";
 import { IExistingClothesData } from "./ClothesModal";
+import DialogModal from "../../../components/ui/modal/DialogModal";
+import Button from "../../../components/ui/Button";
 export interface IOutfitData {
   _id: string;
   image?: string;
@@ -41,6 +46,7 @@ function OutfitCard({
   const { addToast } = useToast();
   const [editMenuOpen, setEditMenuOpen] = useState<boolean>(false);
   const [expandModal, setExpandModal] = useState<boolean>(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const { image, clothes, favorited, name, _id } = item;
   const { mutate: deleteMutation } = useMutation({
     mutationFn: async ({ outfitID }: { outfitID: string }) =>
@@ -90,7 +96,10 @@ function OutfitCard({
   };
   return (
     <>
-      <div className="relative w-full" aria-label="Outfit card">
+      <div
+        className="relative w-full bg-slate-700 p-2 rounded-lg"
+        aria-label="Outfit card"
+      >
         <div className="h-full w-full relative">
           <button
             className="absolute right-2 top-2 z-10"
@@ -167,7 +176,7 @@ function OutfitCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="h-6 w-6  hover:text-ourGrey"
+                      className="h-6 w-6  dark:text-white hover:text-ourGrey"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -181,29 +190,20 @@ function OutfitCard({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white  shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
+                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-slate-600 dark:text-gray-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
                     <div className="px-1 py-1 ">
                       <Menu.Item>
                         {({ active }) => (
                           <button
                             onClick={() => setEditMenuOpen(true)}
                             className={`${
-                              active
-                                ? "bg-ultramarineBlue text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active && "bg-ultramarineBlue"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
-                            {active ? (
-                              <EditActiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <EditInactiveIcon
-                                className="mr-2 h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            )}
+                            <EditIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors"
+                            />
                             Edit
                           </button>
                         )}
@@ -211,24 +211,50 @@ function OutfitCard({
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={handleDelete}
+                            onClick={async () => {
+                              const shareData = {
+                                title: "Check out this clothing!",
+                                text: "Share this clothing with your friends!",
+                                url: `/outfit/${_id}`,
+                              };
+                              try {
+                                await navigator.share(shareData);
+                                console.log("Shared successfully");
+                              } catch (err) {
+                                console.error(err);
+                                addToast({
+                                  title: "Error sharing",
+                                  description:
+                                    "An error occurred while trying to share this clothing. The link has been copied to your clipboard.",
+                                  type: "info",
+                                });
+                                navigator.clipboard.writeText(shareData.url);
+                              }
+                            }}
                             className={`${
-                              active
-                                ? "bg-ultramarineBlue text-white"
-                                : "text-gray-900"
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active && "bg-ultramarineBlue "
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
-                            {active ? (
-                              <DeleteActiveIcon
-                                className="mr-2 h-5 w-5 text-ultramarineBlue"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <DeleteInactiveIcon
-                                className="mr-2 h-5 w-5 text-ultramarineBlue"
-                                aria-hidden="true"
-                              />
-                            )}
+                            <ShareIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                            />
+                            Share
+                          </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            onClick={() => setDeleteModalOpen(true)}
+                            className={`${
+                              active && "bg-ultramarineBlue"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
+                          >
+                            <TrashIcon
+                              active={active}
+                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                            />
                             Delete
                           </button>
                         )}
@@ -241,6 +267,31 @@ function OutfitCard({
           </div>
         </div>
       </div>
+      <DialogModal
+        title="Delete Outfit"
+        open={deleteModalOpen}
+        setOpen={setDeleteModalOpen}
+      >
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <p>
+            Are you sure you want to delete this outfit? Anyone you&apos;ve
+            shared this with will not be able to view it once deleted. This
+            cannot be undone.
+          </p>
+          <div className="flex justify-between items-center w-full">
+            <Button
+              variant="destructive"
+              onClick={() => {
+                handleDelete();
+                setDeleteModalOpen(false);
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={() => setDeleteModalOpen(false)}>No</Button>
+          </div>
+        </div>
+      </DialogModal>
       <ExpandOutfitsModal
         open={expandModal}
         setOpen={setExpandModal}
