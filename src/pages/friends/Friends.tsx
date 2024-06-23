@@ -3,7 +3,6 @@ import {
   acceptFriendRequestAPI,
   getFriendRequests,
   getFriends,
-  IFriend,
   unfriendAPI,
 } from "../../api/friendsAPI";
 import { useQuery } from "@tanstack/react-query";
@@ -100,7 +99,6 @@ export default function Friends() {
                 <h2 className="font-bold">
                   {friend.firstName} {friend.lastName}
                 </h2>
-                <p>{friend.email}</p>
               </div>
             </div>
             <div className="space-x-2">
@@ -116,7 +114,7 @@ export default function Friends() {
       </div>
       <h2 className="font-medium text-xl md:text-2xl">Friend Requests</h2>
       <div>
-        {friendRequests?.map(({ requester }: { requester: IFriend }) => (
+        {friendRequests?.map(({ requester }) => (
           <div
             key={requester._id}
             className="flex justify-between items-center p-4 bg-slate-600 rounded-xl"
@@ -133,7 +131,6 @@ export default function Friends() {
                 <h2 className="font-bold">
                   {requester.firstName} {requester.lastName}
                 </h2>
-                <p>{requester.email}</p>
               </div>
             </div>
             <div className="space-x-2">
