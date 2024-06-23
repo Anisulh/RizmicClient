@@ -1,9 +1,14 @@
-export default function ButtonSpinner() {
+import cn from "../cn";
+
+export default function ButtonSpinner({ className }: { className?: string }) {
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="inline w-4 h-4 text-gray-200 animate-spin  fill-ultramarineBlue"
+        className={cn(
+          "inline w-4 h-4 text-gray-200 animate-spin fill-ultramarineBlue",
+          className,
+        )}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
