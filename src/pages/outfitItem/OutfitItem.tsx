@@ -4,9 +4,11 @@ import { IExistingClothesData } from "../wardrobe/components/ClothesModal";
 import { useNavigate, useParams } from "react-router-dom";
 import { getOutfitsById } from "../../api/outfitsAPI";
 import Spinner from "../../components/ui/spinner/Spinner";
+import { useToast } from "../../contexts/ToastContext";
 
 const OutfitItem = () => {
   const { itemId } = useParams<{ itemId: string }>();
+  const { addToast } = useToast();
   const [item, setItem] = useState<IExistingOutfitData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -19,13 +21,13 @@ const OutfitItem = () => {
         const data = await getOutfitsById(itemId);
         setItem(data);
       } catch (error) {
-        console.error(error);
+        addToast({ title: "Unable to fetch item", type: "error" });
       } finally {
         setLoading(false);
       }
     };
     fetchItem();
-  }, [itemId]);
+  });
 
   if (loading) {
     return <Spinner />;
