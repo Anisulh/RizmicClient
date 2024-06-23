@@ -27,7 +27,7 @@ const ClothingItem = () => {
       }
     };
     fetchItem();
-  });
+  }, [itemId, addToast]);
 
   if (loading) {
     return <Spinner />;
