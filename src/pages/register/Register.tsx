@@ -114,7 +114,7 @@ function Register() {
       <div className="z-10 flex h-screen w-full items-center justify-center lg:block">
         <div className="z-10 flex h-screen items-center justify-center px-8 py-10 md:h-fit md:rounded-3xl lg:h-max lg:min-h-screen lg:w-[42%] lg:p-0">
           <div>
-            <h1 className="text-4xl font-bold tracking-wide lg:text-6xl">
+            <h1 className="text-3xl font-bold tracking-wide lg:text-4xl">
               Register
             </h1>
             <p className="text-slategrey lg:text-lg">
