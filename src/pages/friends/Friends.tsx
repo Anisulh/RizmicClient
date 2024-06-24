@@ -108,44 +108,48 @@ export default function Friends() {
           </div>
         ))}
       </div>
-      <h2 className="text-xl font-medium md:text-2xl">Friend Requests</h2>
-      <div>
-        {friendRequests?.map(({ requester }) => (
-          <div
-            key={requester._id}
-            className="flex items-center justify-between rounded-xl bg-slate-600 p-4"
-          >
-            <div className="flex items-center gap-2">
-              {requester.profilePicture && (
-                <img
-                  src={requester.profilePicture}
-                  alt={requester.firstName}
-                  className="size-8 rounded-full"
-                />
-              )}
-              <div>
-                <h2 className="font-bold">
-                  {requester.firstName} {requester.lastName}
-                </h2>
+      {friendRequests && friendRequests.length > 0 && (
+        <>
+          <h2 className="text-xl font-medium md:text-2xl">Friend Requests</h2>
+          <div>
+            {friendRequests?.map(({ requester }) => (
+              <div
+                key={requester._id}
+                className="flex items-center justify-between rounded-xl bg-slate-600 p-4"
+              >
+                <div className="flex items-center gap-2">
+                  {requester.profilePicture && (
+                    <img
+                      src={requester.profilePicture}
+                      alt={requester.firstName}
+                      className="size-8 rounded-full"
+                    />
+                  )}
+                  <div>
+                    <h2 className="font-bold">
+                      {requester.firstName} {requester.lastName}
+                    </h2>
+                  </div>
+                </div>
+                <div className="space-x-2">
+                  <Button
+                    variant="primary"
+                    onClick={() => handleAcceptRequest(requester._id)}
+                  >
+                    <CheckIcon className="size-5" />
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleUnfriend(requester._id)}
+                  >
+                    <XMarkIcon className="size-5" />
+                  </Button>
+                </div>
               </div>
-            </div>
-            <div className="space-x-2">
-              <Button
-                variant="primary"
-                onClick={() => handleAcceptRequest(requester._id)}
-              >
-                <CheckIcon className="size-5" />
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => handleUnfriend(requester._id)}
-              >
-                <XMarkIcon className="size-5" />
-              </Button>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
       <AddFriendModal
         open={addFriendModalOpen}
         setOpen={setAddFriendModalOpen}
