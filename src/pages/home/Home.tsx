@@ -106,11 +106,11 @@ export default function Home() {
       <main className="mx-auto w-full px-4">
         <section className="mt-24 flex items-center justify-center py-28 text-center">
           <div className="hero-text flex flex-col items-center justify-center gap-10 py-20">
-            <div>
+            <div className="w-full">
               <h1 className="mb-4 text-5xl font-bold sm:text-7xl">
                 Your Personal Wardrobe Manager
               </h1>
-              <p className="max-w-4xl text-xl text-slategrey">
+              <p className="mx-auto max-w-4xl text-xl text-gray-400">
                 Revolutionize the way you dress with our intuitive app that
                 keeps your wardrobe organized and generates stylish outfits
                 tailored to your taste.
