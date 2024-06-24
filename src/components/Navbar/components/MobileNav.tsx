@@ -23,14 +23,14 @@ const tabs = [
     icon: WardrobeIcon,
   },
   {
-    name: "Friends",
-    href: "/friends",
-    icon: FriendsIcon,
-  },
-  {
     name: "Generate",
     href: "/fit-generator",
     icon: TestTubeIcon,
+  },
+  {
+    name: "Friends",
+    href: "/friends",
+    icon: FriendsIcon,
   },
   {
     name: "Settings",
@@ -251,7 +251,12 @@ export default function MobileNav() {
                         <NavLink
                           key={index}
                           to={tab.href}
-                          className="flex flex-col items-center justify-center hover:bg-slate-600"
+                          className={({ isActive }) =>
+                            cn(
+                              isActive && "bg-slate-600",
+                              "flex flex-col items-center justify-center hover:bg-slate-600",
+                            )
+                          }
                         >
                           {({ isActive }) => (
                             <>
@@ -262,7 +267,7 @@ export default function MobileNav() {
                               <p
                                 className={`text-xs font-bold ${
                                   isActive
-                                    ? "text-blue-500 dark:text-blue-200"
+                                    ? "text-cambridgeblue"
                                     : "text-gray-500 dark:text-gray-200"
                                 }`}
                               >
