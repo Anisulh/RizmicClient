@@ -118,7 +118,7 @@ function Register() {
               Register
             </h1>
             <p className="text-slategrey lg:text-lg">
-              Fill in your details or continue with google with a simple click.
+              Enter your details or continue with google.
             </p>
             <form
               className="h-full max-w-lg overflow-auto py-2 lg:px-10 lg:py-5"
