@@ -31,7 +31,7 @@ export default function Profile() {
         <div className="flex gap-2">
           <div className="relative flex h-full items-center justify-center">
             <img
-              className="-mt-6 h-20 w-20 rounded-full p-1"
+              className="-mt-6 h-20 w-20 rounded-full bg-white p-1"
               src={user?.profilePicture ?? Avatar}
               alt="Profile"
               onMouseOver={() => setShowProfileImageEdit(true)}
