@@ -34,11 +34,11 @@ const PasswordStrengthCheck = ({ password }: { password: string }) => {
       case 2:
         return "bg-yellow-500";
       case 3:
-        return "bg-light-green-500";
+        return "bg-green-400";
       case 4:
       case 5:
       case 6:
-        return "bg-green-500";
+        return "bg-green-600";
       default:
         return "bg-red-300";
     }
