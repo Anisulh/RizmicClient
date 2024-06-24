@@ -1,6 +1,3 @@
-import anisulRizmic from "../../assets/anisulRizmic.webp";
-import julfikarRizmic from "../../assets/julfikarRizmic.webp";
-
 export default function AboutUs() {
   return (
     <div className="content-container mx-auto w-full max-w-7xl px-2 lg:px-4">
@@ -35,7 +32,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-      <div className="mt-10 flex flex-col">
+      {/* <div className="mt-10 flex flex-col">
         <h1 className="mb-3 flex justify-center py-3 text-3xl font-bold">
           The Masterminds:
         </h1>
@@ -134,7 +131,7 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
