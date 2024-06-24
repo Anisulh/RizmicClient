@@ -56,7 +56,6 @@ function PasswordReset() {
         });
       }
     } catch (error) {
-      console.error(error);
       addToast({
         title: "Something went wrong.",
         description: "Please try again.",

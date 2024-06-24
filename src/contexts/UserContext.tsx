@@ -38,7 +38,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     if (!isAuthenticated) return;
     try {
       const data = await getUserData();
-      console.log("User data fetched:", data);
       setUser(data);
       return data;
     } catch (error) {
