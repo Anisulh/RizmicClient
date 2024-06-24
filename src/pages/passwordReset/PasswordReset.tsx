@@ -12,6 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../../components/ui/inputs/Input";
 import PopoverModal from "../../components/Popover/PopoverModal";
+import { useState } from "react";
 
 function PasswordReset() {
   const { addToast } = useToast();
@@ -21,6 +22,8 @@ function PasswordReset() {
     useForm<PasswordResetSchemaType>({
       resolver: zodResolver(PasswordResetSchema),
     });
+
+  const [isShowing, setIsShowing] = useState(false);
 
   const password = watch("password");
   const { isPending, mutate } = useMutation({
@@ -84,10 +87,12 @@ function PasswordReset() {
             </div>
             <div className="absolute -right-6 -top-1 z-20">
               <PopoverModal
-                anchor="right"
+                isShowing={isShowing}
                 button={
                   <QuestionMarkCircleIcon
-                    className="ml-2 size-5 text-cambridgeblue transition duration-150 ease-in-out hover:text-opacity-100"
+                    onMouseEnter={() => setIsShowing(true)}
+                    onMouseLeave={() => setIsShowing(false)}
+                    className="ml-2 h-5 w-5 text-cambridgeblue transition duration-150 ease-in-out hover:text-opacity-100"
                     aria-hidden="true"
                   />
                 }
@@ -130,7 +135,7 @@ function PasswordReset() {
             {isPending ? (
               <span className="flex items-center justify-center bg-transparent">
                 <div
-                  className="spinner-border inline-block size-5 animate-spin rounded-full border-4 bg-transparent text-gray-300"
+                  className="spinner-border inline-block h-5 w-5 animate-spin rounded-full border-4 bg-transparent text-gray-300"
                   role="status"
                 >
                   <span className="sr-only">Loading</span>
