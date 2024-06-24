@@ -72,25 +72,25 @@ export default function ShareModal({
 
   return (
     <DialogModal title="Share" open={open} setOpen={setOpen}>
-      <h3 className="text-xl font-bold mt-4">Friends</h3>
+      <h3 className="mt-4 text-xl font-bold">Friends</h3>
       <p className="text-sm font-medium text-gray-300">
         Share privately to your friends within Rizmic.
       </p>
       <div className="my-4 space-y-4">
         {isPending ? (
-          <div className="w-full flex justify-center item-center">
-            <ButtonSpinner className="h-12 w-12" />
+          <div className="item-center flex w-full justify-center">
+            <ButtonSpinner className="size-12" />
           </div>
         ) : friends && friends.length > 0 ? (
           <>
-            <div className="py-4 px-2">
+            <div className="px-2 py-4">
               {friends.map((friend, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <img
                       src={friend.profilePicture || UserAvatar}
                       alt={friend.firstName}
-                      className="w-8 h-8 rounded-full bg-white"
+                      className="size-8 rounded-full bg-white"
                     />
                     <p>
                       {friend.firstName} {friend.lastName}
@@ -100,7 +100,7 @@ export default function ShareModal({
                     type="checkbox"
                     checked={selectedFriends.includes(friend._id)}
                     onChange={() => handleSelectFriend(friend._id)}
-                    className="h-5 w-5 text-ultramarineBlue rounded-md"
+                    className="size-5 rounded-md text-ultramarineBlue"
                   />
                 </div>
               ))}
@@ -120,12 +120,12 @@ export default function ShareModal({
           </p>
         )}
       </div>
-      <p className="my-4 text-white text-xl font-medium">Share publicly:</p>
-      <div className="flex flex-col gap-4 w-full">
+      <p className="my-4 text-xl font-medium text-white">Share publicly:</p>
+      <div className="flex w-full flex-col gap-4">
         <Button
           variant="textWithIcon"
           onClick={handleCopy}
-          icon={<ClipboardIcon className="h-4 w-4" />}
+          icon={<ClipboardIcon className="size-4" />}
           className="flex justify-center gap-2"
         >
           Copy Link
@@ -133,7 +133,7 @@ export default function ShareModal({
         <Button
           variant="textWithIcon"
           onClick={handleShareMenu}
-          icon={<ShareIcon className="h-5 w-5" />}
+          icon={<ShareIcon className="size-5" />}
           className="flex justify-center gap-2"
         >
           Open Share Menu

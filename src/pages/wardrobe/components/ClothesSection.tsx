@@ -64,22 +64,22 @@ function ClothesSection({
         {Object.keys(clothes).map((key) => (
           <div key={key}>
             <button
-              className="flex justify-between items-center mb-6 w-full mx-auto hover:bg-gray-600 p-2 transition-colors rounded-lg"
+              className="mx-auto mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
               onClick={() => toggleCategory(key)}
             >
-              <h2 className="font-medium text-xl">
+              <h2 className="text-xl font-medium">
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </h2>
               <div>
                 {categoryOpen[key] ? (
-                  <ChevronLeftIcon className="h-6 w-6" />
+                  <ChevronLeftIcon className="size-6" />
                 ) : (
-                  <ChevronDownIcon className="h-6 w-6" />
+                  <ChevronDownIcon className="size-6" />
                 )}
               </div>
             </button>
             {categoryOpen[key] && (
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
+              <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
                 {(clothes[key as keyof IClothingData] as []).map(
                   (item, index) => {
                     return (

@@ -14,7 +14,7 @@ export default function PopoverModal({
 }: PopoverProps) {
   return (
     <Popover className="relative">
-      <Popover.Button className="text-opacity-90 hover:text-opacity-100 focus:outline-none rounded-full p-0 bg-transparent">
+      <Popover.Button className="rounded-full bg-transparent p-0 text-opacity-90 hover:text-opacity-100 focus:outline-none">
         {button}
       </Popover.Button>
       <Transition
@@ -26,7 +26,7 @@ export default function PopoverModal({
         leaveTo="opacity-0 translate-y-1"
         show={isShowing}
       >
-        <Popover.Panel className="absolute left-full  z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
+        <Popover.Panel className="absolute left-full z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
           {children}
         </Popover.Panel>
       </Transition>

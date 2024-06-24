@@ -2,12 +2,12 @@ import React from "react";
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className="content-container max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-4">
+    <div className="content-container mx-auto max-w-4xl px-4 py-8">
+      <h1 className="mb-4 text-center text-3xl font-bold">
         Terms of Service for Rizmic Fits
       </h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">1. Introduction</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">1. Introduction</h2>
       <p>
         Welcome to Rizmic Fits. By accessing our web application, you agree to
         be bound by these Terms of Service, all applicable laws and regulations,
@@ -16,14 +16,14 @@ const TermsOfService: React.FC = () => {
         prohibited from using or accessing this site.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">2. Use License</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">2. Use License</h2>
       <p>
         Permission is granted to temporarily download one copy of the materials
-        (information or software) on Rizmic Fits&apos; web application for personal,
-        non-commercial transitory viewing only. This is the grant of a license,
-        not a transfer of title, and under this license, you may not:
+        (information or software) on Rizmic Fits&apos; web application for
+        personal, non-commercial transitory viewing only. This is the grant of a
+        license, not a transfer of title, and under this license, you may not:
       </p>
-      <ul className="list-disc pl-5 mb-4">
+      <ul className="mb-4 list-disc pl-5">
         <li>Modify or copy the materials;</li>
         <li>
           Use the materials for any commercial purpose, or for any public
@@ -38,8 +38,8 @@ const TermsOfService: React.FC = () => {
           materials; or
         </li>
         <li>
-          Transfer the materials to another person or &quot;mirror&quot; the materials on
-          any other server.
+          Transfer the materials to another person or &quot;mirror&quot; the
+          materials on any other server.
         </li>
       </ul>
       <p>
@@ -50,7 +50,7 @@ const TermsOfService: React.FC = () => {
         possession whether in electronic or printed format.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         3. Account Registration and Management
       </h2>
       <p>
@@ -62,7 +62,7 @@ const TermsOfService: React.FC = () => {
         may not use another user&apos;s account without permission.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         4. Subscription Services and Payments
       </h2>
       <p>
@@ -75,7 +75,7 @@ const TermsOfService: React.FC = () => {
         cancellation will take effect at the end of the current paid term.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">5. User Content</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">5. User Content</h2>
       <p>
         You retain all your ownership rights to the content you upload to Rizmic
         Fits. However, by uploading your content, you grant Rizmic Fits a
@@ -85,53 +85,54 @@ const TermsOfService: React.FC = () => {
         your content within the functionality of the application.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">6. Disclaimer</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">6. Disclaimer</h2>
       <p>
-        The materials on Rizmic Fits&apos; web application are provided &quot;as is&quot;.
-        Rizmic Fits makes no warranties, expressed or implied, and hereby
-        disclaims and negates all other warranties including, without
+        The materials on Rizmic Fits&apos; web application are provided &quot;as
+        is&quot;. Rizmic Fits makes no warranties, expressed or implied, and
+        hereby disclaims and negates all other warranties including, without
         limitation, implied warranties or conditions of merchantability, fitness
         for a particular purpose, or non-infringement of intellectual property
         or other violation of rights.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">7. Limitations</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">7. Limitations</h2>
       <p>
         In no event shall Rizmic Fits or its suppliers be liable for any damages
         (including, without limitation, damages for loss of data or profit, or
         due to business interruption) arising out of the use or inability to use
-        the materials on Rizmic Fits&apos; web application, even if Rizmic Fits or a
-        Rizmic Fits authorized representative has been notified orally or in
-        writing of the possibility of such damage.
+        the materials on Rizmic Fits&apos; web application, even if Rizmic Fits
+        or a Rizmic Fits authorized representative has been notified orally or
+        in writing of the possibility of such damage.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         8. Revisions and Errata
       </h2>
       <p>
-        The materials appearing on Rizmic Fits&apos; web application could include
-        technical, typographical, or photographic errors. Rizmic Fits does not
-        warrant that any of the materials on its web application are accurate,
-        complete, or current. Rizmic Fits may make changes to the materials
-        contained on its web application at any time without notice.
+        The materials appearing on Rizmic Fits&apos; web application could
+        include technical, typographical, or photographic errors. Rizmic Fits
+        does not warrant that any of the materials on its web application are
+        accurate, complete, or current. Rizmic Fits may make changes to the
+        materials contained on its web application at any time without notice.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">9. Links</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">9. Links</h2>
       <p>
         Rizmic Fits has not reviewed all of the sites linked to its web
         application and is not responsible for the contents of any such linked
         site. The inclusion of any link does not imply endorsement by Rizmic
-        Fits of the site. Use of any such linked website is at the user&apos;s own
-        risk.
+        Fits of the site. Use of any such linked website is at the user&apos;s
+        own risk.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">10. Governing Law</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">10. Governing Law</h2>
       <p>
-        Any claim relating to Rizmic Fits&apos; web application shall be governed by
-        the laws of the State without regard to its conflict of law provisions.
+        Any claim relating to Rizmic Fits&apos; web application shall be
+        governed by the laws of the State without regard to its conflict of law
+        provisions.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         11. Modifications to Terms of Service
       </h2>
       <p>
@@ -140,11 +141,12 @@ const TermsOfService: React.FC = () => {
         to be bound by the then current version of these Terms of Service.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         12. Contact Information
       </h2>
       <p>
-        If you have any questions about these Terms, please contact us at rizmicfits@gmail.com.
+        If you have any questions about these Terms, please contact us at
+        rizmicfits@gmail.com.
       </p>
     </div>
   );

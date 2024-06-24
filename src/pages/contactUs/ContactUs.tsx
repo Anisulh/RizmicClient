@@ -42,11 +42,11 @@ export default function ContactUs() {
   };
   return (
     <section className="content-container">
-      <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center ">
+      <div className="mx-auto max-w-screen-md px-4 py-8 lg:py-16">
+        <h2 className="mb-4 text-center text-4xl font-extrabold tracking-tight">
           Contact Us
         </h2>
-        <p className="mb-8 lg:mb-16 font-light text-center sm:text-xl">
+        <p className="mb-8 text-center font-light sm:text-xl lg:mb-16">
           Got a technical issue? Want to send feedback about a feature?
         </p>
         <form
@@ -71,24 +71,24 @@ export default function ContactUs() {
           />
 
           <div className="sm:col-span-2">
-            <label htmlFor="message" className="block mb-2 text-sm font-medium">
+            <label htmlFor="message" className="mb-2 block text-sm font-medium">
               Your message
             </label>
             <textarea
               id="message"
               {...register("message")}
               rows={6}
-              className="block p-2.5 w-full text-sm bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-ultramarineBlue focus:border-ultramarineBlue "
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm shadow-sm focus:border-ultramarineBlue focus:ring-ultramarineBlue"
               placeholder="Leave a comment..."
             />
             {errors.message && (
-              <p className="text-red-500 text-sm">{errors.message.message}</p>
+              <p className="text-sm text-red-500">{errors.message.message}</p>
             )}
           </div>
           <div className="w-full text-center">
             <button
               type="submit"
-              className="border-2 py-3 px-5 text-sm font-medium text-center rounded-lg bg-ultramarineBlue sm:w-fit hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-ultramarineBlue text-white"
+              className="rounded-lg border-2 bg-ultramarineBlue px-5 py-3 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-ultramarineBlue sm:w-fit"
             >
               Send message
             </button>

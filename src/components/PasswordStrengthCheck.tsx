@@ -45,8 +45,8 @@ const PasswordStrengthCheck = ({ password }: { password: string }) => {
   };
 
   return (
-    <div className="flex items-center w-full">
-      <div className="w-full h-4 bg-gray-300 rounded-full">
+    <div className="flex w-full items-center">
+      <div className="h-4 w-full rounded-full bg-gray-300">
         <div
           className={cn(
             "h-full rounded-full",
@@ -55,7 +55,7 @@ const PasswordStrengthCheck = ({ password }: { password: string }) => {
           style={{ width: `${num}%` }}
         ></div>
       </div>
-      <p className="ml-2 text-sm whitespace-nowrap">{passwordLabel}</p>
+      <p className="ml-2 whitespace-nowrap text-sm">{passwordLabel}</p>
     </div>
   );
 };

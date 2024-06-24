@@ -110,18 +110,18 @@ function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center content-container mb-10">
-      <div className="z-10 flex items-center justify-center h-screen w-full lg:block">
-        <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
+    <div className="content-container mb-10 flex items-center justify-center">
+      <div className="z-10 flex h-screen w-full items-center justify-center lg:block">
+        <div className="z-10 flex h-screen items-center justify-center px-8 py-10 md:h-fit md:rounded-3xl lg:h-max lg:min-h-screen lg:w-[42%] lg:p-0">
           <div>
-            <h1 className="font-bold text-4xl lg:text-6xl tracking-wide">
+            <h1 className="text-4xl font-bold tracking-wide lg:text-6xl">
               Register
             </h1>
             <p className="text-slategrey lg:text-lg">
               Fill in your details or continue with google with a simple click.
             </p>
             <form
-              className="lg:px-10 py-2 lg:py-5 max-w-lg h-full overflow-auto "
+              className="h-full max-w-lg overflow-auto py-2 lg:px-10 lg:py-5"
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<RegisterSchemaType>
@@ -169,38 +169,38 @@ function Register() {
                 control={control}
                 formatInput={formatPhoneNumber}
               />{" "}
-              <div className="flex items-center justify-center gap-2  mt-4 mb-2">
+              <div className="mb-2 mt-4 flex items-center justify-center gap-2">
                 <input
                   type="checkbox"
                   {...register("termsAndPolicy", { required: true })}
-                  className="h-4 w-4 text-raisinblack border-gray-300 rounded-sm focus:ring-raisinblack focus:border-raisinblack dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                  className="size-4 rounded-sm border-gray-300 text-raisinblack focus:border-raisinblack focus:ring-raisinblack dark:border-gray-600 dark:focus:border-gray-500 dark:focus:ring-gray-500"
                 />
                 <label
                   htmlFor="termsAndPolicy"
-                  className="text-sm md:text-base text-gray-700 dark:text-white"
+                  className="text-sm text-gray-700 md:text-base dark:text-white"
                 >
                   I agree to the{" "}
                   <Link
                     to="/terms-of-service"
                     target="_blank"
-                    className="text-ultramarineBlue p-1 "
+                    className="p-1 text-ultramarineBlue"
                   >
                     Terms of Service
-                    <ArrowTopRightOnSquareIcon className="h-4 w-4 inline ml-1" />
+                    <ArrowTopRightOnSquareIcon className="ml-1 inline size-4" />
                   </Link>{" "}
                   and{" "}
                   <Link
                     to="/privacy-policy"
                     target="_blank"
-                    className="text-ultramarineBlue p-1"
+                    className="p-1 text-ultramarineBlue"
                   >
                     Privacy Policy
-                    <ArrowTopRightOnSquareIcon className="h-4 w-4 inline ml-1" />
+                    <ArrowTopRightOnSquareIcon className="ml-1 inline size-4" />
                   </Link>
                 </label>
               </div>
               {errors.termsAndPolicy && (
-                <p className="text-red-500 text-xs mt-1">
+                <p className="mt-1 text-xs text-red-500">
                   {errors.termsAndPolicy.message}
                 </p>
               )}
@@ -215,24 +215,24 @@ function Register() {
                 Submit
               </Button>
             </form>
-            <div className="flex text-base items-center justify-center gap-1 py-4 ">
+            <div className="flex items-center justify-center gap-1 py-4 text-base">
               <p>Already have an account?</p>
               <Link
                 to="/login"
-                className="text-ultramarineBlue font-medium p-1"
+                className="p-1 font-medium text-ultramarineBlue"
               >
                 Login
               </Link>
             </div>
-            <p className="text-center text-base my-4">Or, register with...</p>
-            <div className="mt-6 w-fit mx-auto">
+            <p className="my-4 text-center text-base">Or, register with...</p>
+            <div className="mx-auto mt-6 w-fit">
               <div ref={googleButton}></div>
             </div>
           </div>
         </div>
       </div>
       <img
-        className="hidden md:block object-cover w-full lg:w-[60%] h-screen absolute top-0 right-0 rounded-2xl"
+        className="absolute right-0 top-0 hidden h-screen w-full rounded-2xl object-cover md:block lg:w-[60%]"
         src={registerImage}
         alt="Clothing on a rack"
       />

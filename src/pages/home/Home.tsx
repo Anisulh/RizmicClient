@@ -102,15 +102,15 @@ export default function Home() {
     }
   });
   return (
-    <div className="content-container max-w-7xl mx-auto">
-      <main className="w-full mx-auto px-4 ">
-        <section className="text-center mt-24 flex justify-center items-center py-28">
-          <div className="hero-text py-20 flex flex-col items-center justify-center gap-10">
+    <div className="content-container mx-auto max-w-7xl">
+      <main className="mx-auto w-full px-4">
+        <section className="mt-24 flex items-center justify-center py-28 text-center">
+          <div className="hero-text flex flex-col items-center justify-center gap-10 py-20">
             <div>
-              <h1 className="text-5xl font-bold  mb-4 sm:text-7xl">
+              <h1 className="mb-4 text-5xl font-bold sm:text-7xl">
                 Your Personal Wardrobe Manager
               </h1>
-              <p className="text-xl text-slategrey max-w-4xl">
+              <p className="max-w-4xl text-xl text-slategrey">
                 Revolutionize the way you dress with our intuitive app that
                 keeps your wardrobe organized and generates stylish outfits
                 tailored to your taste.
@@ -118,7 +118,7 @@ export default function Home() {
             </div>
             <Button
               onClick={() => navigate("/register")}
-              className="text-xl px-6 py-3 font-bold"
+              className="px-6 py-3 text-xl font-bold"
             >
               Get Started
             </Button>
@@ -131,26 +131,26 @@ export default function Home() {
           </h2>
 
           <div className="overflow-hidden py-20">
-            <div className=" px-6 lg:px-8">
-              <div className="flex items-center justify-center ">
+            <div className="px-6 lg:px-8">
+              <div className="flex items-center justify-center">
                 <div className="lg:pr-8 lg:pt-4">
                   <div className="lg:max-w-2xl">
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Shop more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-6xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 sm:text-6xl dark:text-gray-100">
                       Virtual Wardrobe
                     </p>
                     <p className="mt-6">
                       Easily catalog your wardrobe, track your most-worn items,
                       and stay organized with our intuitive wardrobe manager.
                     </p>
-                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-200 lg:max-w-none">
+                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none dark:text-gray-200">
                       {virtualWardrobeFeatures.map((feature) => (
                         <div key={feature.name} className="relative pl-9">
                           <dt className="inline font-semibold text-gray-800 dark:text-gray-100">
                             <feature.icon
-                              className="absolute left-1 top-1 h-5 w-5 text-ultramarineBlue"
+                              className="absolute left-1 top-1 size-5 text-ultramarineBlue"
                               aria-hidden="true"
                             />
                             {feature.name}
@@ -165,14 +165,14 @@ export default function Home() {
             </div>
           </div>
           <div className="overflow-hidden">
-            <div className=" px-6 lg:px-8">
-              <div className="flex items-center justify-center ">
+            <div className="px-6 lg:px-8">
+              <div className="flex items-center justify-center">
                 <div className="lg:pr-8 lg:pt-4">
                   <div className="lg:max-w-2xl">
                     <h2 className="text-base font-semibold leading-7 text-ultramarineBlue">
                       Style more, think less
                     </h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-6xl">
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-800 sm:text-6xl dark:text-gray-100">
                       Outfit Generator
                     </p>
                     <p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-200">
@@ -180,12 +180,12 @@ export default function Home() {
                       with our outfit generator that&apos;s tailored to your
                       unique style.
                     </p>
-                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-200 lg:max-w-none">
+                    <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none dark:text-gray-200">
                       {outfitGeneratorFeatures.map((feature) => (
                         <div key={feature.name} className="relative pl-9">
                           <dt className="inline font-semibold text-gray-800 dark:text-gray-100">
                             <feature.icon
-                              className="absolute left-1 top-1 h-5 w-5 text-ultramarineBlue"
+                              className="absolute left-1 top-1 size-5 text-ultramarineBlue"
                               aria-hidden="true"
                             />
                             {feature.name}
@@ -202,11 +202,11 @@ export default function Home() {
         </section>
 
         <section id="pricing" className="py-24">
-          <h2 className="text-4xl font-bold  mb-8 sm:text-6xl">Pricing</h2>
-          <div className=" py-24 sm:py-20">
+          <h2 className="mb-8 text-4xl font-bold sm:text-6xl">Pricing</h2>
+          <div className="py-24 sm:py-20">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="text-4xl font-bold tracking-tight text-gray-800 dark:text-gray-100 sm:text-4xl">
+                <h2 className="text-4xl font-bold tracking-tight text-gray-800 sm:text-4xl dark:text-gray-100">
                   Simple no-tricks pricing
                 </h2>
                 <p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-200">
@@ -214,7 +214,7 @@ export default function Home() {
                   we provided straight forward pricing plan with no hidden fees.
                 </p>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-4xl border-2 rounded-xl sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="rounded-4xl mx-auto mt-16 max-w-2xl rounded-xl border-2 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
                   <h3 className="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                     Basic Plan
@@ -229,7 +229,7 @@ export default function Home() {
                     </h4>
                     <div className="h-px flex-auto bg-gray-100" />
                   </div>
-                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 dark:text-gray-200 sm:grid-cols-2 sm:gap-6">
+                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6 dark:text-gray-200">
                     {includedFeatures.map((feature) => (
                       <li key={feature} className="flex gap-x-3">
                         <CheckIcon
@@ -259,7 +259,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mx-auto mt-16 max-w-2xl rounded-4xl border-2 rounded-xl sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+              <div className="rounded-4xl mx-auto mt-16 max-w-2xl rounded-xl border-2 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div className="p-8 sm:p-10 lg:flex-auto">
                   <h3 className="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
                     Premium Plan
@@ -274,7 +274,7 @@ export default function Home() {
                     </h4>
                     <div className="h-px flex-auto bg-gray-100" />
                   </div>
-                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 dark:text-gray-200 sm:grid-cols-2 sm:gap-6">
+                  <ul className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6 dark:text-gray-200">
                     {premiumFeatures.map((feature) => (
                       <li key={feature} className="flex gap-x-3">
                         <CheckIcon
@@ -302,7 +302,7 @@ export default function Home() {
                       </p>
                       <a
                         href="/pricing"
-                        className="mt-10 block w-full rounded-md bg-ultramarineBlue px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue "
+                        className="mt-10 block w-full rounded-md bg-ultramarineBlue px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ultramarineBlue"
                       >
                         Upgrade Now
                       </a>
@@ -318,13 +318,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="FAQ" className=" mb-48">
-          <h2 className="text-4xl font-bold  mb-8">FAQ</h2>
+        <section id="FAQ" className="mb-48">
+          <h2 className="mb-8 text-4xl font-bold">FAQ</h2>
           {faq.map((section, i) => (
-            <div key={i} className="mb-4 pl-10 max-w-5xl mx-auto">
-              <h3 className="text-xl font-bold mb-2">{section.question}</h3>
+            <div key={i} className="mx-auto mb-4 max-w-5xl pl-10">
+              <h3 className="mb-2 text-xl font-bold">{section.question}</h3>
 
-              <p className="text-slategrey ">{section.answer}</p>
+              <p className="text-slategrey">{section.answer}</p>
             </div>
           ))}
         </section>

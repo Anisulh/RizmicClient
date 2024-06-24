@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller, Control, Path, FieldValues } from "react-hook-form";
 import cn from "../cn";
 
@@ -14,7 +13,7 @@ interface SelectProps<T extends FieldValues> {
   options: Option[];
   isMulti?: boolean; // Optional prop to determine if multiple selection is allowed
   className?: string;
-  required?: boolean
+  required?: boolean;
 }
 
 const Select = <T extends FieldValues>({
@@ -24,12 +23,12 @@ const Select = <T extends FieldValues>({
   options,
   isMulti = false,
   className,
-  required = true
+  required = true,
 }: SelectProps<T>) => {
   return (
     <div className={cn("my-2 w-full", className)}>
       <label
-        className="flex gap-1 text-sm md:text-base font-medium text-gray-700 dark:text-white"
+        className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
         htmlFor={name}
       >
         {label}
@@ -41,7 +40,7 @@ const Select = <T extends FieldValues>({
         render={({ field }) => (
           <select
             {...field}
-            className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+            className="block w-full rounded-lg border-gray-300 text-sm text-raisinblack placeholder-gray-400 shadow-sm focus:border-raisinblack focus:ring-raisinblack md:text-base dark:border-gray-600 dark:placeholder-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500"
             id={name}
             multiple={isMulti}
             value={field.value || (isMulti ? [] : "")}

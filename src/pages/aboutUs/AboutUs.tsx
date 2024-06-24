@@ -3,13 +3,13 @@ import julfikarRizmic from "../../assets/julfikarRizmic.webp";
 
 export default function AboutUs() {
   return (
-    <div className="content-container max-w-7xl w-full mx-auto px-2 lg:px-4">
+    <div className="content-container mx-auto w-full max-w-7xl px-2 lg:px-4">
       <div>
-        <h1 className="text-4xl font-bold mt-36 mb-16 text-center">About Us</h1>
+        <h1 className="mb-16 mt-36 text-center text-4xl font-bold">About Us</h1>
         <div className="mx-auto flex flex-col gap-10">
           <div className="flex">
             <div className="">
-              <h1 className="text-3xl font-bold  mb-3">Our Purpose</h1>
+              <h1 className="mb-3 text-3xl font-bold">Our Purpose</h1>
               <p className="leading-relaxed">
                 We believe that style is a form of self-expression, and everyone
                 should have the opportunity to showcase their creativity and
@@ -22,7 +22,7 @@ export default function AboutUs() {
           </div>
           <div className="flex">
             <div>
-              <h1 className="text-3xl mt-4 font-bold  mb-3">How we started</h1>
+              <h1 className="mb-3 mt-4 text-3xl font-bold">How we started</h1>
               <p className="leading-relaxed">
                 Rizmic was born out of the shared passion of two friends who
                 wanted to revolutionize the way people approach fashion.
@@ -35,15 +35,15 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-10">
-        <h1 className="flex text-3xl font-bold  py-3 mb-3 justify-center">
+      <div className="mt-10 flex flex-col">
+        <h1 className="mb-3 flex justify-center py-3 text-3xl font-bold">
           The Masterminds:
         </h1>
-        <div className="flex flex-col md:flex-row justify-center gap-8 ">
+        <div className="flex flex-col justify-center gap-8 md:flex-row">
           <div className="flex flex-col items-center">
-            <div className="relative rounded-lg h-96 w-80 overflow-hidden">
+            <div className="relative h-96 w-80 overflow-hidden rounded-lg">
               <img src={anisulRizmic} alt="Anisul" />
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-slategrey text-sWhite text-sm shadow-md">
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-slategrey px-3 py-1 text-sm text-sWhite shadow-md">
                 Anisul H.
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function AboutUs() {
             </div>
             <div className="flex gap-2">
               <a
-                className="bg-blue-400 hover:bg-pink-400 hover:text-white transition-all rounded-full text-sWhite p-4"
+                className="rounded-full bg-blue-400 p-4 text-sWhite transition-all hover:bg-pink-400 hover:text-white"
                 href="https://instagram.com/uber.goose"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -71,7 +71,7 @@ export default function AboutUs() {
                 </svg>
               </a>
               <a
-                className="bg-cambridgeblue hover:bg-blue-500 transition-all rounded-full text-sWhite p-4"
+                className="rounded-full bg-cambridgeblue p-4 text-sWhite transition-all hover:bg-blue-500"
                 href="https://linkedin.com/in/anisulh"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -88,20 +88,20 @@ export default function AboutUs() {
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <div className="relative rounded-lg h-96 w-80 overflow-hidden">
+            <div className="relative h-96 w-80 overflow-hidden rounded-lg">
               <img src={julfikarRizmic} alt="Julfikar" />
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-slategrey text-sWhite text-sm shadow-md">
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-slategrey px-3 py-1 text-sm text-sWhite shadow-md">
                 Julfikar C.
               </div>
             </div>
-            <div className="mt-2  h-auto w-80 text-center">
+            <div className="mt-2 h-auto w-80 text-center">
               Julfikar, 21, is in his senior year of studying Computer Science
               at Hunter College. He will be joining as a Software Engineering
               Intern for Mastercard in Summer 2023.
             </div>
             <div className="flex gap-2">
               <a
-                className="bg-blue-400 hover:bg-pink-400 hover:text-white transition-all rounded-full text-sWhite p-4"
+                className="rounded-full bg-blue-400 p-4 text-sWhite transition-all hover:bg-pink-400 hover:text-white"
                 href="https://instagram.com/julefikar"
                 target="_blank"
                 rel="noreferrer noopener"
@@ -117,7 +117,7 @@ export default function AboutUs() {
                 </svg>
               </a>
               <a
-                className="bg-cambridgeblue hover:bg-blue-500 transition-all rounded-full text-sWhite p-4"
+                className="rounded-full bg-cambridgeblue p-4 text-sWhite transition-all hover:bg-blue-500"
                 href="https://linkedin.com/in/julfikarc"
                 target="_blank"
                 rel="noreferrer noopener"

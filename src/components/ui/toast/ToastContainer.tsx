@@ -5,7 +5,7 @@ const ToastContainer = () => {
   const { toasts, removeToast } = useToast();
 
   return (
-    <div className="fixed top-0 right-0 p-4 space-y-2 z-50">
+    <div className="fixed right-0 top-0 z-50 space-y-2 p-4">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

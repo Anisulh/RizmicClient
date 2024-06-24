@@ -11,19 +11,16 @@ export default function InfoPopover({
 }) {
   const [isShowing, setIsShowing] = useState(false);
   return (
-    <Popover className="relative ">
+    <Popover className="relative">
       {({ open }) => (
         <>
           <Popover.Button
-            className={`
-                ${open ? "" : "text-opacity-90"}
-                   hover:text-opacity-100 focus:outline-none rounded-full`}
+            className={` ${open ? "" : "text-opacity-90"} rounded-full hover:text-opacity-100 focus:outline-none`}
           >
             <QuestionMarkCircleIcon
               onMouseEnter={() => setIsShowing(true)}
               onMouseLeave={() => setIsShowing(false)}
-              className={`${open ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-ultramarineBlue transition duration-150 ease-in-out hover:text-opacity-100`}
+              className={`${open ? "" : "text-opacity-70"} ml-2 h-5 w-5 text-ultramarineBlue transition duration-150 ease-in-out hover:text-opacity-100`}
               aria-hidden="true"
             />
           </Popover.Button>
@@ -37,10 +34,10 @@ export default function InfoPopover({
             leaveTo="opacity-0 translate-y-1"
             show={isShowing}
           >
-            <Popover.Panel className="absolute left-full  z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-              <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+            <Popover.Panel className="absolute left-full z-30 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
+              <div className="overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="p-4">
-                  <div className=" px-2 py-2 ">
+                  <div className="px-2 py-2">
                     <h6 className="text-sm font-medium text-gray-900">
                       {title}:
                     </h6>

@@ -5,23 +5,23 @@ interface MessageProps {
 }
 
 const ProductDisplay = () => (
-  <section className="flex justify-center items-center min-h-screen bg-white">
+  <section className="flex min-h-screen items-center justify-center bg-white">
     <div className="container mx-auto">
       <div className="mx-auto">
-        <h2 className="text-xl sm:text-center font-bold tracking-tight text-raisinblack sm:text-2xl">
+        <h2 className="text-xl font-bold tracking-tight text-raisinblack sm:text-center sm:text-2xl">
           Simple no-tricks pricing
         </h2>
         <p className="mt-1 text-lg leading-8 text-slategrey">
           We believe in being completely transparent with our users so we
           provided straight forward pricing plan with no hidden fees.
         </p>
-        <p className="pb-3 mt-1 text-lg leading-8 text-slategrey">
+        <p className="mt-1 pb-3 text-lg leading-8 text-slategrey">
           Rest assured that your purchase is secure and protected through
           Stripe&apos;s robust encryption methods, ensuring that your payment
           information is safely transmitted and kept confidential.
         </p>
       </div>
-      <table className="border border-ourGrey divide-y divide-ourGrey w-full">
+      <table className="w-full divide-y divide-ourGrey border border-ourGrey">
         <thead>
           <tr>
             <th className="p-3">Tier</th>
@@ -35,7 +35,7 @@ const ProductDisplay = () => (
             <td className="p-3">Basic Tier</td>
             <td className="p-3">Free</td>
             <td className="p-3">
-              <ul className="list-disc list-inside">
+              <ul className="list-inside list-disc">
                 <li>Access To Wardrobe Manager</li>
                 <li>3 Outfit Generations A Month</li>
                 <li>Ads</li>
@@ -50,7 +50,7 @@ const ProductDisplay = () => (
               <p className="text-xs text-raisinblack">Billed monthly</p>
             </td>
             <td className="p-3">
-              <ul className="list-disc list-inside">
+              <ul className="list-inside list-disc">
                 <li>Access To Wardrobe Manager</li>
                 <li>Unlimited Outfit Generations</li>
                 <li>Advanced Style Insights</li>
@@ -62,7 +62,7 @@ const ProductDisplay = () => (
               <form action="/create-checkout-session" method="POST">
                 <button
                   type="submit"
-                  className="bg-ultramarineBlue hover:bg-blue-600 text-sWhite font-semibold py-2 px-4 rounded"
+                  className="rounded bg-ultramarineBlue px-4 py-2 font-semibold text-sWhite hover:bg-blue-600"
                 >
                   <a href="https://buy.stripe.com/28oaGsdb3ajHapGdQQ">
                     Checkout
@@ -94,7 +94,7 @@ const ProductDisplay = () => (
               <form action="/create-checkout-session" method="POST">
                 <button
                   type="submit"
-                  className="bg-ultramarineBlue hover:bg-blue-600 text-sWhite font-semibold py-2 px-4 rounded"
+                  className="rounded bg-ultramarineBlue px-4 py-2 font-semibold text-sWhite hover:bg-blue-600"
                 >
                   <a href="https://buy.stripe.com/00gg0M2wp77v7duaEF">
                     Checkout
@@ -110,7 +110,7 @@ const ProductDisplay = () => (
 );
 
 const Message: React.FC<MessageProps> = ({ message }) => (
-  <section className="flex justify-center items-center min-h-screen">
+  <section className="flex min-h-screen items-center justify-center">
     <p>{message}</p>
   </section>
 );

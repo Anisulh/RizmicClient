@@ -89,18 +89,18 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center min-h-screen overflow-auto">
-      <div className="z-10 flex items-center justify-center min-h-screen h-max w-full lg:block">
-        <div className="flex items-center justify-center h-screen md:h-fit md:rounded-3xl lg:min-h-screen lg:h-max lg:w-[42%] z-10 py-10 px-8 lg:p-0">
+    <div className="flex min-h-screen items-center overflow-auto">
+      <div className="z-10 flex h-max min-h-screen w-full items-center justify-center lg:block">
+        <div className="z-10 flex h-screen items-center justify-center px-8 py-10 md:h-fit md:rounded-3xl lg:h-max lg:min-h-screen lg:w-[42%] lg:p-0">
           <div>
-            <h1 className="font-bold text-4xl lg:text-6xl tracking-wide">
+            <h1 className="text-4xl font-bold tracking-wide lg:text-6xl">
               Welcome back!
             </h1>
             <p className="text-slategrey lg:text-lg">
               Login to find a fresh new fit or manage your wardrobe
             </p>
             <form
-              className="lg:px-10 py-2 lg:py-5"
+              className="py-2 lg:px-10 lg:py-5"
               onSubmit={handleSubmit(onSubmit)}
             >
               <Input<LoginSchemaType>
@@ -119,10 +119,10 @@ function Login() {
                 control={control}
               />
 
-              <div className="flex justify-end -mt-2">
+              <div className="-mt-2 flex justify-end">
                 <Link
                   to={"/forgot-password"}
-                  className="text-sm text-ultramarineBlue hover:bg-inherit p-0"
+                  className="p-0 text-sm text-ultramarineBlue hover:bg-inherit"
                 >
                   Forgot Password?
                 </Link>
@@ -138,24 +138,24 @@ function Login() {
                 Submit
               </Button>
             </form>
-            <div className="flex items-center justify-center gap-1 py-4 ">
+            <div className="flex items-center justify-center gap-1 py-4">
               <p>Already have an account?</p>
               <Link
                 to="/register"
-                className="font-medium text-ultramarineBlue p-1"
+                className="p-1 font-medium text-ultramarineBlue"
               >
                 Register
               </Link>
             </div>
-            <p className="text-center  my-4">Or, login with...</p>
-            <div className="mt-6 w-fit mx-auto">
+            <p className="my-4 text-center">Or, login with...</p>
+            <div className="mx-auto mt-6 w-fit">
               <div ref={googleButton}></div>
             </div>
           </div>
         </div>
       </div>
       <img
-        className="hidden md:block object-cover w-full lg:w-[60%] h-screen absolute right-0 rounded-2xl"
+        className="absolute right-0 hidden h-screen w-full rounded-2xl object-cover md:block lg:w-[60%]"
         src={loginImage}
         alt="Room with clothes near window"
       />

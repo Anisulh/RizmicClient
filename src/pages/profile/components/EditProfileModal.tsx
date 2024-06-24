@@ -101,7 +101,7 @@ export default function EditProfileModal({
           control={control}
           formatInput={formatPhoneNumber}
         />
-        <div className="flex items-center justify-center mt-10">
+        <div className="mt-10 flex items-center justify-center">
           <Button type="submit" isLoading={isPending}>
             Save Changes
           </Button>

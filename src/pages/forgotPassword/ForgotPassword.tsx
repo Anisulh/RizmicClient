@@ -52,11 +52,11 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen max-w-lg w-full mx-auto flex items-center">
+    <div className="mx-auto flex min-h-screen w-full max-w-lg items-center">
       <div className="w-full">
-        <h1 className="font-bold text-4xl">Forgot Password</h1>
+        <h1 className="text-4xl font-bold">Forgot Password</h1>
         <p>Enter your email to reset your password</p>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-10 ">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
           <Input<ForgotPasswordSchemaType>
             label="Email"
             type="email"
@@ -64,7 +64,7 @@ function ForgotPassword() {
             placeholder="Email"
             control={control}
           />
-          <div className="text-center mt-6">
+          <div className="mt-6 text-center">
             <Button type="submit" isLoading={isPending}>
               Submit
             </Button>

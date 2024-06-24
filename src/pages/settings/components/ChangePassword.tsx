@@ -1,7 +1,5 @@
-import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
-import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
 import { useMutation } from "@tanstack/react-query";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { changePasswordAPI } from "../../../api/userAPI";
 import { useToast } from "../../../contexts/ToastContext";
 import { z } from "zod";

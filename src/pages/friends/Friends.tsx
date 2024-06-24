@@ -69,26 +69,26 @@ export default function Friends() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto content-container px-4 space-y-10">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl md:text-4xl font-bold">Friends</h1>
+    <div className="content-container mx-auto max-w-7xl space-y-10 px-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold md:text-4xl">Friends</h1>
         <Button variant="primary" onClick={() => setAddFriendModalOpen(true)}>
           Add Friend
         </Button>
       </div>
-      <h2 className="font-medium text-xl md:text-2xl">Your Friends</h2>
+      <h2 className="text-xl font-medium md:text-2xl">Your Friends</h2>
       <div>
         {friends?.map((friend) => (
           <div
             key={friend._id}
-            className="flex justify-between items-center p-4 bg-slate-600 rounded-xl"
+            className="flex items-center justify-between rounded-xl bg-slate-600 p-4"
           >
             <div className="flex items-center gap-2">
               {friend.profilePicture && (
                 <img
                   src={friend.profilePicture}
                   alt={friend.firstName}
-                  className="w-8 h-8 rounded-full"
+                  className="size-8 rounded-full"
                 />
               )}
               <div>
@@ -108,19 +108,19 @@ export default function Friends() {
           </div>
         ))}
       </div>
-      <h2 className="font-medium text-xl md:text-2xl">Friend Requests</h2>
+      <h2 className="text-xl font-medium md:text-2xl">Friend Requests</h2>
       <div>
         {friendRequests?.map(({ requester }) => (
           <div
             key={requester._id}
-            className="flex justify-between items-center p-4 bg-slate-600 rounded-xl"
+            className="flex items-center justify-between rounded-xl bg-slate-600 p-4"
           >
             <div className="flex items-center gap-2">
               {requester.profilePicture && (
                 <img
                   src={requester.profilePicture}
                   alt={requester.firstName}
-                  className="w-8 h-8 rounded-full"
+                  className="size-8 rounded-full"
                 />
               )}
               <div>
@@ -134,13 +134,13 @@ export default function Friends() {
                 variant="primary"
                 onClick={() => handleAcceptRequest(requester._id)}
               >
-                <CheckIcon className="h-5 w-5" />
+                <CheckIcon className="size-5" />
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleUnfriend(requester._id)}
               >
-                <XMarkIcon className="h-5 w-5" />
+                <XMarkIcon className="size-5" />
               </Button>
             </div>
           </div>

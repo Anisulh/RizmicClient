@@ -42,7 +42,7 @@ export default function DialogModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg transform  rounded-2xl bg-white dark:bg-slate-700 p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-lg transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-700">
                 <div className="flex justify-between">
                   <Dialog.Title
                     as="h3"
@@ -52,7 +52,7 @@ export default function DialogModal({
                   </Dialog.Title>
                   <Button variant="ghost" onClick={() => setOpen(false)}>
                     <XMarkIcon
-                      className="block h-6 w-6 text-white hover:text-red-500 transition-all"
+                      className="block h-6 w-6 text-white transition-all hover:text-red-500"
                       aria-hidden="true"
                     />
                   </Button>

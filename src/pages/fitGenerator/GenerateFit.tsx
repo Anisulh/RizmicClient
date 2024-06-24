@@ -89,21 +89,21 @@ function GenerateFit() {
 
   return (
     <div className="mb-10">
-      <div className="flex max-w-7xl mt-24 relative w-full md:mx-auto flex-col md:flex-row px-2">
-        <div className="relative rounded md:w-2/6 ">
-          <h1 className=" w-full absolute text-center font-medium text-lg">
+      <div className="relative mt-24 flex w-full max-w-7xl flex-col px-2 md:mx-auto md:flex-row">
+        <div className="relative rounded md:w-2/6">
+          <h1 className="absolute w-full text-center text-lg font-medium">
             Our Recommended Generation
           </h1>
-          <div className="flex gap-3 flex-col justify-center items-center mt-20">
+          <div className="mt-20 flex flex-col items-center justify-center gap-3">
             <button
               onClick={() => {
                 setShowModal(true);
                 setModalData(head);
               }}
               type="button"
-              className="flex border-gray-300 border-2 transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
+              className="flex h-20 w-24 items-center justify-center rounded-xl border-2 border-gray-300 transition-all hover:bg-cambridgeblue md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36"
             >
-              <PlusIcon className="h-12 w-12 rounded-full p-3" />
+              <PlusIcon className="size-12 rounded-full p-3" />
             </button>
             <button
               onClick={() => {
@@ -111,9 +111,9 @@ function GenerateFit() {
                 setModalData(top);
               }}
               type="button"
-              className="flex border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56 rounded-xl"
+              className="flex h-40 w-44 items-center justify-center rounded-xl border-gray-300 bg-white transition-all hover:bg-cambridgeblue md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56"
             >
-              <PlusIcon className="h-12 w-12 rounded-full p-3" />
+              <PlusIcon className="size-12 rounded-full p-3" />
             </button>
             <button
               onClick={() => {
@@ -121,9 +121,9 @@ function GenerateFit() {
                 setModalData(bottom);
               }}
               type="button"
-              className="flex border-gray-300 bg-white transition-all hover:bg-cambridgeblue justify-center items-center h-40 w-44 md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56  rounded-xl"
+              className="flex h-40 w-44 items-center justify-center rounded-xl border-gray-300 bg-white transition-all hover:bg-cambridgeblue md:h-44 md:w-48 lg:h-48 lg:w-52 xl:h-52 xl:w-56"
             >
-              <PlusIcon className="h-12 w-12 rounded-full p-3" />
+              <PlusIcon className="size-12 rounded-full p-3" />
             </button>
             <button
               onClick={() => {
@@ -131,19 +131,19 @@ function GenerateFit() {
                 setModalData(shoes);
               }}
               type="button"
-              className="flex border-gray-300 border-2 transition-all hover:bg-cambridgeblue justify-center items-center h-20 w-24 md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36 rounded-xl"
+              className="flex h-20 w-24 items-center justify-center rounded-xl border-2 border-gray-300 transition-all hover:bg-cambridgeblue md:h-24 md:w-28 lg:h-28 lg:w-32 xl:h-32 xl:w-36"
             >
-              <PlusIcon className="h-12 w-12 rounded-full p-3" />
+              <PlusIcon className="size-12 rounded-full p-3" />
             </button>
           </div>
         </div>
-        <div className="flex flex-col grow rounded">
+        <div className="flex grow flex-col rounded">
           <div className="text-sm">
             <h1 className="w-full text-lg font-medium">Choose a vibe:</h1>
-            <div className="flex justify-center gap-2  md:gap-4 mt-8">
+            <div className="mt-8 flex justify-center gap-2 md:gap-4">
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Neutral
               </button>
@@ -151,14 +151,14 @@ function GenerateFit() {
                 type="button"
                 className={`${
                   style === "monochrome" && "bg-cambridgeblue"
-                }rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4`}
+                }rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue`}
                 onClick={() => setStyle("monochrome")}
               >
                 Monochrome
               </button>
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Earth-tones
               </button>
@@ -166,7 +166,7 @@ function GenerateFit() {
                 type="button"
                 className={`${
                   style === "complimentary" && "bg-cambridgeblue"
-                }rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4`}
+                }rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue`}
                 onClick={() => setStyle("complimentary")}
               >
                 Complimentary
@@ -174,54 +174,54 @@ function GenerateFit() {
             </div>
           </div>
           <div className="text-sm">
-            <h1 className="w-full  text-lg font-medium mt-10">Fit vibes:</h1>
-            <div className="flex justify-center gap-4  md:gap-4 mt-8">
+            <h1 className="mt-10 w-full text-lg font-medium">Fit vibes:</h1>
+            <div className="mt-8 flex justify-center gap-4 md:gap-4">
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue  py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Cozy
               </button>
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Warm
               </button>
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Cool
               </button>
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Professional
               </button>
               <button
                 type="button"
-                className="rounded-md border-2 transition-all hover:bg-cambridgeblue py-2 px-4"
+                className="rounded-md border-2 px-4 py-2 transition-all hover:bg-cambridgeblue"
               >
                 Relaxed
               </button>
             </div>
           </div>
-          <div className="flex justify-center items-center py-8">
+          <div className="flex items-center justify-center py-8">
             <button
               type="button"
-              className="flex justify-center items-center rounded-md bg-ultramarineBlue transition-all hover:bg-blue-700 text-white py-2 px-4"
+              className="flex items-center justify-center rounded-md bg-ultramarineBlue px-4 py-2 text-white transition-all hover:bg-blue-700"
               onClick={() => style && mutate({ body: { style } })}
             >
               Generate
             </button>
           </div>
-          <div className="flex items-center justify-center mb-20 md:mb-0 p-4">
-            <div className="flex flex-col justify-center border-2 p-4 rounded-lg">
-              <h1 className="text-lg font-medium ">How does it work?</h1>
+          <div className="mb-20 flex items-center justify-center p-4 md:mb-0">
+            <div className="flex flex-col justify-center rounded-lg border-2 p-4">
+              <h1 className="text-lg font-medium">How does it work?</h1>
 
-              <ol className="mt-4 flex flex-col gap-2 px-10 list-decimal">
+              <ol className="mt-4 flex list-decimal flex-col gap-2 px-10">
                 <li>
                   You choose which part of the body you wish to generate a
                   outfit for. By default the upper body and lower body are
@@ -248,7 +248,7 @@ function GenerateFit() {
         </div>
       </div>{" "}
       {mutationIsLoading && <Spinner />}
-      <div className="flex gap-10 items-center justify-center mt-10">
+      <div className="mt-10 flex items-center justify-center gap-10">
         {generatedFits.map((fit) => {
           return fit.map((item: IExistingClothesData) => {
             return (

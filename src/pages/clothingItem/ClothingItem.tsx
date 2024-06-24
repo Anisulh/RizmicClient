@@ -12,9 +12,9 @@ const ClothingItem = () => {
   }
 
   return (
-    <div className="content-container max-w-7xl w-full my-10 relative mx-auto">
+    <div className="content-container relative mx-auto my-10 w-full max-w-7xl">
       {!item ? (
-        <div className="min-h-screen flex item-center justify-center">
+        <div className="item-center flex min-h-screen justify-center">
           <p className="text-xl">
             Looks like we couldn&apos;t find the item you&apos;re looking for $
             {":("}
@@ -28,64 +28,64 @@ const ClothingItem = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-auto rounded-lg"
+                  className="h-auto w-full rounded-lg"
                 />
               ) : (
-                <div className=" w-full h-64 md:h-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
+                <div className="h-64 w-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue md:h-full"></div>
               )}
             </div>
             <div className="w-full md:w-1/2 md:pl-6">
-              <h2 className="text-2xl font-bold mb-4">{item.name}</h2>
-              <p className="text-gray-300 mb-2">
+              <h2 className="mb-4 text-2xl font-bold">{item.name}</h2>
+              <p className="mb-2 text-gray-300">
                 <span className="font-semibold">Category:</span> {item.category}
               </p>
-              <p className="text-gray-300 mb-2">
+              <p className="mb-2 text-gray-300">
                 <span className="font-semibold">Size:</span> {item.size}
               </p>
-              <p className="text-gray-300 mb-2">
+              <p className="mb-2 text-gray-300">
                 <span className="font-semibold">Color:</span> {item.color}
               </p>
               {item.material && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Material:</span>{" "}
                   {item.material}
                 </p>
               )}
               {item.brand && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Brand:</span> {item.brand}
                 </p>
               )}
-              <p className="text-gray-300 mb-2">
+              <p className="mb-2 text-gray-300">
                 <span className="font-semibold">Condition:</span>{" "}
                 {item.condition}
               </p>
               {item.purchaseDate && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Purchase Date:</span>{" "}
                   {format(new Date(item.purchaseDate), "MMMM dd, yyyy")}
                 </p>
               )}
               {item.price && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Price:</span> $
                   {item.price.toFixed(2)}
                 </p>
               )}
               {item.description && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Description:</span>{" "}
                   {item.description}
                 </p>
               )}
               {item.careInstructions && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Care Instructions:</span>{" "}
                   {item.careInstructions}
                 </p>
               )}
               {item.tags && item.tags.length > 0 && (
-                <p className="text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300">
                   <span className="font-semibold">Tags:</span>{" "}
                   {item.tags.join(", ")}
                 </p>

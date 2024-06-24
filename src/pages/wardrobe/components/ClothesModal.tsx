@@ -242,13 +242,11 @@ export default function ClothesModal({
                 setPreviewColor(value);
               }}
             />
-            <Popover className=" relative ">
+            <Popover className="relative">
               {({ open }) => (
                 <>
                   <Popover.Button
-                    className={`
-                ${open ? "" : "text-opacity-90"}
-                   hover:text-opacity-100 focus:outline-none h-8 w-8 my-3 shadow-sm border border-gray-300 focus:border-ultramarineBlue focus:ring-1 focus:ring-ultra  rounded-md hover:border-ultramarineBlue`}
+                    className={` ${open ? "" : "text-opacity-90"} focus:ring-ultra my-3 size-8 rounded-md border border-gray-300 shadow-sm hover:border-ultramarineBlue hover:text-opacity-100 focus:border-ultramarineBlue focus:outline-none focus:ring-1`}
                     style={{ backgroundColor: previewColor || "white" }}
                   ></Popover.Button>
                   <Transition
@@ -260,8 +258,8 @@ export default function ClothesModal({
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute  bg-white z-30 mt-3 rounded-md max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl">
-                      <div className="bg-white p-5 rounded-md shadow-lg">
+                    <Popover.Panel className="absolute z-30 mt-3 max-w-sm -translate-x-1/2 transform rounded-md bg-white px-4 sm:px-0 lg:max-w-3xl">
+                      <div className="rounded-md bg-white p-5 shadow-lg">
                         <ColorPicker
                           color={color}
                           onChange={(data: string): void => {
@@ -285,7 +283,7 @@ export default function ClothesModal({
           >
             Advanced
             <ChevronRightIcon
-              className={cn("w-5 h-5", showAdvanced ? "rotate-90" : "rotate-0")}
+              className={cn("size-5", showAdvanced ? "rotate-90" : "rotate-0")}
             />
           </button>
           <Transition
@@ -370,7 +368,7 @@ export default function ClothesModal({
             <div>
               <div className="my-2 w-full">
                 <label
-                  className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+                  className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
                   htmlFor="image"
                 >
                   Upload Image
@@ -380,11 +378,11 @@ export default function ClothesModal({
                   type="file"
                   {...register("image")}
                   onChange={handleFileChange}
-                  className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+                  className="block w-full rounded-lg border-gray-300 text-sm text-raisinblack placeholder-gray-400 shadow-sm focus:border-raisinblack focus:ring-raisinblack md:text-base dark:border-gray-600 dark:placeholder-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500"
                   accept="image/*"
                 />
                 {errors.image && (
-                  <p className="text-red-500 text-xs mt-1">
+                  <p className="mt-1 text-xs text-red-500">
                     {errors.image.message as string}
                   </p>
                 )}
@@ -406,7 +404,7 @@ export default function ClothesModal({
                         setImagePreview(null);
                       }}
                     >
-                      <XMarkIcon className="h-5 w-5 " />
+                      <XMarkIcon className="size-5" />
                     </button>
                   </div>
                 </div>
@@ -419,7 +417,7 @@ export default function ClothesModal({
                 label="Favorite"
                 name="favorited"
                 control={control}
-                className="flex items-center w-5 gap-2"
+                className="flex w-5 items-center gap-2"
                 required={false}
               />
             </div>

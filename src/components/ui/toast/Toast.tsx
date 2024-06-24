@@ -56,7 +56,7 @@ export default function Toast({
         aria-live="assertive"
       >
         <button onClick={() => removeToast(id)} className="float-right">
-          <XMarkIcon className="h-6 w-6" />
+          <XMarkIcon className="size-6" />
         </button>
         <strong>{title}</strong>
         <span className="block">{description}</span>

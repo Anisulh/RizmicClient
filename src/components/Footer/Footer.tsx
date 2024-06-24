@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="py-6">
-      <div className="px-4 sm:px-8 md:px-16 lg:px-32 mb-4 text-sm">
+      <div className="mb-4 px-4 text-sm sm:px-8 md:px-16 lg:px-32">
         <h3 className="text-lg font-semibold">Site Links</h3>
-        <div className="grid grid-cols-2 gap-2 max-w-lg mx-auto">
+        <div className="mx-auto grid max-w-lg grid-cols-2 gap-2">
           <Link to="/about-us" className="text-sm">
             About Us
           </Link>
@@ -20,7 +20,7 @@ function Footer() {
           </Link>
         </div>
       </div>
-      <p className="container mx-auto px-4 text-center my-4 text-sm">
+      <p className="container mx-auto my-4 px-4 text-center text-sm">
         &copy; {new Date().getFullYear()} RizmicFits. All rights reserved.
       </p>
     </footer>

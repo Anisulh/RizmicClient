@@ -38,7 +38,7 @@ const TagsInput: React.FC<TagsInputProps> = ({
   return (
     <div className="my-2 w-full">
       <label
-        className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+        className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
         htmlFor="tags"
       >
         Tags:
@@ -50,7 +50,7 @@ const TagsInput: React.FC<TagsInputProps> = ({
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}
         placeholder={placeholder}
-        className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+        className="block w-full rounded-lg border-gray-300 text-sm text-raisinblack placeholder-gray-400 shadow-sm focus:border-raisinblack focus:ring-raisinblack md:text-base dark:border-gray-600 dark:placeholder-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500"
       />
       <ul className="px-2">
         {tags.map((tag, index) => (
@@ -61,7 +61,7 @@ const TagsInput: React.FC<TagsInputProps> = ({
               onClick={() => removeTag(index)}
               className="hover:text-red-500"
             >
-              <XMarkIcon className="h-4 w-4" />
+              <XMarkIcon className="size-4" />
             </button>
           </li>
         ))}

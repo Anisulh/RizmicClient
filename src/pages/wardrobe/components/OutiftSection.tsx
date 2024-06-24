@@ -36,7 +36,7 @@ function OutfitSection({
           return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
             <div key={key}>
               <button
-                className="flex justify-between items-center mb-6 w-full hover:bg-gray-600 p-2 transition-colors rounded-lg"
+                className="mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
                 onClick={() =>
                   setShow((prevState) => ({
                     ...prevState,
@@ -44,17 +44,17 @@ function OutfitSection({
                   }))
                 }
               >
-                <h2 className="font-medium text-xl">{splitCamelCase(key)}</h2>
+                <h2 className="text-xl font-medium">{splitCamelCase(key)}</h2>
                 <div>
                   {show[key as keyof IOutfitsShow] ? (
-                    <ChevronLeftIcon className="h-6 w-6" />
+                    <ChevronLeftIcon className="size-6" />
                   ) : (
-                    <ChevronDownIcon className="h-6 w-6" />
+                    <ChevronDownIcon className="size-6" />
                   )}
                 </div>
               </button>
               {show[key as keyof IOutfitsShow] && (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center">
+                <div className="grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-4">
                   {(outfits[key as keyof IOutfitsSections] as []).map(
                     (item: IExistingOutfitData) => {
                       return (

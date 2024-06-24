@@ -212,7 +212,7 @@ function OutfitsModal({
 
           <div className="mb-2">
             <label
-              className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+              className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
               htmlFor="clothes"
             >
               Clothes <span className="text-red-500">*</span>
@@ -230,7 +230,7 @@ function OutfitsModal({
                           : "Please choose the pieces to add"}
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                           <ChevronUpDownIcon
-                            className="h-5 w-5 text-gray-400"
+                            className="size-5 text-gray-400"
                             aria-hidden="true"
                           />
                         </span>
@@ -267,7 +267,7 @@ function OutfitsModal({
                                   leaveFrom="opacity-100 scale-100"
                                   leaveTo="opacity-0 scale-95"
                                 >
-                                  <Dialog.Panel className="min-w-fit max-w-md w-full transform bg-white dark:bg-slate-700 rounded-2xl p-6 text-left align-middle shadow-xl transition-all overflow-auto">
+                                  <Dialog.Panel className="w-full min-w-fit max-w-md transform overflow-auto rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-700">
                                     <Dialog.Title
                                       as="h3"
                                       className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
@@ -276,16 +276,16 @@ function OutfitsModal({
                                     </Dialog.Title>
 
                                     <Listbox.Options>
-                                      <div className="mt-2 grid md:grid-cols-3 gap-x-10 gap-y-2">
+                                      <div className="mt-2 grid gap-x-10 gap-y-2 md:grid-cols-3">
                                         {clothingItems.length > 0 &&
                                           clothingItems.map((item) => (
                                             <Listbox.Option
                                               key={item._id}
                                               className={({ active }) =>
-                                                `relative select-none py-2 pr-8 pl-4 rounded-lg ${
+                                                `relative select-none rounded-lg py-2 pl-4 pr-8 ${
                                                   active
                                                     ? "bg-green-100 text-green-900"
-                                                    : "text-gray-900 "
+                                                    : "text-gray-900"
                                                 }`
                                               }
                                               value={item._id}
@@ -297,9 +297,9 @@ function OutfitsModal({
                                                     refetch={refetch}
                                                   />
                                                   {selected && (
-                                                    <span className="absolute top-1 right-1 flex items-center text-blue-600">
+                                                    <span className="absolute right-1 top-1 flex items-center text-blue-600">
                                                       <CheckIcon
-                                                        className="h-5 w-5"
+                                                        className="size-5"
                                                         aria-hidden="true"
                                                       />
                                                     </span>
@@ -310,10 +310,10 @@ function OutfitsModal({
                                           ))}
                                       </div>
                                     </Listbox.Options>
-                                    <div className="flex justify-end mt-4">
+                                    <div className="mt-4 flex justify-end">
                                       <button
                                         type="button"
-                                        className="rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
+                                        className="rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-sm font-medium text-white transition-all hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         onClick={() => !open}
                                       >
                                         Done
@@ -340,7 +340,7 @@ function OutfitsModal({
           >
             Advanced
             <ChevronRightIcon
-              className={cn("w-5 h-5", showAdvanced ? "rotate-90" : "rotate-0")}
+              className={cn("size-5", showAdvanced ? "rotate-90" : "rotate-0")}
             />
           </button>
           <Transition
@@ -389,7 +389,7 @@ function OutfitsModal({
             <div>
               <div className="my-2 w-full">
                 <label
-                  className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+                  className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
                   htmlFor="image"
                 >
                   Upload Image
@@ -399,11 +399,11 @@ function OutfitsModal({
                   type="file"
                   {...register("image")}
                   onChange={handleFileChange}
-                  className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+                  className="block w-full rounded-lg border-gray-300 text-sm text-raisinblack placeholder-gray-400 shadow-sm focus:border-raisinblack focus:ring-raisinblack md:text-base dark:border-gray-600 dark:placeholder-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500"
                   accept="image/*"
                 />
                 {errors.image && (
-                  <p className="text-red-500 text-xs mt-1">
+                  <p className="mt-1 text-xs text-red-500">
                     {errors.image.message as string}
                   </p>
                 )}
@@ -425,7 +425,7 @@ function OutfitsModal({
                         setImagePreview(null);
                       }}
                     >
-                      <XMarkIcon className="h-5 w-5 " />
+                      <XMarkIcon className="size-5" />
                     </button>
                   </div>
                 </div>
@@ -438,7 +438,7 @@ function OutfitsModal({
                 label="Favorite"
                 name="favorited"
                 control={control}
-                className="flex items-center w-5 gap-2"
+                className="flex w-5 items-center gap-2"
                 required={false}
               />
             </div>

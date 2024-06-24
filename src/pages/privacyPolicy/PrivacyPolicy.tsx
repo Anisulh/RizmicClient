@@ -3,12 +3,12 @@ import React from "react";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="content-container max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-4">
+    <div className="content-container mx-auto max-w-4xl px-4 py-8">
+      <h1 className="mb-4 text-center text-3xl font-bold">
         Privacy Policy for Rizmic Fits
       </h1>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">Introduction</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">Introduction</h2>
       <p>
         Welcome to Rizmic Fits, the web application that allows you to add,
         manage, and organize your clothing and outfits. We are committed to
@@ -17,7 +17,7 @@ const PrivacyPolicy: React.FC = () => {
         information.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Information Collection
       </h2>
       <ul className="list-disc pl-5">
@@ -37,7 +37,7 @@ const PrivacyPolicy: React.FC = () => {
         </li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Purpose of Data Collection
       </h2>
       <ul className="list-disc pl-5">
@@ -56,7 +56,7 @@ const PrivacyPolicy: React.FC = () => {
         </li>
       </ul>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Data Sharing and Disclosure
       </h2>
       <ul className="list-disc pl-5">
@@ -71,7 +71,7 @@ const PrivacyPolicy: React.FC = () => {
           fraud or cyber crime or to protect the app and its users.
         </li>
       </ul>
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Subscription Services
       </h2>
       <p>
@@ -80,7 +80,7 @@ const PrivacyPolicy: React.FC = () => {
         premium features and capabilities within our application.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">Payment Information</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">Payment Information</h2>
       <p>
         All payment transactions are processed through our third-party payment
         processor, Stripe. We collect necessary payment information, such as
@@ -90,7 +90,7 @@ const PrivacyPolicy: React.FC = () => {
         their own privacy policy.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Data Security for Payment Information
       </h2>
       <p>
@@ -100,7 +100,7 @@ const PrivacyPolicy: React.FC = () => {
         transferring your data.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Subscription Management
       </h2>
       <p>
@@ -110,7 +110,7 @@ const PrivacyPolicy: React.FC = () => {
         your account settings.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Changes and Cancellation
       </h2>
       <p>
@@ -120,21 +120,21 @@ const PrivacyPolicy: React.FC = () => {
         current billing cycle.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">Data Security</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">Data Security</h2>
       <p>
         We implement robust security measures to protect your data from
         unauthorized access, alteration, and destruction. These include
         encryption, firewalls, and secure server facilities.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">User Rights</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">User Rights</h2>
       <p>
         You have the right to access, correct, or delete your personal
         information stored with us. You can manage your information through your
         account settings or by contacting our support team.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Cookies and Tracking Technologies
       </h2>
       <p>
@@ -142,7 +142,7 @@ const PrivacyPolicy: React.FC = () => {
         interactions with our app and to store certain information.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         International Data Transfers
       </h2>
       <p>
@@ -152,7 +152,7 @@ const PrivacyPolicy: React.FC = () => {
         securely.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">
         Changes to This Policy
       </h2>
       <p>
@@ -161,7 +161,7 @@ const PrivacyPolicy: React.FC = () => {
         or through a notice on our website.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-2">Contact Us</h2>
+      <h2 className="mb-2 mt-6 text-2xl font-semibold">Contact Us</h2>
       <p>
         If you have any questions about this privacy policy, please contact us
         at: rizmicfits@gmail.com.

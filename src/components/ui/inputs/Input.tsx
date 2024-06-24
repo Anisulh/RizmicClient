@@ -26,7 +26,7 @@ const Input = <T extends FieldValues>({
   return (
     <div className={cn("my-2 w-full", className)}>
       <label
-        className="text-sm md:text-base font-medium text-gray-700 dark:text-white flex gap-1"
+        className="flex gap-1 text-sm font-medium text-gray-700 md:text-base dark:text-white"
         htmlFor={name}
       >
         {label} {required && <span className="text-red-500">*</span>}
@@ -55,10 +55,10 @@ const Input = <T extends FieldValues>({
               onBlur={onBlur}
               ref={ref}
               id={name}
-              className="rounded-lg block w-full text-raisinblack border-gray-300 shadow-sm focus:ring-raisinblack focus:border-raisinblack text-sm md:text-base dark:border-gray-600 dark:focus:ring-gray-500 dark:focus:border-gray-500 placeholder-gray-400 dark:placeholder-gray-500"
+              className="block w-full rounded-lg border-gray-300 text-sm text-raisinblack placeholder-gray-400 shadow-sm focus:border-raisinblack focus:ring-raisinblack md:text-base dark:border-gray-600 dark:placeholder-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </>
         )}

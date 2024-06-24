@@ -116,18 +116,18 @@ export default function Wardrobe() {
   }
 
   return (
-    <div className="content-container max-w-7xl w-full my-10 relative mx-auto">
-      <h1 className="text-3xl md:text-4xl font-bold ml-4">Wardrobe</h1>
+    <div className="content-container relative mx-auto my-10 w-full max-w-7xl">
+      <h1 className="ml-4 text-3xl font-bold md:text-4xl">Wardrobe</h1>
       <div className="flex items-center justify-between px-4">
         <ul
-          className="flex items-center py-1 md:py-3 bg-slate-700 w-full justify-center rounded-xl px-4 my-4"
+          className="my-4 flex w-full items-center justify-center rounded-xl bg-slate-700 px-4 py-1 md:py-3"
           role="tablist"
         >
-          <li className=" text-center w-full">
+          <li className="w-full text-center">
             <button
               className={cn(
-                "text-xs md:text-sm font-bold uppercase py-2  block leading-normal w-full rounded-lg transition-all",
-                openTab === 1 && "text-cambridgeblue  bg-slate-800",
+                "block w-full rounded-lg py-2 text-xs font-bold uppercase leading-normal transition-all md:text-sm",
+                openTab === 1 && "bg-slate-800 text-cambridgeblue",
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -139,12 +139,12 @@ export default function Wardrobe() {
               Clothes
             </button>
           </li>
-          <p className="text-gray-400 px-4">|</p>
-          <li className="text-center w-full">
+          <p className="px-4 text-gray-400">|</p>
+          <li className="w-full text-center">
             <button
               className={cn(
-                "text-xs md:text-sm font-bold uppercase py-2 block leading-normal w-full rounded-lg transition-all",
-                openTab === 2 && "text-cambridgeblue  bg-slate-800",
+                "block w-full rounded-lg py-2 text-xs font-bold uppercase leading-normal transition-all md:text-sm",
+                openTab === 2 && "bg-slate-800 text-cambridgeblue",
               )}
               onClick={(e) => {
                 e.preventDefault();
@@ -161,7 +161,7 @@ export default function Wardrobe() {
         <Button
           variant="textWithIcon"
           onClick={() => setModalOpen(true)}
-          className="px-4 py-3.5 hover:bg-cambridgeblue fixed bottom-28 right-8 md:right-32 rounded-full bg-ultramarineBlue border-none transition-colors"
+          className="fixed bottom-28 right-8 rounded-full border-none bg-ultramarineBlue px-4 py-3.5 transition-colors hover:bg-cambridgeblue md:right-32"
         >
           <PlusIcon className="h-7 w-6" />
         </Button>

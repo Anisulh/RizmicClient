@@ -124,10 +124,10 @@ function OutfitCard({
   return (
     <>
       <div
-        className="relative w-full bg-slate-700 p-2 rounded-lg"
+        className="relative w-full rounded-lg bg-slate-700 p-2"
         aria-label="Outfit card"
       >
-        <div className="h-full w-full relative">
+        <div className="relative h-full w-full">
           <button
             className="absolute right-2 top-2 z-10"
             onClick={() => {
@@ -135,9 +135,9 @@ function OutfitCard({
             }}
           >
             {favorited ? (
-              <StarIcon className="h-4 w-4 text-yellow-400 hover:text-yellow-100" />
+              <StarIcon className="size-4 text-yellow-400 hover:text-yellow-100" />
             ) : (
-              <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
+              <StarIcon className="size-4 stroke-white text-transparent hover:text-yellow-100" />
             )}
           </button>
           <button className="w-full" onClick={() => navigate(`/outfit/${_id}`)}>
@@ -154,14 +154,14 @@ function OutfitCard({
                 tabIndex={0}
               >
                 <img
-                  className="object-cover w-full h-64 text-center rounded-md"
+                  className="h-64 w-full rounded-md object-cover text-center"
                   alt="Piece of clothing"
                   src={image}
                 />
               </div>
             ) : (
               <div
-                className=" w-full h-64  rounded-md grid grid-cols-2 grid-rows-2 gap-5 hover:bg-cambridgeblue hover:opacity-80 transition-all"
+                className="grid h-64 w-full grid-cols-2 grid-rows-2 gap-5 rounded-md transition-all hover:bg-cambridgeblue hover:opacity-80"
                 onClick={() => setExpandModal(true)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
@@ -176,7 +176,7 @@ function OutfitCard({
                   return image ? (
                     <img
                       key={index}
-                      className="w-1/5 h-1/5 object-cover"
+                      className="h-1/5 w-1/5 object-cover"
                       src={image}
                       alt={category}
                     />
@@ -191,10 +191,10 @@ function OutfitCard({
             )}
           </button>
 
-          <div className="flex justify-between w-full mt-1">
+          <div className="mt-1 flex w-full justify-between">
             <div>
               <h3 className="font-medium">{name}</h3>
-              <p className="text-slategrey text-sm">
+              <p className="text-sm text-slategrey">
                 {clothes.length + " "} Pieces
               </p>
             </div>
@@ -204,7 +204,7 @@ function OutfitCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="h-6 w-6  dark:text-white hover:text-ourGrey"
+                      className="size-6 hover:text-ourGrey dark:text-white"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -218,8 +218,8 @@ function OutfitCard({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-slate-600 dark:text-gray-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
-                    <div className="px-1 py-1 ">
+                  <Menu.Items className="absolute right-0 z-20 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
+                    <div className="px-1 py-1">
                       <Menu.Item>
                         {({ active }) => (
                           <button
@@ -230,7 +230,7 @@ function OutfitCard({
                           >
                             <EditIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors"
+                              className="mr-2 size-5 transition-colors"
                             />
                             Edit
                           </button>
@@ -241,12 +241,12 @@ function OutfitCard({
                           <button
                             onClick={() => setShareModalOpen(true)}
                             className={`${
-                              active && "bg-ultramarineBlue "
+                              active && "bg-ultramarineBlue"
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
                             <ShareIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                              className="mr-2 size-5 text-ultramarineBlue transition-colors"
                             />
                             Share
                           </button>
@@ -262,7 +262,7 @@ function OutfitCard({
                           >
                             <TrashIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                              className="mr-2 size-5 text-ultramarineBlue transition-colors"
                             />
                             Delete
                           </button>
@@ -287,7 +287,7 @@ function OutfitCard({
             shared this with will not be able to view it once deleted. This
             cannot be undone.
           </p>
-          <div className="flex justify-between items-center w-full">
+          <div className="flex w-full items-center justify-between">
             <Button
               variant="destructive"
               onClick={() => {

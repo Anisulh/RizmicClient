@@ -12,15 +12,15 @@ export default function NonMobileNav() {
   const isLoginPage = location.pathname === "/login";
   return (
     <nav
-      className={`top-0 w-full bg-white dark:bg-gray-800 hidden md:block ${
+      className={`top-0 hidden w-full bg-white md:block dark:bg-gray-800 ${
         isLoginPage || isRegisterPage
           ? "fixed bg-transparent dark:bg-transparent"
           : "fixed"
-      } z-20 `}
+      } z-20`}
     >
       <div className="relative">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="flex items-center justify-end border-gray-100 dark:text-gray-900 py-2 pt-4  md:justify-start md:space-x-10">
+          <div className="flex items-center justify-end border-gray-100 py-2 pt-4 md:justify-start md:space-x-10 dark:text-gray-900">
             <Logo />
 
             {isAuthenticated ? (
@@ -28,24 +28,24 @@ export default function NonMobileNav() {
                 <div className="space-x-10">
                   <Link
                     to="/wardrobe"
-                    className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 "
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
                   >
                     Wardrobe
                   </Link>
                   <Link
                     to="/generate-fit"
-                    className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
                   >
                     Fit Generator
                   </Link>
                   <Link
                     to="/friends"
-                    className="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
                   >
                     Friends
                   </Link>
                 </div>
-                <div className=" items-center justify-end flex flex-1 lg:w-0">
+                <div className="flex flex-1 items-center justify-end lg:w-0">
                   <ProfileMenu />
                 </div>
               </>
@@ -56,7 +56,7 @@ export default function NonMobileNav() {
                   <a href="#pricing">Pricing</a>
                   <a href="#FAQ">FAQ</a>
                 </div>
-                <div className=" items-center justify-end flex md:flex-1 lg:w-0">
+                <div className="flex items-center justify-end md:flex-1 lg:w-0">
                   <Link to="/login">Login</Link>
                   <Link
                     to="/register"
@@ -67,10 +67,10 @@ export default function NonMobileNav() {
                 </div>
               </>
             ) : (
-              <div className="items-center justify-end flex flex-1 lg:w-0">
+              <div className="flex flex-1 items-center justify-end lg:w-0">
                 <Link
                   to="/login"
-                  className="dark:text-gray-800 hover:text-gray-900 mix-blend-difference"
+                  className="mix-blend-difference hover:text-gray-900 dark:text-gray-800"
                 >
                   Login
                 </Link>
@@ -93,9 +93,9 @@ export const Logo = () => {
   return (
     <Link
       to="/"
-      className=" font-semibold text-2xl hover:bg-transparent flex gap-1 flex-1"
+      className="flex flex-1 gap-1 text-2xl font-semibold hover:bg-transparent"
     >
-      <img src={RizmicIcon} alt="RizmicFits" className="w-8 h-8 rounded-full" />
+      <img src={RizmicIcon} alt="RizmicFits" className="size-8 rounded-full" />
       <span>RizmicFits</span>
     </Link>
   );

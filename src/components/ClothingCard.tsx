@@ -108,10 +108,10 @@ export default function ClothingCard({
   return (
     <>
       <div
-        className="relative w-full bg-slate-700 h-64 p-2 rounded-lg"
+        className="relative h-64 w-full rounded-lg bg-slate-700 p-2"
         aria-label="Clothing card"
       >
-        <div className="h-full w-full relative">
+        <div className="relative h-full w-full">
           <button
             className="absolute right-2 top-2 z-10"
             onClick={() => {
@@ -119,9 +119,9 @@ export default function ClothingCard({
             }}
           >
             {favorited ? (
-              <StarIcon className="h-4 w-4 text-yellow-400 hover:text-yellow-100" />
+              <StarIcon className="size-4 text-yellow-400 hover:text-yellow-100" />
             ) : (
-              <StarIcon className="h-4 w-4 text-transparent hover:text-yellow-100 stroke-white" />
+              <StarIcon className="size-4 stroke-white text-transparent hover:text-yellow-100" />
             )}
           </button>
           <button
@@ -130,21 +130,21 @@ export default function ClothingCard({
           >
             {image ? (
               <img
-                className="w-full object-contain h-48 text-center rounded-md"
+                className="h-48 w-full rounded-md object-contain text-center"
                 alt="Piece of clothing"
                 src={image}
               />
             ) : (
-              <div className=" w-full h-48 rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue "></div>
+              <div className="h-48 w-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
             )}
           </button>
-          <div className="flex justify-between w-full mt-2">
+          <div className="mt-2 flex w-full justify-between">
             <div>
               <h3>{item.name}</h3>
               <div className="flex items-center gap-2">
-                <p className="text-slate-300 text-sm">Color:</p>
+                <p className="text-sm text-slate-300">Color:</p>
                 <div
-                  className="h-4 w-4 border rounded-md"
+                  className="size-4 rounded-md border"
                   style={{ background: color }}
                 ></div>
               </div>
@@ -155,7 +155,7 @@ export default function ClothingCard({
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
-                      className="  h-6 w-6 transition-colors dark:text-white hover:text-ourGrey"
+                      className="size-6 transition-colors hover:text-ourGrey dark:text-white"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -169,8 +169,8 @@ export default function ClothingCard({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0  w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-slate-600 dark:text-gray-200 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
-                    <div className="px-1 py-1 ">
+                  <Menu.Items className="absolute right-0 z-20 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
+                    <div className="px-1 py-1">
                       <Menu.Item>
                         {({ active }) => (
                           <button
@@ -181,7 +181,7 @@ export default function ClothingCard({
                           >
                             <EditIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors"
+                              className="mr-2 size-5 transition-colors"
                             />
                             Edit
                           </button>
@@ -192,12 +192,12 @@ export default function ClothingCard({
                           <button
                             onClick={() => setShareModalOpen(true)}
                             className={`${
-                              active && "bg-ultramarineBlue "
+                              active && "bg-ultramarineBlue"
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm transition-colors`}
                           >
                             <ShareIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                              className="mr-2 size-5 text-ultramarineBlue transition-colors"
                             />
                             Share
                           </button>
@@ -213,7 +213,7 @@ export default function ClothingCard({
                           >
                             <TrashIcon
                               active={active}
-                              className="mr-2 h-5 w-5 transition-colors text-ultramarineBlue"
+                              className="mr-2 size-5 text-ultramarineBlue transition-colors"
                             />
                             Delete
                           </button>
@@ -237,7 +237,7 @@ export default function ClothingCard({
             Are you sure you want to delete this clothing? This cannot be
             undone.
           </p>
-          <div className="flex justify-between items-center w-full">
+          <div className="flex w-full items-center justify-between">
             <Button
               variant="destructive"
               onClick={() => {

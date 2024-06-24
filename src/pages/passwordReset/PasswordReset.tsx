@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import QuestionMarkCircleIcon from "@heroicons/react/20/solid/QuestionMarkCircleIcon";
 import { resetPasswordAPI } from "../../api/userAPI";
@@ -23,7 +22,6 @@ function PasswordReset() {
       resolver: zodResolver(PasswordResetSchema),
     });
 
-  const [isShowing, setIsShowing] = useState(false);
   const password = watch("password");
   const { isPending, mutate } = useMutation({
     mutationFn: resetPasswordAPI,
@@ -65,14 +63,14 @@ function PasswordReset() {
   };
 
   return (
-    <div className="flex content-container">
+    <div className="content-container flex">
       <div className="m-auto justify-center">
-        <h1 className="font-bold text-4xl">Password Reset</h1>
+        <h1 className="text-4xl font-bold">Password Reset</h1>
         <p className="text-gray-700">
           Enter the fields below to reset your password.
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center mt-6 relative">
+          <div className="relative mt-6 flex items-center">
             <div className="w-full">
               <Input<PasswordResetSchemaType>
                 label="Password"
@@ -84,27 +82,25 @@ function PasswordReset() {
 
               <PasswordStrengthCheck password={password} />
             </div>
-            <div className="absolute -top-1 -right-6 z-20">
+            <div className="absolute -right-6 -top-1 z-20">
               <PopoverModal
-                isShowing={isShowing}
+                anchor="right"
                 button={
                   <QuestionMarkCircleIcon
-                    onMouseEnter={() => setIsShowing(true)}
-                    onMouseLeave={() => setIsShowing(false)}
-                    className="ml-2 h-5 w-5 text-cambridgeblue transition duration-150 ease-in-out hover:text-opacity-100"
+                    className="ml-2 size-5 text-cambridgeblue transition duration-150 ease-in-out hover:text-opacity-100"
                     aria-hidden="true"
                   />
                 }
               >
-                <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="p-4">
-                    <div className=" px-2  ">
-                      <h6 className="text-sm font-medium text-gray-900 py-2">
+                    <div className="px-2">
+                      <h6 className="py-2 text-sm font-medium text-gray-900">
                         Enter new password which meets the following conditions
                         for a strong password:
                       </h6>
 
-                      <ul className="list-none block text-sm text-gray-500 ">
+                      <ul className="block list-none text-sm text-gray-500">
                         <li>Minimum of 6 characters</li>
                         <li>Contains one lowercase and one uppercase</li>
                         <li>A symbol</li>
@@ -115,7 +111,7 @@ function PasswordReset() {
               </PopoverModal>
             </div>
           </div>
-          <div className="flex items-center mt-6">
+          <div className="mt-6 flex items-center">
             <div className="w-full">
               <Input<PasswordResetSchemaType>
                 label="Confirm Password"
@@ -129,12 +125,12 @@ function PasswordReset() {
           <button
             disabled={isPending}
             type="submit"
-            className="mt-6 border rounded-md text-raisinblack px-4 py-2 font-medium w-full bg-cambridgeblue"
+            className="mt-6 w-full rounded-md border bg-cambridgeblue px-4 py-2 font-medium text-raisinblack"
           >
             {isPending ? (
-              <span className="flex justify-center items-center bg-transparent">
+              <span className="flex items-center justify-center bg-transparent">
                 <div
-                  className="spinner-border animate-spin inline-block w-5 h-5 border-4 rounded-full bg-transparent text-gray-300"
+                  className="spinner-border inline-block size-5 animate-spin rounded-full border-4 bg-transparent text-gray-300"
                   role="status"
                 >
                   <span className="sr-only">Loading</span>

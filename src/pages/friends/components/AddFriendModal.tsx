@@ -56,7 +56,7 @@ export default function AddFriendModal({
         placeholder="Search for friends"
         value={searchTerm}
         onChange={handleSearchChange}
-        className="border border-gray-300 p-2 w-full rounded-md mb-4 text-black"
+        className="mb-4 w-full rounded-md border border-gray-300 p-2 text-black"
       />
 
       <div className="space-y-2">
@@ -66,14 +66,14 @@ export default function AddFriendModal({
           searchResults?.map((user: IFriend) => (
             <div
               key={user._id}
-              className="flex justify-between items-center p-2 bg-slate-600 rounded-xl"
+              className="flex items-center justify-between rounded-xl bg-slate-600 p-2"
             >
               <div className="flex items-center gap-2">
                 {user.profilePicture && (
                   <img
                     src={user.profilePicture}
                     alt={user.firstName}
-                    className="w-8 h-8 rounded-full"
+                    className="size-8 rounded-full"
                   />
                 )}
                 <div>

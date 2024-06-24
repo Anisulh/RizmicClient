@@ -78,7 +78,7 @@ export const HamburgerMenu = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600">
           {isHomePage ? (
             <div className="space-y-1 px-2 pb-3 pt-2 shadow-md">
               {homeNavigation.map((item, index) => (
@@ -88,7 +88,7 @@ export const HamburgerMenu = ({
                       href={item.href}
                       className={cn(
                         active ? "bg-gray-100 dark:text-gray-900" : "",
-                        "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                        "block px-4 py-2 text-gray-900 hover:text-gray-700 dark:text-white",
                       )}
                     >
                       {item.name}
@@ -103,7 +103,7 @@ export const HamburgerMenu = ({
                       to={item.href}
                       className={cn(
                         active ? "bg-gray-100 dark:text-gray-900" : "",
-                        "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                        "block px-4 py-2 text-gray-900 hover:text-gray-700 dark:text-white",
                       )}
                     >
                       {item.name}
@@ -121,7 +121,7 @@ export const HamburgerMenu = ({
                       to={item.href}
                       className={cn(
                         active ? "bg-gray-100 dark:text-gray-900" : "",
-                        "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                        "block px-4 py-2 text-gray-900 hover:text-gray-700 dark:text-white",
                       )}
                     >
                       {item.name}
@@ -131,7 +131,9 @@ export const HamburgerMenu = ({
               ))}
             </div>
           )}
-          <PWAInstallPrompt />
+          <Menu.Item>
+            <PWAInstallPrompt />
+          </Menu.Item>
         </Menu.Items>
       </Transition>
     </Menu>
@@ -144,7 +146,7 @@ export const ProfileMenu = () => {
   const navigate = useNavigate();
   return (
     <Menu as="div" className="relative px-4">
-      <Menu.Button className="flex rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800 ">
+      <Menu.Button className="flex rounded-full focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 focus:ring-offset-gray-800">
         <span className="sr-only">Open user menu</span>
         <img
           className="h-8 w-8 rounded-full bg-white"
@@ -161,7 +163,7 @@ export const ProfileMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-slate-600 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-4 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600">
           <div className="space-y-1 px-2 pb-3 pt-2 shadow-md">
             <Menu.Item>
               {({ active }) => (
@@ -169,7 +171,7 @@ export const ProfileMenu = () => {
                   to="/profile"
                   className={cn(
                     active ? "bg-gray-100 dark:text-gray-900" : "",
-                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                    "block px-4 py-2 text-gray-900 hover:text-gray-700 dark:text-white",
                   )}
                 >
                   Your Profile
@@ -182,7 +184,7 @@ export const ProfileMenu = () => {
                   to="/settings"
                   className={cn(
                     active ? "bg-gray-100 dark:text-gray-900" : "",
-                    "block px-4 py-2   text-gray-900 dark:text-white hover:text-gray-700",
+                    "block px-4 py-2 text-gray-900 hover:text-gray-700 dark:text-white",
                   )}
                 >
                   Settings
@@ -200,8 +202,10 @@ export const ProfileMenu = () => {
                 Log out
               </Button>
             </Menu.Item>
+            <Menu.Item>
+              <PWAInstallPrompt />
+            </Menu.Item>
           </div>
-          <PWAInstallPrompt />
         </Menu.Items>
       </Transition>
     </Menu>
@@ -212,9 +216,9 @@ export const Logo = () => {
   return (
     <Link
       to="/"
-      className="font-semibold text-2xl hover:bg-transparent flex gap-1 flex-1"
+      className="flex flex-1 gap-1 text-2xl font-semibold hover:bg-transparent"
     >
-      <img src={RizmicIcon} alt="RizmicFits" className="w-8 h-8 rounded-full" />
+      <img src={RizmicIcon} alt="RizmicFits" className="h-8 w-8 rounded-full" />
     </Link>
   );
 };
@@ -227,13 +231,13 @@ export default function MobileNav() {
   return (
     <Disclosure
       as="nav"
-      className={`top-0 w-full bg-white dark:bg-gray-800 fixed z-20 md:hidden`}
+      className={`fixed top-0 z-20 w-full bg-white md:hidden dark:bg-gray-800`}
     >
       {({ open }) => (
         <>
           <div className="relative">
-            <div className="mx-auto max-w-7xl ">
-              <div className="flex items-center justify-end border-gray-100 dark:text-gray-900 py-2 pt-4  md:justify-start md:space-x-10">
+            <div className="mx-auto max-w-7xl">
+              <div className="flex items-center justify-end border-gray-100 py-2 pt-4 md:justify-start md:space-x-10 dark:text-gray-900">
                 <Logo />
                 {isAuthenticated ? (
                   <ProfileMenu />
@@ -241,7 +245,7 @@ export default function MobileNav() {
                   <HamburgerMenu open={open} isHomePage={isHomePage} />
                 )}
                 {isAuthenticated && (
-                  <div className=" w-full px-4 py-1 flex items-center justify-evenly bg-white shadow fixed bottom-0 dark:bg-slate-700">
+                  <div className="fixed bottom-0 flex w-full items-center justify-evenly bg-white px-4 py-1 shadow dark:bg-slate-700">
                     {tabs.map((tab, index) => {
                       return (
                         <NavLink

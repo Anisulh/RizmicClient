@@ -6,7 +6,7 @@ export default function ButtonSpinner({ className }: { className?: string }) {
       <svg
         aria-hidden="true"
         className={cn(
-          "inline w-4 h-4 text-gray-200 animate-spin fill-ultramarineBlue",
+          "inline size-4 animate-spin fill-ultramarineBlue text-gray-200",
           className,
         )}
         viewBox="0 0 100 101"

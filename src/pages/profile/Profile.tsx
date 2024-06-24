@@ -25,13 +25,13 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto content-container">
-      <div className="w-full h-60 bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue rounded-2xl"></div>
-      <div className="flex flex-col max-w-5xl mx-auto gap-10 px-2">
+    <div className="content-container mx-auto max-w-7xl">
+      <div className="h-60 w-full rounded-2xl bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
+      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-2">
         <div className="flex gap-2">
-          <div className="relative flex items-center justify-center h-full">
+          <div className="relative flex h-full items-center justify-center">
             <img
-              className="rounded-full h-20 w-20 -mt-6  p-1"
+              className="-mt-6 h-20 w-20 rounded-full p-1"
               src={user?.profilePicture ?? Avatar}
               alt="Profile"
               onMouseOver={() => setShowProfileImageEdit(true)}
@@ -45,45 +45,45 @@ export default function Profile() {
                 onMouseLeave={() => setShowProfileImageEdit(false)}
                 onFocus={() => null}
                 onClick={() => setShowProfileImageModal(true)}
-                className="absolute -top-6 backdrop-brightness-50 text-white w-20 h-20 rounded-full flex items-center justify-center transition-all"
+                className="absolute -top-6 flex h-20 w-20 items-center justify-center rounded-full text-white backdrop-brightness-50 transition-all"
               >
-                <PencilIcon className="h-5 w-5" />
+                <PencilIcon className="size-5" />
               </button>
             )}
           </div>
 
           <div>
-            <h1 className="font-medium text-xl">{`${user?.firstName} ${user?.lastName}`}</h1>
+            <h1 className="text-xl font-medium">{`${user?.firstName} ${user?.lastName}`}</h1>
             <p className="font-medium">{user?.email}</p>
           </div>
         </div>
-        <div className="max-w-4xl mx-auto w-full px-2">
-          <div className="border-2 dark:border-gray-700 dark:bg-gray-700 rounded-xl p-4">
+        <div className="mx-auto w-full max-w-4xl px-2">
+          <div className="rounded-xl border-2 p-4 dark:border-gray-700 dark:bg-gray-700">
             <div>
-              <div className="flex justify-between items-center mb-4">
+              <div className="mb-4 flex items-center justify-between">
                 <h1 className="text-xl font-medium">Profile Information</h1>
                 <Button
                   variant="outline"
                   onClick={() => setEditingProfile(true)}
                 >
-                  <PencilIcon className="h-4 w-4 inline mr-1" />
+                  <PencilIcon className="mr-1 inline size-4" />
                   Edit
                 </Button>
               </div>
               <div className="flex flex-col gap-2">
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <p>First Name:</p>
                   <p className="font-medium">{user?.firstName}</p>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <p>Last Name:</p>
                   <p className="font-medium">{user?.lastName}</p>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <p>Email:</p>
                   <p className="font-medium">{user?.email}</p>
                 </div>
-                <div className="flex gap-4 items-center">
+                <div className="flex items-center gap-4">
                   <p>Phone Number:</p>
                   <p className="font-medium">{user?.phoneNumber || "N/A"}</p>
                 </div>

@@ -19,7 +19,7 @@ export default function ExpandOutfitsModal({
   return (
     <>
       <DialogModal open={open} setOpen={setOpen} title={name}>
-        <div className="mt-2 grid md:grid-cols-3 gap-10 overflow-auto">
+        <div className="mt-2 grid gap-10 overflow-auto md:grid-cols-3">
           {clothes?.length && clothes.length > 0 ? (
             clothes.map((item, index) => {
               return <ClothingCard key={index} item={item} refetch={refetch} />;
