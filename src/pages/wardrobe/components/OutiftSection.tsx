@@ -54,7 +54,7 @@ function OutfitSection({
                 </div>
               </button>
               {show[key as keyof IOutfitsShow] && (
-                <div className="grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
                   {(outfits[key as keyof IOutfitsSections] as []).map(
                     (item: IExistingOutfitData) => {
                       return (
