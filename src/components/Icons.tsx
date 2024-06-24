@@ -9,8 +9,8 @@ export function WardrobeIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#CDD6F4" : "#334155"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        fill={active ? "#CDD6F4" : "#475569"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -25,7 +25,7 @@ export function ShareIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
-        fill={active ? "#CDD6F4" : "#334155"}
+        fill={active ? "#CDD6F4" : "#475569"}
         stroke={active ? "#CDD6F4" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -65,8 +65,8 @@ export function SettingIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
-        fill={active ? "#CDD6F4" : "#334155"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        fill={active ? "#CDD6F4" : "#475569"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -83,8 +83,8 @@ export function ProfileIcon({ active = false, ...props }: IIconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
-        fill={active ? "#CDD6F4" : "#334155"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        fill={active ? "#CDD6F4" : "#475569"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -102,7 +102,7 @@ export function FriendsIcon({ active = false, ...props }: IIconProps) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
         fill={active ? "#CDD6F4" : "none"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -117,7 +117,7 @@ export function TrashIcon({ active = false, ...props }: IIconProps) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
         fill={active ? "#CDD6F4" : "none"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
@@ -132,7 +132,7 @@ export function TestTubeIcon({ active = false, ...props }: IIconProps) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g
         fill={active ? "#CDD6F4" : "none"}
-        stroke={active ? "#334155" : "#CDD6F4"}
+        stroke={active ? "#475569" : "#CDD6F4"}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}
