@@ -52,25 +52,25 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-lg items-center">
-      <div className="w-full">
-        <h1 className="text-4xl font-bold">Forgot Password</h1>
+    <div className="content-container mx-auto max-w-7xl space-y-10 px-4">
+      <div>
+        <h1 className="text-3xl font-bold md:text-4xl">Forgot Password</h1>
         <p>Enter your email to reset your password</p>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
-          <Input<ForgotPasswordSchemaType>
-            label="Email"
-            type="email"
-            name="email"
-            placeholder="Email"
-            control={control}
-          />
-          <div className="mt-6 text-center">
-            <Button type="submit" isLoading={isPending}>
-              Submit
-            </Button>
-          </div>
-        </form>
       </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
+        <Input<ForgotPasswordSchemaType>
+          label="Email"
+          type="email"
+          name="email"
+          placeholder="Email"
+          control={control}
+        />
+        <div className="mt-6 text-center">
+          <Button type="submit" isLoading={isPending}>
+            Submit
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
