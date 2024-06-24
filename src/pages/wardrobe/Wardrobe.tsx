@@ -161,7 +161,7 @@ export default function Wardrobe() {
         <Button
           variant="textWithIcon"
           onClick={() => setModalOpen(true)}
-          className="fixed bottom-28 right-8 rounded-full border-none bg-ultramarineBlue px-4 py-3.5 transition-colors hover:bg-cambridgeblue md:right-32"
+          className="fixed bottom-28 right-8 rounded-full border-none bg-ultramarineBlue px-4 py-3.5 shadow-md transition-colors hover:bg-cambridgeblue md:right-32"
         >
           <PlusIcon className="h-7 w-6" />
         </Button>
