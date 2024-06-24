@@ -123,10 +123,7 @@ function OutfitCard({
   };
   return (
     <>
-      <div
-        className="relative w-full rounded-lg bg-slate-700 p-2"
-        aria-label="Outfit card"
-      >
+      <div className="relative w-full shadow-sm" aria-label="Outfit card">
         <div className="relative h-full w-full">
           <button
             className="absolute right-2 top-2 z-10"
@@ -161,7 +158,7 @@ function OutfitCard({
               </div>
             ) : (
               <div
-                className="grid h-64 w-full grid-cols-2 grid-rows-2 gap-5 rounded-md transition-all hover:bg-cambridgeblue hover:opacity-80"
+                className="grid h-64 w-full grid-cols-2 grid-rows-2 gap-2 rounded-md transition-all hover:bg-cambridgeblue hover:opacity-80"
                 onClick={() => setExpandModal(true)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {

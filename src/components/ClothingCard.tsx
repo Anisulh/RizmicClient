@@ -108,7 +108,7 @@ export default function ClothingCard({
   return (
     <>
       <div
-        className="relative h-64 w-full rounded-lg bg-slate-700 p-2"
+        className="relative h-64 w-full shadow-sm"
         aria-label="Clothing card"
       >
         <div className="relative h-full w-full">
@@ -153,7 +153,7 @@ export default function ClothingCard({
             <div>
               <Menu as="div" className="relative inline-block text-right">
                 <div>
-                  <Menu.Button className="inline-flex w-full justify-center rounded-md text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                  <Menu.Button className="inline-flex w-full justify-center rounded-md text-right text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
                       className="size-6 transition-colors hover:text-ourGrey dark:text-white"
                       aria-hidden="true"
