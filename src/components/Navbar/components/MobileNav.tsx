@@ -24,7 +24,7 @@ const tabs = [
   },
   {
     name: "Generate",
-    href: "/fit-generator",
+    href: "/generate-fit",
     icon: TestTubeIcon,
   },
   {
