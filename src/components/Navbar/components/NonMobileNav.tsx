@@ -52,12 +52,32 @@ export default function NonMobileNav() {
             ) : isHomePage ? (
               <>
                 <div className="space-x-10">
-                  <a href="#features">Features</a>
-                  <a href="#pricing">Pricing</a>
-                  <a href="#FAQ">FAQ</a>
+                  <a
+                    href="#features"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="#pricing"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
+                  >
+                    Pricing
+                  </a>
+                  <a
+                    href="#FAQ"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
+                  >
+                    FAQ
+                  </a>
                 </div>
                 <div className="flex items-center justify-end md:flex-1 lg:w-0">
-                  <Link to="/login">Login</Link>
+                  <Link
+                    to="/login"
+                    className="text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-200"
+                  >
+                    Login
+                  </Link>
                   <Link
                     to="/register"
                     className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-ultramarineBlue px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
