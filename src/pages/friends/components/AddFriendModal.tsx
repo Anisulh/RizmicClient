@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import DialogModal from "../../../components/ui/modal/DialogModal";
-import Button from "../../../components/ui/Button";
 import { useQuery } from "@tanstack/react-query";
 import { searchUsersAPI } from "../../../api/userAPI";
 import useDebounce from "../../../hooks/useDebounce";
 import Spinner from "../../../components/ui/spinner/Spinner";
-import { IFriend, sendFriendRequestAPI } from "../../../api/friendsAPI";
-import { useToast } from "../../../contexts/ToastContext";
+import { IFriend } from "../../../api/friendsAPI";
+import FriendQuery from "./FriendQuery";
 
 export default function AddFriendModal({
   open,
@@ -15,9 +14,7 @@ export default function AddFriendModal({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { addToast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sendRequestLoading, setSendRequestLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const { data: searchResults, isLoading } = useQuery({
@@ -28,23 +25,6 @@ export default function AddFriendModal({
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-  };
-
-  const handleSendRequest = async (userId: string) => {
-    setSendRequestLoading(true);
-    try {
-      await sendFriendRequestAPI(userId);
-      addToast({
-        title: "Friend request sent",
-        type: "success",
-      });
-    } catch (error) {
-      addToast({
-        title: "Unable to send request",
-        type: "error",
-      });
-    }
-    setSendRequestLoading(false);
   };
 
   return (
@@ -64,33 +44,7 @@ export default function AddFriendModal({
           <Spinner />
         ) : (
           searchResults?.map((user: IFriend) => (
-            <div
-              key={user._id}
-              className="flex items-center justify-between rounded-xl bg-slate-600 p-2"
-            >
-              <div className="flex items-center gap-2">
-                {user.profilePicture && (
-                  <img
-                    src={user.profilePicture}
-                    alt={user.firstName}
-                    className="size-8 rounded-full"
-                  />
-                )}
-                <div>
-                  <h2 className="font-bold">
-                    {user.firstName} {user.lastName}
-                  </h2>
-                </div>
-              </div>
-
-              <Button
-                variant="primary"
-                onClick={() => handleSendRequest(user._id)}
-                isLoading={sendRequestLoading}
-              >
-                Request
-              </Button>
-            </div>
+            <FriendQuery user={user} key={user._id} />
           ))
         )}
       </div>
