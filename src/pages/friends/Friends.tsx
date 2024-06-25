@@ -9,7 +9,11 @@ import Spinner from "../../components/ui/spinner/Spinner";
 import Button from "../../components/ui/Button";
 import AddFriendModal from "./components/AddFriendModal";
 import { useToast } from "../../contexts/ToastContext";
-import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import {
+  CheckIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 import useFriends from "../../hooks/useFriends";
 
 export default function Friends() {
@@ -72,8 +76,13 @@ export default function Friends() {
     <div className="content-container mx-auto max-w-7xl space-y-10 px-4">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold md:text-4xl">Friends</h1>
-        <Button variant="primary" onClick={() => setAddFriendModalOpen(true)}>
-          Add Friend
+        <Button
+          variant="ghost"
+          onClick={() => setAddFriendModalOpen(true)}
+          className="flex gap-2 p-1 hover:bg-slate-600"
+        >
+          <p className="hidden md:block">Search</p>
+          <MagnifyingGlassIcon className="size-6" />
         </Button>
       </div>
       <h2 className="text-xl font-medium md:text-2xl">Your Friends</h2>
