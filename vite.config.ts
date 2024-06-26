@@ -7,6 +7,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "service-worker.ts",
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-icon.png"],
       manifest: {
