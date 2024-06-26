@@ -36,7 +36,7 @@ function OutfitCard({
 }: {
   item: IExistingOutfitData;
   refetch: () => void;
-  clothingItems: IExistingClothesData[];
+  clothingItems: IExistingClothesData[] | undefined;
 }) {
   const { addToast } = useToast();
   const navigate = useNavigate();

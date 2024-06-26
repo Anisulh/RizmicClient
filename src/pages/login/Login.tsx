@@ -12,6 +12,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/ui/inputs/Input";
 import { useToast } from "../../contexts/ToastContext";
 import Button from "../../components/ui/Button";
+import { setAuthCache, setUserCache } from "../../utils/indexDB";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,34 +31,38 @@ function Login() {
 
   const loginMutation = useMutation({
     mutationFn: loginAPI,
-    onSuccess: (data) => {
-      if (data.message) {
-        addToast({
-          title: "Error",
-          description: data.error,
-          type: "error",
-        });
-      } else {
-        reset();
-        setUser(data);
-        navigate("/wardrobe");
-      }
+    onSuccess: async (data) => {
+      reset();
+      setUser(data.user);
+      await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
+
+      navigate("/wardrobe");
+    },
+    onError: (error) => {
+      addToast({
+        title: "Something went wrong.",
+        description: error.message || "Unable to log in. Please try again.",
+        type: "error",
+      });
     },
   });
 
   const googleSignInMutation = useMutation({
     mutationFn: googleSignInAPI,
-    onSuccess: (data) => {
-      if (data.message) {
-        addToast({
-          title: "Error",
-          description: data.message,
-          type: "error",
-        });
-      } else {
-        setUser(data);
-        navigate("/wardrobe");
-      }
+    onSuccess: async (data) => {
+      setUser(data.user);
+      await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
+      navigate("/wardrobe");
+    },
+    onError: (error) => {
+      addToast({
+        title: "Something went wrong.",
+        description:
+          error.message || "Unable to sign in via google. Please try again.",
+        type: "error",
+      });
     },
   });
 
@@ -82,7 +87,7 @@ function Login() {
     } catch (error) {
       addToast({
         title: "Something went wrong.",
-        description: "Invalid email or password.",
+        description: "Unable to log in. Please try again.",
         type: "error",
       });
     }

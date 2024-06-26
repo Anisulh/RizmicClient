@@ -1,10 +1,8 @@
 import PencilIcon from "@heroicons/react/24/outline/PencilIcon";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import ProfileImageModal from "./components/ProfileImageModal";
 import { useAuth } from "../../contexts/UserContext";
 import Button from "../../components/ui/Button";
-import Spinner from "../../components/ui/spinner/Spinner";
 import Avatar from "../../assets/userAvatar.webp";
 import EditProfileModal from "./components/EditProfileModal";
 
@@ -15,14 +13,6 @@ export default function Profile() {
 
   const [showProfileImageEdit, setShowProfileImageEdit] = useState(false);
   const [showProfileImageModal, setShowProfileImageModal] = useState(false);
-  const { isPending: queryPending } = useQuery({
-    queryKey: ["user"],
-    queryFn: refetchUserData,
-  });
-
-  if (queryPending) {
-    return <Spinner />;
-  }
 
   return (
     <div className="content-container mx-auto max-w-7xl">

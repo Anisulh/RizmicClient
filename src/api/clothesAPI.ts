@@ -1,8 +1,9 @@
 import { IExistingClothesData } from "../pages/wardrobe/components/ClothesModal";
+import { getClothesCache, setClothesCache } from "../utils/indexDB";
 
 const baseURL = `${import.meta.env.VITE_BASE_URL}/clothes/`;
 
-export const getClothes = async () => {
+export const getClothes = async (): Promise<IExistingClothesData[]> => {
   const options: RequestInit = {
     method: "GET",
     headers: {
@@ -13,13 +14,22 @@ export const getClothes = async () => {
 
   try {
     const response = await fetch(baseURL, options);
-    const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message);
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch clothes");
     }
+    const data: IExistingClothesData[] = await response.json();
+    // cache fetched clothes
+    await setClothesCache(data);
     return data;
   } catch (error) {
-    return error;
+    // If fetch fails, try to get data from cache
+    const cachedData = await getClothesCache();
+    if (cachedData) {
+      return cachedData;
+    }
+
+    throw error;
   }
 };
 

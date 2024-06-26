@@ -100,7 +100,7 @@ export default function Home() {
     if (isAuthenticated) {
       navigate("/wardrobe");
     }
-  });
+  }, [isAuthenticated, navigate]);
   return (
     <div className="content-container mx-auto max-w-7xl">
       <main className="mx-auto w-full px-4">

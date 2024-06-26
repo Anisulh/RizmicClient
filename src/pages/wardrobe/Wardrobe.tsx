@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import ClothesSection from "./components/ClothesSection";
-import { useQuery } from "@tanstack/react-query";
-import { getClothes } from "../../api/clothesAPI";
 import { useToast } from "../../contexts/ToastContext";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { IExistingClothesData } from "./components/ClothesModal";
 import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { IExistingOutfitData } from "./components/OutfitsModal";
-import { getOutfits } from "../../api/outfitsAPI";
 import OutfitSection from "./components/OutiftSection";
 import cn from "../../components/ui/cn";
 import { useLocation } from "react-router";
+import { useClothes } from "../../hooks/useClothes";
+import { useOutfits } from "../../hooks/useOutfits";
 
-type GroupedClothes = {
+export type GroupedClothes = {
   [key in IExistingClothesData["category"]]?: IExistingClothesData[];
 };
 export interface IOutfitsSections {
@@ -23,16 +22,6 @@ export interface IOutfitsSections {
 
 export default function Wardrobe() {
   const [openTab, setOpenTab] = useState(1);
-  const [structuredClothes, setStructuredClothes] = useState<{
-    [key: string]: IExistingClothesData[];
-  }>({});
-  const [unstructuredClothes, setUnstructuredClothes] = useState<
-    IExistingClothesData[]
-  >([]);
-  const [outfits, setOutfits] = useState<IOutfitsSections>({
-    favoriteOutfits: [],
-    allOutfits: [],
-  });
   const [modalOpen, setModalOpen] = useState(false);
   const { addToast } = useToast();
   const location = useLocation();
@@ -56,60 +45,39 @@ export default function Wardrobe() {
 
     handleQueryParams();
   }, [location.search]);
-  const { isLoading: isLoadingClothes, refetch: refetchClothes } = useQuery({
-    queryKey: ["clothes"],
-    queryFn: async () => {
-      const data = await getClothes();
-      if (data?.message) {
-        addToast({
-          title: "Something went wrong.",
-          description: "Unable to fetch clothes",
-          type: "error",
-        });
-      } else {
-        setUnstructuredClothes(data);
-        const groupedByCategory = data.reduce(
-          (acc: GroupedClothes, cloth: IExistingClothesData) => {
-            const categoryArray = acc[cloth.category] || [];
-            categoryArray.push(cloth);
-            acc[cloth.category] = categoryArray;
+  const {
+    data: clothes,
+    isLoading: isLoadingClothes,
+    isError: isClothesError,
+    error: clothesError,
+    refetch: refetchClothes,
+  } = useClothes();
 
-            return acc;
-          },
-          {},
-        );
-        setStructuredClothes(groupedByCategory);
-        return data;
-      }
-    },
-    refetchOnWindowFocus: false,
-  });
-  const { isLoading: isLoadingOutfits, refetch: refetchOutfits } = useQuery({
-    queryKey: ["outfits"],
-    queryFn: async () => {
-      const data = await getOutfits();
-      if (data?.message) {
-        addToast({
-          title: "Something went wrong.",
-          description: "Unable to fetch outfits",
-          type: "error",
-        });
-      } else {
-        const tempFav: IExistingOutfitData[] = [];
-        data.outfits.map((item: IExistingOutfitData) => {
-          if (item.favorited) {
-            tempFav.push(item);
-          }
-        });
-        setOutfits({
-          favoriteOutfits: tempFav,
-          allOutfits: data.outfits,
-        });
-        return data;
-      }
-    },
-    refetchOnWindowFocus: false,
-  });
+  useEffect(() => {
+    if (isClothesError && clothesError instanceof Error) {
+      addToast({
+        title: "Something went wrong.",
+        description: clothesError.message || "Unable to fetch clothes",
+        type: "error",
+      });
+    }
+  }, [isClothesError, clothesError, addToast]);
+  const {
+    data: outfits,
+    isError: isOutfitError,
+    error: outfitError,
+    isLoading: isLoadingOutfits,
+    refetch: refetchOutfits,
+  } = useOutfits();
+  useEffect(() => {
+    if (isOutfitError && outfitError instanceof Error) {
+      addToast({
+        title: "Something went wrong.",
+        description: outfitError.message || "Unable to fetch clothes",
+        type: "error",
+      });
+    }
+  }, [isOutfitError, outfitError, addToast]);
 
   if (isLoadingClothes || isLoadingOutfits) {
     return <Spinner />;
@@ -170,7 +138,7 @@ export default function Wardrobe() {
       {openTab === 1 ? (
         <>
           <ClothesSection
-            clothes={structuredClothes}
+            clothes={clothes?.structuredClothes}
             refetch={refetchClothes}
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
@@ -179,7 +147,7 @@ export default function Wardrobe() {
       ) : (
         <OutfitSection
           outfits={outfits}
-          clothes={unstructuredClothes}
+          clothes={clothes?.unstructuredClothes}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           refetch={refetchOutfits}

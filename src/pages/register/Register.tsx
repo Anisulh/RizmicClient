@@ -15,6 +15,7 @@ import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 import Button from "../../components/ui/Button";
 import formatPhoneNumber from "../../utils/formatPhoneNumber";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import { setAuthCache, setUserCache } from "../../utils/indexDB";
 
 declare global {
   const google: {
@@ -52,34 +53,37 @@ function Register() {
 
   const registerMutation = useMutation({
     mutationFn: registerAPI,
-    onSuccess: (data) => {
-      if (data.message) {
-        addToast({
-          title: "Error",
-          description: data.message,
-          type: "error",
-        });
-      } else {
-        reset();
-        setUser(data);
-        navigate("/wardrobe");
-      }
+    onSuccess: async (data) => {
+      reset();
+      setUser(data.user);
+      await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
+      navigate("/wardrobe");
+    },
+    onError: (error) => {
+      addToast({
+        title: "Something went wrong.",
+        description: error.message || "Unable to register. Please try again.",
+        type: "error",
+      });
     },
   });
 
   const googleSignInMutation = useMutation({
     mutationFn: googleSignInAPI,
-    onSuccess: (data) => {
-      if (data.message) {
-        addToast({
-          title: "Error",
-          description: data.message,
-          type: "error",
-        });
-      } else {
-        setUser(data);
-        navigate("/wardrobe");
-      }
+    onSuccess: async (data) => {
+      setUser(data.user);
+      await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
+      navigate("/wardrobe");
+    },
+    onError: (error) => {
+      addToast({
+        title: "Something went wrong.",
+        description:
+          error.message || "Unable to sign in via google. Please try again.",
+        type: "error",
+      });
     },
   });
 
@@ -89,7 +93,7 @@ function Register() {
     } catch (error) {
       addToast({
         title: "Something went wrong.",
-        description: "An error occurred.",
+        description: "Unable to sign in via google. Please try again.",
         type: "error",
       });
     }

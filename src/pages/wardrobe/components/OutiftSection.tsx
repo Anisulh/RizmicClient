@@ -18,8 +18,8 @@ function OutfitSection({
   setModalOpen,
   refetch,
 }: {
-  outfits: IOutfitsSections;
-  clothes: IExistingClothesData[];
+  outfits: IOutfitsSections | undefined;
+  clothes: IExistingClothesData[] | undefined;
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   refetch: () => void;
@@ -32,46 +32,50 @@ function OutfitSection({
   return (
     <>
       <div className="px-4">
-        {Object.keys(outfits).map((key) => {
-          return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
-            <div key={key}>
-              <button
-                className="mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
-                onClick={() =>
-                  setShow((prevState) => ({
-                    ...prevState,
-                    [key]: !show[key as keyof IOutfitsShow],
-                  }))
-                }
-              >
-                <h2 className="text-xl font-medium">{splitCamelCase(key)}</h2>
-                <div>
-                  {show[key as keyof IOutfitsShow] ? (
-                    <ChevronLeftIcon className="size-6" />
-                  ) : (
-                    <ChevronDownIcon className="size-6" />
-                  )}
-                </div>
-              </button>
-              {show[key as keyof IOutfitsShow] && (
-                <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
-                  {(outfits[key as keyof IOutfitsSections] as []).map(
-                    (item: IExistingOutfitData) => {
-                      return (
-                        <OutfitCard
-                          clothingItems={clothes}
-                          item={item}
-                          refetch={refetch}
-                          key={item._id}
-                        />
-                      );
-                    },
-                  )}
-                </div>
-              )}
-            </div>
-          ) : null;
-        })}
+        {outfits ? (
+          Object.keys(outfits).map((key) => {
+            return (outfits[key as keyof IOutfitsSections] as []).length > 0 ? (
+              <div key={key}>
+                <button
+                  className="mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
+                  onClick={() =>
+                    setShow((prevState) => ({
+                      ...prevState,
+                      [key]: !show[key as keyof IOutfitsShow],
+                    }))
+                  }
+                >
+                  <h2 className="text-xl font-medium">{splitCamelCase(key)}</h2>
+                  <div>
+                    {show[key as keyof IOutfitsShow] ? (
+                      <ChevronLeftIcon className="size-6" />
+                    ) : (
+                      <ChevronDownIcon className="size-6" />
+                    )}
+                  </div>
+                </button>
+                {show[key as keyof IOutfitsShow] && (
+                  <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
+                    {(outfits[key as keyof IOutfitsSections] as []).map(
+                      (item: IExistingOutfitData) => {
+                        return (
+                          <OutfitCard
+                            clothingItems={clothes}
+                            item={item}
+                            refetch={refetch}
+                            key={item._id}
+                          />
+                        );
+                      },
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : null;
+          })
+        ) : (
+          <p>Let&apos;s create a new outfit</p>
+        )}
       </div>
 
       <OutfitsModal

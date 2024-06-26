@@ -1,11 +1,12 @@
 import { ChevronDownIcon, ChevronLeftIcon } from "@heroicons/react/20/solid";
-import { IClothingData } from "./interface";
 import ClothingCard from "../../../components/ClothingCard";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ClothesModal, { IExistingClothesData } from "./ClothesModal";
+import ClothesModal from "./ClothesModal";
+import { GroupedClothes } from "../Wardrobe";
 interface CategoryOpenState {
   [key: string]: boolean;
 }
+type ClothesCategory = keyof GroupedClothes;
 const categories = [
   "t-shirt",
   "jacket",
@@ -25,7 +26,7 @@ function ClothesSection({
   modalOpen,
   setModalOpen,
 }: {
-  clothes: { [key: string]: IExistingClothesData[] };
+  clothes: GroupedClothes | undefined;
   refetch: () => void;
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -61,36 +62,44 @@ function ClothesSection({
   return (
     <>
       <div className="px-4">
-        {Object.keys(clothes).map((key) => (
-          <div key={key}>
-            <button
-              className="mx-auto mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
-              onClick={() => toggleCategory(key)}
-            >
-              <h2 className="text-xl font-medium">
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </h2>
-              <div>
-                {categoryOpen[key] ? (
-                  <ChevronLeftIcon className="size-6" />
-                ) : (
-                  <ChevronDownIcon className="size-6" />
-                )}
-              </div>
-            </button>
-            {categoryOpen[key] && (
-              <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
-                {(clothes[key as keyof IClothingData] as []).map(
-                  (item, index) => {
-                    return (
-                      <ClothingCard item={item} refetch={refetch} key={index} />
-                    );
-                  },
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+        {clothes ? (
+          Object.keys(clothes).map((key) => (
+            <div key={key}>
+              <button
+                className="mx-auto mb-6 flex w-full items-center justify-between rounded-lg p-2 transition-colors hover:bg-gray-600"
+                onClick={() => toggleCategory(key)}
+              >
+                <h2 className="text-xl font-medium">
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </h2>
+                <div>
+                  {categoryOpen[key] ? (
+                    <ChevronLeftIcon className="size-6" />
+                  ) : (
+                    <ChevronDownIcon className="size-6" />
+                  )}
+                </div>
+              </button>
+              {categoryOpen[key] && (
+                <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
+                  {(clothes[key as ClothesCategory] as []).map(
+                    (item, index) => {
+                      return (
+                        <ClothingCard
+                          item={item}
+                          refetch={refetch}
+                          key={index}
+                        />
+                      );
+                    },
+                  )}
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>Oh no.... this isn&apos;t looking too good....</p>
+        )}
       </div>
       <ClothesModal open={modalOpen} setOpen={setModalOpen} refetch={refetch} />
     </>
