@@ -39,28 +39,28 @@ const dbPromise = openDB<RFDB>("RizmicFits", 1, {
 
 export async function getAuthCache(): Promise<number> {
   const db = await dbPromise;
-  const auth = await db.get("auth", "currentAuth");
+  const auth = await db.get("auth", "items");
   return auth || 0;
 }
 
 export async function setAuthCache(tokenExpiry: number): Promise<string> {
-  return (await dbPromise).put("auth", tokenExpiry, "currentAuth");
+  return (await dbPromise).put("auth", tokenExpiry, "items");
 }
 
 export async function clearAuthCache(): Promise<void> {
-  return (await dbPromise).delete("auth", "currentAuth");
+  return (await dbPromise).delete("auth", "items");
 }
 
 export async function getUserCache(): Promise<IUser | undefined> {
-  return (await dbPromise).get("user", "current");
+  return (await dbPromise).get("user", "items");
 }
 
 export async function setUserCache(user: IUser): Promise<string> {
-  return (await dbPromise).put("user", user, "current");
+  return (await dbPromise).put("user", user, "items");
 }
 
 export async function clearUserCache(): Promise<void> {
-  return (await dbPromise).delete("user", "current");
+  return (await dbPromise).delete("user", "items");
 }
 
 export async function getClothesCache(): Promise<
