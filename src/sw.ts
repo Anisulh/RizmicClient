@@ -1,10 +1,22 @@
-/// <reference lib="webworker" />
-import { precacheAndRoute } from "workbox-precaching";
+import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
+
 declare const self: ServiceWorkerGlobalScope;
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+// cleanup old caches
+cleanupOutdatedCaches();
+
 // Precache all static assets
 precacheAndRoute(self.__WB_MANIFEST);
 
