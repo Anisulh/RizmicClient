@@ -9,9 +9,10 @@ export default defineConfig({
     VitePWA({
       strategies: "injectManifest",
       srcDir: "src",
-      filename: "service-worker.ts",
+      filename: "sw.ts",
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-icon.png"],
+      injectRegister: "auto",
       manifest: {
         name: "RizmicFits",
         short_name: "Rizmic",
