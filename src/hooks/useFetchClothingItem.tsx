@@ -9,6 +9,8 @@ export default function useFetchClothingItem(itemId: string | undefined) {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
   return query;
 }
