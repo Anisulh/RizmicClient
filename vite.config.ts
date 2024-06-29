@@ -8,7 +8,15 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "prompt",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+      includeAssets: [
+        "favicon.ico",
+        "apple-touch-icon.png",
+        "masked-icon.svg",
+        "assets/**/*",
+      ],
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,webmanifest}"],
+      },
       manifest: {
         name: "RizmicFits",
         short_name: "Rizmic",
