@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "npm run build && serve -s dist",
+    "serve": "npm run build && PORT=5173 serve -s dist",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx"
   },
