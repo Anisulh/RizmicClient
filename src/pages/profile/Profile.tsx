@@ -5,14 +5,19 @@ import { useAuth } from "../../contexts/UserContext";
 import Button from "../../components/ui/Button";
 import Avatar from "../../assets/userAvatar.webp";
 import EditProfileModal from "./components/EditProfileModal";
+import Spinner from "../../components/ui/spinner/Spinner";
+import { useFetchUser } from "../../hooks/useFetchUser";
 
 export default function Profile() {
   const { user, refetchUserData } = useAuth();
 
   const [editingProfile, setEditingProfile] = useState(false);
-
   const [showProfileImageEdit, setShowProfileImageEdit] = useState(false);
   const [showProfileImageModal, setShowProfileImageModal] = useState(false);
+
+  useFetchUser();
+
+  if (!user) return <Spinner />;
 
   return (
     <div className="content-container mx-auto max-w-7xl">
