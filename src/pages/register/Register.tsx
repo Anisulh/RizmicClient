@@ -15,7 +15,7 @@ import PasswordStrengthCheck from "../../components/PasswordStrengthCheck";
 import Button from "../../components/ui/Button";
 import formatPhoneNumber from "../../utils/formatPhoneNumber";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
-import { setAuthCache, setUserCache } from "../../utils/indexDB";
+import { setAuthCache } from "../../utils/indexDB";
 
 declare global {
   const google: {
@@ -57,7 +57,6 @@ function Register() {
       reset();
       setUser(data.user);
       await setAuthCache(data.tokenExpiry);
-      await setUserCache(data.user);
       navigate("/wardrobe");
     },
     onError: (error) => {
@@ -74,7 +73,6 @@ function Register() {
     onSuccess: async (data) => {
       setUser(data.user);
       await setAuthCache(data.tokenExpiry);
-      await setUserCache(data.user);
       navigate("/wardrobe");
     },
     onError: (error) => {

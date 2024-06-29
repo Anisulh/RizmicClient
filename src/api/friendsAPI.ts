@@ -1,5 +1,3 @@
-import { getFriendsCache, setFriendsCache } from "../utils/indexDB";
-
 const baseURL = `${import.meta.env.VITE_BASE_URL}/friends/`;
 
 export interface IFriend {
@@ -15,32 +13,20 @@ export interface IFriendRequest {
   requester: IFriend;
 }
 export const getFriends = async (): Promise<IFriend[]> => {
-  try {
-    const url = new URL(baseURL);
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    };
-    const response = await fetch(url, options);
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-
-    await setFriendsCache(data);
-    return data;
-  } catch (error) {
-    // If fetch fails, try to get data from cache
-    const cachedData = await getFriendsCache();
-    if (cachedData) {
-      return cachedData;
-    }
-
-    throw error;
+  const url = new URL(baseURL);
+  const options: RequestInit = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
   }
+  return data;
 };
 
 export const getFriendRequests = async (): Promise<IFriendRequest[]> => {
