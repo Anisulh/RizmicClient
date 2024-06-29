@@ -36,6 +36,8 @@ export default function Friends() {
   } = useQuery({
     queryKey: ["friendRequests"],
     queryFn: getFriendRequests,
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   if (friendQueryPending || friendRequestQueryPending) {
