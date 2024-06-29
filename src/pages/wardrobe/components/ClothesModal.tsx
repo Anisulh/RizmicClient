@@ -79,7 +79,7 @@ export default function ClothesModal({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   existingData?: IExistingClothesData | undefined;
-  refetch?: () => void;
+  refetch: () => void;
 }) {
   const { addToast } = useToast();
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -153,7 +153,7 @@ export default function ClothesModal({
         setOpen(false);
         reset();
         setShowAdvanced(false);
-        refetch && refetch();
+        refetch();
         addToast({
           title: "Success",
           description: "Your changes have been saved",

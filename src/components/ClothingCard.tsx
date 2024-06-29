@@ -24,7 +24,7 @@ export default function ClothingCard({
   refetch,
 }: {
   item: IExistingClothesData;
-  refetch?: () => void;
+  refetch: () => void;
 }) {
   const { addToast } = useToast();
   const navigate = useNavigate();

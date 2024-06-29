@@ -14,7 +14,7 @@ export default function ExpandOutfitsModal({
   setOpen: Dispatch<SetStateAction<boolean>>;
   name: string | undefined;
   clothes: IExistingClothesData[];
-  refetch?: () => void;
+  refetch: () => void;
 }) {
   return (
     <>
