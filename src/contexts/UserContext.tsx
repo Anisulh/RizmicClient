@@ -8,20 +8,13 @@ import {
 } from "react";
 import { getUserData, logoutAPI } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
-import {
-  clearAuthCache,
-  clearUserCache,
-  getAuthCache,
-  getUserCache,
-  setAuthCache,
-  setUserCache,
-} from "../utils/indexDB";
+import { clearAuthCache, getAuthCache, setAuthCache } from "../utils/indexDB";
 
 export interface IUserContext {
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   isAuthenticated: boolean;
-  refetchUserData: () => Promise<void>;
+  refetchUserData: () => Promise<IUser | undefined>;
   logout: () => void;
   validateToken: () => Promise<void>;
 }
@@ -39,14 +32,12 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!user);
 
-  const refetchUserData = useCallback(async (): Promise<void> => {
+  const refetchUserData = useCallback(async (): Promise<IUser | undefined> => {
     if (!isAuthenticated) return;
-    const cachedUser = await getUserCache();
-    if (cachedUser) setUser(cachedUser);
     try {
       const data = await getUserData();
-      await setUserCache(data);
       setUser(data);
+      return data;
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
@@ -55,9 +46,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       const tokenExpiry = await getAuthCache();
-      const authUser = await getUserCache();
-      if (authUser && tokenExpiry && tokenExpiry > Date.now()) {
-        setUser(authUser);
+      if (tokenExpiry && tokenExpiry > Date.now()) {
         setIsAuthenticated(true);
       } else {
         await validateToken();
@@ -81,7 +70,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
       } else {
         await clearAuthCache();
-        await clearUserCache();
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -92,7 +80,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
       } else {
         await clearAuthCache();
-        await clearUserCache();
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -100,10 +87,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async (): Promise<void> => {
+    await logoutAPI();
     setUser(null);
     setIsAuthenticated(false);
     await clearAuthCache();
-    await logoutAPI();
   };
 
   const value = {
