@@ -1,4 +1,5 @@
 import { IExistingOutfitData } from "../pages/wardrobe/components/OutfitsModal";
+import { getOutfitsCache, setOutfitsCache } from "../utils/indexDB";
 
 const baseURL = `${import.meta.env.VITE_BASE_URL}/outfits/`;
 
@@ -10,13 +11,22 @@ export const getOutfits = async (): Promise<IExistingOutfitData[]> => {
     },
     credentials: "include",
   };
-  const response = await fetch(baseURL, options);
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to fetch outfits");
+  try {
+    const response = await fetch(baseURL, options);
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch outfits");
+    }
+    const data: IExistingOutfitData[] = await response.json();
+    await setOutfitsCache(data);
+    return data;
+  } catch (error) {
+    const cachedData = await getOutfitsCache();
+    if (cachedData) {
+      return cachedData;
+    }
+    throw error;
   }
-  const data: IExistingOutfitData[] = await response.json();
-  return data;
 };
 
 export const getOutfitsById = async (

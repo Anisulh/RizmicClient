@@ -5,6 +5,7 @@ import {
   IUserLogin,
 } from "../interface/userInterface";
 import { PasswordResetSchemaType } from "../pages/passwordReset/passwordResetSchema";
+import { getUserCache, setUserCache } from "../utils/indexDB";
 
 const baseURL = `${import.meta.env.VITE_BASE_URL}/user/`;
 
@@ -134,12 +135,21 @@ export const getUserData = async () => {
     method: "GET",
     credentials: "include",
   };
-  const response = await fetch(url, options);
-  const responseData = await response.json();
-  if (!response.ok) {
-    throw new Error(responseData.message);
+  try {
+    const response = await fetch(url, options);
+    const responseData = await response.json();
+    if (!response.ok) {
+      throw new Error(responseData.message);
+    }
+    await setUserCache(responseData);
+    return responseData;
+  } catch (error) {
+    const userData = await getUserCache();
+    if (userData) {
+      return userData;
+    }
+    throw error;
   }
-  return responseData;
 };
 
 export const changePasswordAPI = async (passwordData: IChangePasswordData) => {
@@ -204,7 +214,7 @@ export const deleteAccountAPI = async () => {
     throw new Error(responseData.message);
   }
   return responseData;
-}
+};
 
 export const searchUsersAPI = async (search: string) => {
   const url = new URL(baseURL + "search");
@@ -219,4 +229,5 @@ export const searchUsersAPI = async (search: string) => {
     throw new Error(responseData.message);
   }
   return responseData;
-}
+};
+

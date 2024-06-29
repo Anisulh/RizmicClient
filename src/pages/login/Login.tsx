@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/ui/inputs/Input";
 import { useToast } from "../../contexts/ToastContext";
 import Button from "../../components/ui/Button";
-import { setAuthCache } from "../../utils/indexDB";
+import { setAuthCache, setUserCache } from "../../utils/indexDB";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ function Login() {
       reset();
       setUser(data.user);
       await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
 
       navigate("/wardrobe");
     },
@@ -52,6 +53,7 @@ function Login() {
     onSuccess: async (data) => {
       setUser(data.user);
       await setAuthCache(data.tokenExpiry);
+      await setUserCache(data.user);
       navigate("/wardrobe");
     },
     onError: (error) => {

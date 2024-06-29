@@ -8,7 +8,12 @@ import {
 } from "react";
 import { getUserData, logoutAPI } from "../api/userAPI";
 import { IUser } from "../interface/userInterface";
-import { clearAuthCache, getAuthCache, setAuthCache } from "../utils/indexDB";
+import {
+  clearAllCache,
+  getAuthCache,
+  getUserCache,
+  setAuthCache,
+} from "../utils/indexDB";
 
 export interface IUserContext {
   user: IUser | null;
@@ -46,8 +51,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = async () => {
       const tokenExpiry = await getAuthCache();
-      if (tokenExpiry && tokenExpiry > Date.now()) {
+      const userData = await getUserCache();
+      if (userData && tokenExpiry && tokenExpiry > Date.now()) {
         setIsAuthenticated(true);
+        setUser(userData);
       } else {
         await validateToken();
         await refetchUserData();
@@ -69,7 +76,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         }
         setIsAuthenticated(true);
       } else {
-        await clearAuthCache();
+        await clearAllCache();
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -79,7 +86,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       if (tokenExpiry && tokenExpiry > Date.now()) {
         setIsAuthenticated(true);
       } else {
-        await clearAuthCache();
+        await clearAllCache();
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -87,10 +94,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async (): Promise<void> => {
+    await clearAllCache();
     await logoutAPI();
     setUser(null);
     setIsAuthenticated(false);
-    await clearAuthCache();
   };
 
   const value = {
