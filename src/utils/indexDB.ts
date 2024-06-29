@@ -27,13 +27,21 @@ interface RFDB extends DBSchema {
   };
 }
 
-const dbPromise = openDB<RFDB>("RizmicFits", 1, {
-  upgrade(db) {
-    db.createObjectStore("auth");
-    db.createObjectStore("user");
-    db.createObjectStore("clothes");
-    db.createObjectStore("outfits");
-    db.createObjectStore("friends");
+const DB_VERSION = 2; // Increase this when new stores are added
+
+const dbPromise = openDB<RFDB>("RizmicFits", DB_VERSION, {
+  upgrade(db, oldVersion) {
+    if (oldVersion < 1) {
+      // Create initial stores
+      db.createObjectStore("auth");
+    }
+    if (oldVersion < 2) {
+      // Add new stores in version 2
+      db.createObjectStore("user");
+      db.createObjectStore("clothes");
+      db.createObjectStore("outfits");
+      db.createObjectStore("friends");
+    }
   },
 });
 
