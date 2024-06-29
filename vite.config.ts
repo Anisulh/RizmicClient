@@ -7,12 +7,8 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "sw.ts",
-      registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-icon.png"],
-      injectRegister: "auto",
+      registerType: "prompt",
+      includeAssets: ["favicon.ico", "apple-touc-icon.png", "masked-icon.svg"],
       manifest: {
         name: "RizmicFits",
         short_name: "Rizmic",
@@ -34,7 +30,14 @@ export default defineConfig({
             src: "pwa512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any maskable",
+            purpose: "any",
+          },
+
+          {
+            src: "/maskable_icon.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
           },
         ],
         start_url: "/",
