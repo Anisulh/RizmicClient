@@ -194,8 +194,8 @@ export const ProfileMenu = () => {
             <Menu.Item>
               <Button
                 className="w-full"
-                onClick={() => {
-                  logout();
+                onClick={async () => {
+                  await logout();
                   navigate("/login");
                 }}
               >
