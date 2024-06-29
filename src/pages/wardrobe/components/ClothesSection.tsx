@@ -53,12 +53,6 @@ function ClothesSection({
     }));
   };
 
-  useEffect(() => {
-    if (!modalOpen) {
-      refetch();
-    }
-  }, [modalOpen, refetch]);
-
   return (
     <>
       <div className="px-4">

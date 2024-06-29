@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import ClothesSection from "./components/ClothesSection";
-import { useToast } from "../../contexts/ToastContext";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { IExistingClothesData } from "./components/ClothesModal";
 import Button from "../../components/ui/Button";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { IExistingOutfitData } from "./components/OutfitsModal";
-import OutfitSection from "./components/OutiftSection";
 import cn from "../../components/ui/cn";
 import { useLocation } from "react-router";
 import { useClothes } from "../../hooks/useClothes";
 import { useOutfits } from "../../hooks/useOutfits";
+import OutfitSection from "./components/OutiftSection";
 
 export type GroupedClothes = {
   [key in IExistingClothesData["category"]]?: IExistingClothesData[];
@@ -23,7 +22,6 @@ export interface IOutfitsSections {
 export default function Wardrobe() {
   const [openTab, setOpenTab] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
-  const { addToast } = useToast();
   const location = useLocation();
 
   useEffect(() => {
@@ -48,34 +46,13 @@ export default function Wardrobe() {
   const {
     data: clothes,
     isLoading: isLoadingClothes,
-    isError: isClothesError,
-    error: clothesError,
     refetch: refetchClothes,
   } = useClothes();
-
-  if (isClothesError) {
-    addToast({
-      title: "Error",
-      description: clothesError.message,
-      type: "error",
-    });
-  }
-
   const {
     data: outfits,
-    isError: isOutfitError,
-    error: outfitError,
     isLoading: isLoadingOutfits,
     refetch: refetchOutfits,
   } = useOutfits();
-
-  if (isOutfitError) {
-    addToast({
-      title: "Error",
-      description: outfitError.message,
-      type: "error",
-    });
-  }
 
   if (isLoadingClothes || isLoadingOutfits) {
     return <Spinner />;
@@ -134,21 +111,19 @@ export default function Wardrobe() {
       </div>
 
       {openTab === 1 ? (
-        <>
-          <ClothesSection
-            clothes={clothes?.structuredClothes}
-            refetch={refetchClothes}
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
-          />
-        </>
+        <ClothesSection
+          clothes={clothes?.structuredClothes}
+          refetch={refetchClothes}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        />
       ) : (
         <OutfitSection
           outfits={outfits}
           clothes={clothes?.unstructuredClothes}
+          refetch={refetchOutfits}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
-          refetch={refetchOutfits}
         />
       )}
     </div>
