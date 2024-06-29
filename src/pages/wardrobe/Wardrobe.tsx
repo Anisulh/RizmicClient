@@ -53,15 +53,14 @@ export default function Wardrobe() {
     refetch: refetchClothes,
   } = useClothes();
 
-  useEffect(() => {
-    if (isClothesError && clothesError instanceof Error) {
-      addToast({
-        title: "Something went wrong.",
-        description: clothesError.message || "Unable to fetch clothes",
-        type: "error",
-      });
-    }
-  }, [isClothesError, clothesError, addToast]);
+  if (isClothesError) {
+    addToast({
+      title: "Error",
+      description: clothesError.message,
+      type: "error",
+    });
+  }
+
   const {
     data: outfits,
     isError: isOutfitError,
@@ -69,15 +68,14 @@ export default function Wardrobe() {
     isLoading: isLoadingOutfits,
     refetch: refetchOutfits,
   } = useOutfits();
-  useEffect(() => {
-    if (isOutfitError && outfitError instanceof Error) {
-      addToast({
-        title: "Something went wrong.",
-        description: outfitError.message || "Unable to fetch clothes",
-        type: "error",
-      });
-    }
-  }, [isOutfitError, outfitError, addToast]);
+
+  if (isOutfitError) {
+    addToast({
+      title: "Error",
+      description: outfitError.message,
+      type: "error",
+    });
+  }
 
   if (isLoadingClothes || isLoadingOutfits) {
     return <Spinner />;
