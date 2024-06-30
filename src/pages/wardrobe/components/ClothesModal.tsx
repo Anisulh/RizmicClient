@@ -200,7 +200,9 @@ export default function ClothesModal({
               <Step1 setStep={setStep} />
             ) : (
               <>
-                <p>Make sure to fill in all required fields</p>
+                <p className="text-sm md:text-lg">
+                  Make sure to fill in all required fields
+                </p>
                 <Input<IClothesModalSchema>
                   type="text"
                   label="Name"
@@ -409,7 +411,7 @@ const Step1 = ({ setStep }: { setStep: Dispatch<SetStateAction<number>> }) => {
 
   return (
     <div>
-      <p className="pr-4">
+      <p className="pr-4 text-sm md:text-lg">
         Add a photo of your clothing to get started or skip by clicking Next.
       </p>
       <div className="mt-4 flex w-full flex-col justify-center">
