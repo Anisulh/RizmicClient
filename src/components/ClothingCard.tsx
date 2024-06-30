@@ -108,10 +108,10 @@ export default function ClothingCard({
   return (
     <>
       <div
-        className="relative h-64 w-full shadow-sm"
+        className="relative h-80 w-60 rounded-lg bg-gray-600 bg-opacity-10 bg-clip-padding shadow-sm backdrop-blur-lg backdrop-filter"
         aria-label="Clothing card"
       >
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full p-5">
           <button
             className="absolute right-2 top-2 z-10"
             onClick={() => {
@@ -130,16 +130,16 @@ export default function ClothingCard({
           >
             {image ? (
               <img
-                className="h-48 w-full rounded-md object-contain text-center"
+                className="h-56 w-full rounded-md object-cover"
                 alt="Piece of clothing"
                 src={image}
               />
             ) : (
-              <div className="h-48 w-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
+              <div className="h-56 w-full rounded-md bg-gradient-to-tr from-cambridgeblue to-ultramarineBlue"></div>
             )}
           </button>
-          <div className="mt-2 flex w-full justify-between">
-            <div>
+          <div className="my-2 flex w-full justify-between">
+            <div className="space-y-1">
               <h3>{item.name}</h3>
               <div className="flex items-center gap-2">
                 <p className="text-sm text-slate-300">Color:</p>
