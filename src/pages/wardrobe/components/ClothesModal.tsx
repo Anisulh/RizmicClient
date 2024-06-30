@@ -23,7 +23,6 @@ import { ChevronRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import TagsInput from "../../../components/ui/inputs/TagsInput";
 import { filterData } from "../../../utils/filterData";
 import valuesToSelectOptions from "../../../utils/valuesToSelectOptions";
-import { DevTool } from "@hookform/devtools";
 
 const categoryValues = [
   "t-shirt",
@@ -374,7 +373,7 @@ export default function ClothesModal({
           </form>
         </FormProvider>
       </div>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </DialogModal>
   );
 }
