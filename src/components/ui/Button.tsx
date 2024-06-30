@@ -22,7 +22,7 @@ const variantClasses = {
 type Variant = keyof typeof variantClasses;
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant?: Variant;
   className?: string;
   isLoading?: boolean;
