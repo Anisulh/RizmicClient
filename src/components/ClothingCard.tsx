@@ -108,10 +108,10 @@ export default function ClothingCard({
   return (
     <>
       <div
-        className="relative h-80 w-60 rounded-lg bg-gray-600 bg-opacity-10 bg-clip-padding shadow-sm backdrop-blur-lg backdrop-filter"
+        className="relative h-full w-full max-w-56 rounded-lg"
         aria-label="Clothing card"
       >
-        <div className="relative h-full w-full p-5">
+        <div className="h-full w-full">
           <button
             className="absolute right-2 top-2 z-10"
             onClick={() => {
@@ -126,7 +126,7 @@ export default function ClothingCard({
           </button>
           <button
             onClick={() => navigate(`/clothing/${_id}`)}
-            className="w-full"
+            className="z-0 w-full"
           >
             {image ? (
               <img
@@ -151,7 +151,7 @@ export default function ClothingCard({
             </div>
 
             <div>
-              <Menu as="div" className="relative inline-block text-right">
+              <Menu as="div" className="relative z-50 inline-block text-right">
                 <div>
                   <Menu.Button className="inline-flex w-full justify-center rounded-md text-right text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <EllipsisVerticalIcon
@@ -169,7 +169,7 @@ export default function ClothingCard({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-20 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
+                  <Menu.Items className="absolute right-0 z-50 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
                     <div className="px-1 py-1">
                       <Menu.Item>
                         {({ active }) => (
