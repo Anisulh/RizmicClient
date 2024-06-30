@@ -251,8 +251,8 @@ export default function ClothesModal({
                           leaveFrom="opacity-100 translate-y-0"
                           leaveTo="opacity-0 translate-y-1"
                         >
-                          <Popover.Panel className="absolute z-30 mt-3 max-w-sm -translate-x-1/2 transform rounded-md bg-white px-4 sm:px-0 lg:max-w-3xl">
-                            <div className="rounded-md bg-white p-5 shadow-lg">
+                          <Popover.Panel className="absolute z-30 mt-3 max-w-sm -translate-x-3/4 transform rounded-md bg-slate-600 px-4 sm:px-0 lg:max-w-3xl">
+                            <div className="rounded-md bg-white p-5 shadow-lg dark:bg-slate-600">
                               <ColorPicker
                                 color={color}
                                 onChange={(data: string): void => {
