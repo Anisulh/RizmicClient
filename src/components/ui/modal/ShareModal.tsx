@@ -83,7 +83,7 @@ export default function ShareModal({
           </div>
         ) : friends && friends.length > 0 ? (
           <>
-            <div className="px-2 py-4">
+            <div className="space-y-2 px-2 py-4">
               {friends.map((friend, index) => (
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
