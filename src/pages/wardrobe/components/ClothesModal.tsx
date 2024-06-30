@@ -154,11 +154,11 @@ export default function ClothesModal({
 
   useEffect(() => {
     setStep(1);
+    setShowAdvanced(false);
   }, [open]);
 
   const onSubmit: SubmitHandler<IClothesModalSchema> = async (data) => {
     const formData = new FormData();
-    console.log(data);
     const keys = Object.keys(data) as Array<keyof IClothesModalSchema>;
 
     // Use existing data to find changes if updating, else use all data
@@ -201,6 +201,7 @@ export default function ClothesModal({
               <Step1 setStep={setStep} />
             ) : (
               <>
+                <p>Make sure to fill in all required fields</p>
                 <Input<IClothesModalSchema>
                   type="text"
                   label="Name"
@@ -272,7 +273,7 @@ export default function ClothesModal({
                   className="flex items-center gap-1 text-sm"
                   onClick={() => setShowAdvanced(!showAdvanced)}
                 >
-                  Advanced
+                  Advanced (optional)
                   <ChevronRightIcon
                     className={cn(
                       "size-5",
@@ -409,7 +410,7 @@ const Step1 = ({ setStep }: { setStep: Dispatch<SetStateAction<number>> }) => {
 
   return (
     <div>
-      <p className="pr-4 text-sm md:text-base">
+      <p className="pr-4">
         Add a photo of your clothing to get started or skip by clicking Next.
       </p>
       <div className="mt-4 flex w-full flex-col justify-center">
