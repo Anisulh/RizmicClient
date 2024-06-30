@@ -92,7 +92,9 @@ function ClothesSection({
             </div>
           ))
         ) : (
-          <p>Oh no.... this isn&apos;t looking too good....</p>
+          <p className="mt-10 w-full text-center text-lg">
+            Oh no.... this isn&apos;t looking too good....
+          </p>
         )}
       </div>
       <ClothesModal open={modalOpen} setOpen={setModalOpen} refetch={refetch} />

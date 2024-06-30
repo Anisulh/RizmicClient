@@ -74,7 +74,9 @@ function OutfitSection({
             ) : null;
           })
         ) : (
-          <p>Let&apos;s create a new outfit</p>
+          <p className="mt-10 w-full text-center text-lg">
+            Oh no.... this isn&apos;t looking too good....
+          </p>
         )}
       </div>
 
