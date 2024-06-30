@@ -75,7 +75,7 @@ function ClothesSection({
                 </div>
               </button>
               {categoryOpen[key] && (
-                <div className="grid grid-cols-2 justify-items-center gap-4 lg:grid-cols-4">
+                <div className="grid grid-cols-2 justify-items-center gap-4 pb-4 lg:grid-cols-4">
                   {(clothes[key as ClothesCategory] as []).map(
                     (item, index) => {
                       return (
