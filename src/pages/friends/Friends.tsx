@@ -92,7 +92,7 @@ export default function Friends() {
         </Button>
       </div>
       <h2 className="text-xl font-medium md:text-2xl">Your Friends</h2>
-      <div>
+      <div className="space-y-2">
         {friends?.map((friend) => (
           <div
             key={friend._id}
