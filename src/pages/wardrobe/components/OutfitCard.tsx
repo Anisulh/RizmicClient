@@ -5,7 +5,6 @@ import EllipsisVerticalIcon from "@heroicons/react/24/outline/EllipsisVerticalIc
 import {
   deleteOutfits,
   favoriteOutfits,
-  shareOutfits,
   unfavoriteOutfits,
 } from "../../../api/outfitsAPI";
 import { useMutation } from "@tanstack/react-query";
@@ -18,6 +17,7 @@ import DialogModal from "../../../components/ui/modal/DialogModal";
 import Button from "../../../components/ui/Button";
 import ShareModal from "../../../components/ui/modal/ShareModal";
 import { useNavigate } from "react-router-dom";
+import { shareOutfitsWithFriends } from "../../../api/friendsAPI";
 export interface IOutfitData {
   _id: string;
   image?: string;
@@ -88,15 +88,20 @@ function OutfitCard({
     }: {
       outfitId: string;
       userId: string[];
-    }) => await shareOutfits(outfitId, userId),
+    }) => await shareOutfitsWithFriends(outfitId, userId),
     onSuccess(data) {
-      if (data.message) {
-        addToast({
-          title: "Something went wrong.",
-          description: data.message,
-          type: "error",
-        });
-      }
+      addToast({
+        title: "Success",
+        description: data.message || "Outfit shared successfully.",
+        type: "success",
+      });
+    },
+    onError(error) {
+      addToast({
+        title: "Unable to share outfit",
+        type: "error",
+        description: error.message || "Something went wrong.",
+      });
     },
   });
   const handleDelete = () => {
