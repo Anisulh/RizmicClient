@@ -22,11 +22,22 @@ export interface ISharedClothing {
   updatedAt: string;
   __v: 0;
 }
+export interface ISharedOutfit {
+  _id: string;
+  sharedBy: string;
+  sharedWith: string;
+  outfitItem: IExistingOutfitData;
+  status: string;
+  sharedAt: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: 0;
+}
 
 export interface IFriendProfile extends IFriend {
   since: string;
   sharedClothes: ISharedClothing[];
-  sharedOutfits: IExistingOutfitData[];
+  sharedOutfits: ISharedOutfit[];
 }
 
 export interface IFriendRequest {
@@ -145,16 +156,33 @@ export const shareClothesWithFriends = async (
     credentials: "include",
     body: JSON.stringify({ friends }),
   };
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-    return data;
-  } catch (error) {
-    return error;
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
   }
+  return data;
+};
+
+export const shareOutfitsWithFriends = async (
+  outfitsId: string,
+  friends: string[],
+) => {
+  const url = new URL(baseURL + `share/outfit/${outfitsId}`);
+  const options: RequestInit = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ friends }),
+  };
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
 };
 
 export const fetchFriendProfile = async (
