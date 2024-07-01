@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "./contexts/ToastContext";
 import DialogModal from "./components/ui/modal/DialogModal";
 import Button from "./components/ui/Button";
+import FriendProfile from "./pages/friendProfile/FriendProfile";
 
 const queryClient = new QueryClient();
 
@@ -134,6 +135,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Settings />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/friends/profile/:friendId"
+              element={
+                <PrivateRoute>
+                  <FriendProfile />
                 </PrivateRoute>
               }
             />
