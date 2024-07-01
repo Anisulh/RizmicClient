@@ -177,25 +177,3 @@ export const deleteOutfits = async (outfitsId: string) => {
     return error;
   }
 };
-
-export const shareOutfits = async (outfitsId: string, friends: string[]) => {
-  const url = new URL(outfitsId, baseURL + "share/");
-  const options: RequestInit = {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({ friends }),
-  };
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message);
-    }
-    return data;
-  } catch (error) {
-    return error;
-  }
-};
