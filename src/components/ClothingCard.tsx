@@ -8,7 +8,6 @@ import { useMutation } from "@tanstack/react-query";
 import {
   deleteClothes,
   favoriteClothes,
-  shareClothes,
   unfavoriteClothes,
 } from "../api/clothesAPI";
 import { EditIcon, ShareIcon, TrashIcon } from "./Icons";
@@ -18,6 +17,7 @@ import Button from "./ui/Button";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ShareModal from "./ui/modal/ShareModal";
 import { useNavigate } from "react-router-dom";
+import { shareClothesWithFriends } from "../api/friendsAPI";
 
 export default function ClothingCard({
   item,
@@ -78,13 +78,13 @@ export default function ClothingCard({
     }: {
       clothesId: string;
       userId: string[];
-    }) => await shareClothes(clothesId, userId),
+    }) => await shareClothesWithFriends(clothesId, userId),
     onSuccess(data) {
       if (data.message) {
         addToast({
-          title: "Something went wrong.",
+          title: "Shared.",
           description: data.message,
-          type: "error",
+          type: "success",
         });
       }
     },
