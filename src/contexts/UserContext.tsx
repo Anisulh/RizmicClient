@@ -13,6 +13,7 @@ import {
   getAuthCache,
   getUserCache,
   setAuthCache,
+  setUserCache,
 } from "../utils/indexDB";
 
 export interface IUserContext {
@@ -42,6 +43,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       const data = await getUserData();
       setUser(data);
+      setUserCache(data);
       return data;
     } catch (error) {
       console.error("Failed to fetch user data:", error);
