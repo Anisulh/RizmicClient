@@ -216,7 +216,7 @@ export const Logo = () => {
   return (
     <Link
       to="/"
-      className="flex flex-1 gap-1 text-2xl font-semibold hover:bg-transparent"
+      className="flex gap-1 text-2xl font-semibold hover:bg-transparent"
     >
       <img src={RizmicIcon} alt="RizmicFits" className="h-8 w-8 rounded-full" />
     </Link>
@@ -239,6 +239,7 @@ export default function MobileNav() {
             <div className="mx-auto max-w-7xl">
               <div className="flex items-center justify-end border-gray-100 py-2 pt-4 md:justify-start md:space-x-10 dark:text-gray-900">
                 <Logo />
+                <div className="flex-1"></div>
                 {isAuthenticated ? (
                   <ProfileMenu />
                 ) : (
