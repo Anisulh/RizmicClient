@@ -230,4 +230,3 @@ export const searchUsersAPI = async (search: string) => {
   }
   return responseData;
 };
-
