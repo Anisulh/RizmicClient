@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import {
   acceptFriendRequestAPI,
   getFriendRequests,
@@ -18,9 +18,12 @@ import {
 import useFriends from "../../hooks/useFriends";
 import { Menu, Transition } from "@headlessui/react";
 import DialogModal from "../../components/ui/modal/DialogModal";
+import UserAvatar from "../../assets/userAvatar.webp";
+import { useNavigate } from "react-router-dom";
 
 export default function Friends() {
   const { addToast } = useToast();
+  const navigate = useNavigate();
   const [addFriendModalOpen, setAddFriendModalOpen] = useState(false);
   const [unfriendModalOpen, setUnfriendModalOpen] = useState(false);
 
@@ -98,12 +101,22 @@ export default function Friends() {
             key={friend._id}
             className="flex items-center justify-between rounded-xl bg-slate-700 p-4"
           >
-            <div className="flex items-center gap-2">
-              {friend.profilePicture && (
+            <Button
+              variant="ghost"
+              className="flex flex-1 items-center gap-2"
+              onClick={() => navigate("/friends/profile/" + friend._id)}
+            >
+              {friend.profilePicture ? (
                 <img
                   src={friend.profilePicture}
                   alt={friend.firstName}
                   className="size-8 rounded-full"
+                />
+              ) : (
+                <img
+                  src={UserAvatar}
+                  alt="User Avatar"
+                  className="size-8 rounded-full bg-white"
                 />
               )}
               <div>
@@ -111,55 +124,12 @@ export default function Friends() {
                   {friend.firstName} {friend.lastName}
                 </h2>
               </div>
-            </div>
+            </Button>
             <div>
-              <Menu as="div" className="relative inline-block text-right">
-                <div>
-                  <Menu.Button className="inline-flex w-full justify-center rounded-md text-right text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    <EllipsisVerticalIcon
-                      className="size-6 transition-colors hover:text-cambridgeblue dark:text-white"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                </div>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-20 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
-                    <div className="px-1 py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            className={`${
-                              active && "bg-ultramarineBlue"
-                            } group flex w-full items-center rounded-md px-4 py-2 transition-colors`}
-                          >
-                            View Profile
-                          </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={() => setUnfriendModalOpen(true)}
-                            className={`${
-                              active && "bg-red-600"
-                            } group flex w-full items-center rounded-md px-4 py-2 transition-colors`}
-                          >
-                            Unfriend
-                          </button>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+              <FriendMenu
+                setUnfriendModalOpen={setUnfriendModalOpen}
+                friendId={friend._id}
+              />
             </div>
             <DialogModal
               title="Delete Clothing"
@@ -236,3 +206,63 @@ export default function Friends() {
     </div>
   );
 }
+
+export const FriendMenu = ({
+  setUnfriendModalOpen,
+  friendId,
+}: {
+  setUnfriendModalOpen: Dispatch<SetStateAction<boolean>>;
+  friendId: string;
+}) => {
+  const navigate = useNavigate();
+  return (
+    <Menu as="div" className="relative inline-block text-right">
+      <div>
+        <Menu.Button className="inline-flex w-full justify-center rounded-md text-right text-sm font-medium text-raisinblack hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <EllipsisVerticalIcon
+            className="size-6 transition-colors hover:text-cambridgeblue dark:text-white"
+            aria-hidden="true"
+          />
+        </Menu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 z-20 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-600 dark:text-gray-200">
+          <div className="px-1 py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  className={`${
+                    active && "bg-ultramarineBlue"
+                  } group flex w-full items-center rounded-md px-4 py-2 transition-colors`}
+                  onClick={() => navigate("/friends/profile/" + friendId)}
+                >
+                  View Profile
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={() => setUnfriendModalOpen(true)}
+                  className={`${
+                    active && "bg-red-600"
+                  } group flex w-full items-center rounded-md px-4 py-2 transition-colors`}
+                >
+                  Unfriend
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  );
+};
