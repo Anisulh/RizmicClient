@@ -15,6 +15,7 @@ import { useAuth } from "../../../contexts/UserContext";
 import PWAInstallPrompt from "./PWAInstallPrompt";
 import userAvatar from "../../../assets/userAvatar.webp";
 import RizmicIcon from "../../../assets/RFIcon.png";
+import { useQueryClient } from "@tanstack/react-query";
 
 const tabs = [
   {
@@ -142,6 +143,7 @@ export const HamburgerMenu = ({
 
 export const ProfileMenu = () => {
   const { user, logout } = useAuth();
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
   return (
@@ -195,6 +197,7 @@ export const ProfileMenu = () => {
               <Button
                 className="w-full"
                 onClick={async () => {
+                  queryClient.removeQueries();
                   await logout();
                   navigate("/login");
                 }}
