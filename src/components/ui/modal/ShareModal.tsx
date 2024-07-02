@@ -45,17 +45,7 @@ export default function ShareModal({
       text: "Check out this clothing!",
       url: url,
     };
-    try {
-      await navigator.share(shareData);
-    } catch (err) {
-      addToast({
-        title: "Error sharing",
-        description:
-          "An error occurred while trying to share this clothing. The link has been copied to your clipboard.",
-        type: "error",
-      });
-      handleCopy();
-    }
+    await navigator.share(shareData);
   };
 
   const handleCopy = () => {
@@ -89,11 +79,11 @@ export default function ShareModal({
           </div>
         ) : friends && friends.length > 0 ? (
           <>
-            <div className="grid grid-cols-3 items-center justify-center space-y-2 px-2 py-4 md:grid-cols-4">
+            <div className="grid grid-cols-3 items-center justify-center px-2 py-4 md:grid-cols-4">
               {friends.map((friend, index) => (
                 <div key={index} className="h-20 w-fit">
                   <label
-                    htmlFor="friend-checkbox"
+                    htmlFor={`friend-checkbox-${friend._id}`}
                     className={cn(
                       "relative flex flex-col items-center gap-2 rounded-md p-2 transition-colors hover:cursor-pointer hover:bg-slate-600",
                       selectedFriends.includes(friend._id) && "bg-slate-500",
@@ -113,10 +103,10 @@ export default function ShareModal({
                   </label>
                   <input
                     type="checkbox"
-                    id="friend-checkbox"
+                    id={`friend-checkbox-${friend._id}`}
                     checked={selectedFriends.includes(friend._id)}
                     onChange={() => handleSelectFriend(friend._id)}
-                    className="hidden size-5 rounded-md text-ultramarineBlue"
+                    className="hidden"
                   />
                 </div>
               ))}
