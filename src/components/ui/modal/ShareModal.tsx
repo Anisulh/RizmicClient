@@ -4,9 +4,11 @@ import UserAvatar from "../../../assets/userAvatar.webp";
 import { useToast } from "../../../contexts/ToastContext";
 import { ClipboardIcon } from "@heroicons/react/24/solid";
 import { ShareIcon } from "../../Icons";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ButtonSpinner from "../spinner/ButtonSpinner";
 import useFriends from "../../../hooks/useFriends";
+import cn from "../cn";
+import { CheckIcon } from "@heroicons/react/20/solid";
 
 interface IShareModal {
   open: boolean;
@@ -32,6 +34,10 @@ export default function ShareModal({
         : [...prevSelected, friendId],
     );
   };
+
+  useEffect(() => {
+    !open && setSelectedFriends([]);
+  }, [open]);
 
   const handleShareMenu = async () => {
     const shareData = {
@@ -83,24 +89,34 @@ export default function ShareModal({
           </div>
         ) : friends && friends.length > 0 ? (
           <>
-            <div className="space-y-2 px-2 py-4">
+            <div className="grid grid-cols-3 items-center justify-center space-y-2 px-2 py-4 md:grid-cols-4">
               {friends.map((friend, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                <div key={index} className="h-20 w-fit">
+                  <label
+                    htmlFor="friend-checkbox"
+                    className={cn(
+                      "relative flex flex-col items-center gap-2 rounded-md p-2 transition-colors hover:cursor-pointer hover:bg-slate-600",
+                      selectedFriends.includes(friend._id) && "bg-slate-500",
+                    )}
+                  >
+                    {selectedFriends.includes(friend._id) && (
+                      <CheckIcon className="absolute right-1 top-1 size-4" />
+                    )}
                     <img
                       src={friend.profilePicture || UserAvatar}
                       alt={friend.firstName}
                       className="size-8 rounded-full bg-white"
                     />
                     <p>
-                      {friend.firstName} {friend.lastName}
+                      {friend.firstName} {friend.lastName[0]}.
                     </p>
-                  </div>
+                  </label>
                   <input
                     type="checkbox"
+                    id="friend-checkbox"
                     checked={selectedFriends.includes(friend._id)}
                     onChange={() => handleSelectFriend(friend._id)}
-                    className="size-5 rounded-md text-ultramarineBlue"
+                    className="hidden size-5 rounded-md text-ultramarineBlue"
                   />
                 </div>
               ))}
