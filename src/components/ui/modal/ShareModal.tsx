@@ -85,7 +85,7 @@ export default function ShareModal({
                   <label
                     htmlFor={`friend-checkbox-${friend._id}`}
                     className={cn(
-                      "relative flex flex-col items-center gap-2 rounded-md p-2 transition-colors hover:cursor-pointer hover:bg-slate-600",
+                      "relative flex flex-col items-center gap-2 rounded-md p-2 transition-colors hover:cursor-pointer md:hover:bg-slate-600",
                       selectedFriends.includes(friend._id) && "bg-slate-500",
                     )}
                   >
